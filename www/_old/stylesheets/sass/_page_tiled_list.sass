@@ -1,0 +1,110 @@
+$defaultTileWidth:    128px
+$defaultTileHeight:   128px
+$portraitTileHeight:  190px
+$tileMarginLeft:      26px
+$tileMarginTop:       28px
+$tileMarginBottom:    25px
+
+.page.tiled_list_page
+  > .content
+    
+    ul
+      background:     white
+      padding-bottom: $tileMarginBottom
+      
+      li
+        display:          inline-block
+        vertical-align:   bottom
+        width:            $defaultTileWidth
+        height:           $defaultTileHeight
+        margin:           $tileMarginTop 0 $tileMarginBottom $tileMarginLeft
+        background-image: url(../images/artwork/default/empty.png)
+        background:       no-repeat center center
+        // @include tileShadow
+        
+        &.selected
+          opacity: 0.5
+        
+        p
+          font-weight:    normal
+          font-size:      70%
+          text-align:     center
+          overflow:       hidden
+          white-space:    nowrap
+          text-overflow:  ellipsis
+                    
+          &:first-child
+            margin-top:    $defaultTileHeight + 6
+            margin-bottom:  -1px
+            font-weight:    bold
+          
+          &:last-child
+            color:  #676767
+    
+    // Position indicator
+    ul.position
+      position:     absolute
+      z-index:      1
+      left:         ($defaultTileWidth + $tileMarginLeft) * 2
+      top:          50%
+      margin-top:   $defaultTileHeight / -2 - $tileMarginTop
+      overflow:     visible
+      li
+        margin-right: $tileMarginLeft
+      
+      li p
+        width:  500%
+        margin-left:  -200%
+    
+    div.position
+      position:     absolute
+      z-index:      1
+      left:         0
+      right:        0
+      text-align:   center
+      top:          40%
+      
+      p
+        font-weight:    bold
+        color:          #ddd
+        font-size:      400%
+        text-transform: capitalize
+    
+    // Count
+    div.count
+      line-height:  $defaultRowHeight - 2
+      border-top:   1px solid #d6d6d6
+  
+  // Specifics for different content types
+  &.artists > .content ul li
+    border-radius:    8px
+    background-image: url(../images/artwork/default/artist.png)
+  &.albums > .content ul li
+    background-image: url(../images/artwork/default/album.png)
+  &.videos > .content ul li
+    background-image: url(../images/artwork/default/video.png)
+  
+  // Portrait items
+  &.films,
+  &.series,
+  &.series_seasons
+    > .content ul li
+      height:           $portraitTileHeight
+      p:first-child
+        margin-top:     $portraitTileHeight + 6
+  &.films > .content ul li
+    background-image: url(../images/artwork/default/film.png)
+  &.series > .content ul li
+    background-image: url(../images/artwork/default/seriesseasonsfolder.png)
+  
+  // No second viewline
+  &.streams li,
+  &.videos li,
+  &.films li,
+  &.series li
+    p:last-child
+      display: none
+    
+// Position indicator in portrait mode
+.portrait .page.tiled_list_page > .content ul.position
+  left:   $defaultTileWidth + $tileMarginLeft

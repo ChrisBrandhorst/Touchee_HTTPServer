@@ -1,0 +1,161 @@
+$baseFontColor:       black
+$defaultDropShadow:   0 0 8px 0 black
+$selectedCollectionGradient: -webkit-gradient(linear, left top, left bottom, from(#058CF5), to(#015DE6))
+
+$applicationBorder:   5px
+
+@mixin ellipsis
+  overflow:       hidden
+  text-overflow:  ellipsis
+  white-space:    nowrap
+
+html, body
+  width:    100%
+  height:   100%
+  overflow: hidden
+
+body, input, textarea, select, button
+  font-family:          "Helvetica Neue", "Calibri", Arial
+  font-size:            0.8em
+  
+// *
+//   cursor: url(../images/cursor.png), crosshair
+
+body
+  margin:               0
+  background:           #333
+  color:                $baseFontColor
+  //-webkit-user-select:  none
+  position:             relative
+  width:                1024px
+  height:               748px
+  
+  // &.portrait
+  //   width:  768px
+  //   height: 1004px
+  
+  ul, li, p, dl, dt, dd
+    margin:   0
+    padding:  0
+  
+  ul
+    list-style: none
+    overflow:   hidden
+    
+  *
+    outline:    none
+    
+  img
+    border: none
+  
+  a
+    color:            $baseFontColor
+    text-decoration:  none
+  
+  table
+    font-size:        100%
+    border-collapse:  collapse
+    
+    td
+      vertical-align: top
+      padding:        0
+  
+  .invisible
+    visibility: hidden
+  
+  .hidden
+    display:  none
+  
+  .noanim
+    -webkit-transition: none !important
+  
+  #overlay
+    position:     absolute
+    width:        100%
+    height:       100%
+    z-index:      20
+    top:          0
+    display:      none
+  
+  .nowplaying_artwork
+    background-image: url(../images/artwork/default/empty.png)
+    
+@media screen and (max-width: 999px)
+  body
+    width:  768px
+    height: 1004px
+
+  // #browser, #nowplaying
+  //   width:      100%
+  //   height:     100%
+  //   position:   absolute
+  //   top:        0
+  //   left:       0
+  // 
+  // #browser
+  //   z-index:    0
+  //   visibility: hidden
+  //   &.active
+  //     visibility: visible
+  //   #controls
+  //     height:     $controlsHeight + px
+  //     > div
+  //       height:   $controlsHeight - 2 + px
+  //       width:    100%
+  //       position: absolute
+  //       z-index:  10
+  //   
+  //   #sources
+  //     width:    $sourcesWidth + px
+  //   
+  //   #filters
+  //     height:   $filtersHeight - 1 + px
+  // 
+  // #nowplaying
+  //   display:  none
+  //   z-index:  1
+  //   &.active
+  //     display: block
+  // 
+  // #overlay
+  //   position:     absolute
+  //   width:        100%
+  //   height:       100%
+  //   z-index:      1000
+  //   
+  // a.button
+  //   &:active
+  //     opacity: 0.5
+  // 
+  // 
+  // // Transition between browser and nowplaying
+  // &.animated
+  //   #browser, #nowplaying
+  //     -webkit-transition-property: opacity
+  //     -webkit-transition-duration: .75s
+  //     -webkit-transition-timing-function: ease
+  //     opacity: 0
+  //     &.active
+  //       opacity: 1
+  //   #nowplaying
+  //     z-index: 1
+  //     display:  none
+  //   #browser
+  //     z-index: 0
+
+@import "layout"
+
+@import "controls"
+@import "library"
+@import "content"
+@import "nowplaying"
+
+@import "popup"
+@import "volume"
+
+@import "button"
+
+// @import "controls"
+// @import "sources"
+// @import "filters"
+// @import "nowplaying"

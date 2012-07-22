@@ -1,0 +1,74 @@
+#volume_popup
+  top:      58px
+  left:     32px
+  width:    320px
+  display:  none
+  
+  .popup_well .volume_slider
+    height:               28px
+    margin:               15px
+    padding:              0 13px 0 14px
+    border:               1px solid #151515
+    border-bottom-color:  #373737
+    border-top-color:     #111
+    border-radius:        15px
+    background-image:     -webkit-gradient(linear, left top, left bottom, from(#545556), color-stop(0.06, #838486), color-stop(0.5, #545557), color-stop(0.5, #3D3F41), color-stop(0.95, #494C4F), to(#050505)), -webkit-gradient(linear, left top, left bottom, from(#141414), to(#202020))
+    background-size:      17px 100%, 100% 100%
+    background-repeat:    no-repeat
+    background-position:  left top, 17px top
+  
+    > div
+      height:   100%
+      position: relative
+    
+      > div
+        position:   absolute
+        height:     100%
+        background: -webkit-gradient(linear, left top, left bottom, from(#545556), color-stop(0.06, #838486), color-stop(0.5, #545557), color-stop(0.5, #3D3F41), color-stop(0.95, #494C4F), to(#050505))
+      > a
+        position:   absolute
+        width:      35px
+        height:     31px
+        background: url(../images/controls/volume_knob.png)
+        margin:     -3px 0 0 -17px
+        outline:    none
+  
+  h1
+    position: relative
+    button[data-button=mute]
+      position:   absolute
+      right:      7px
+      top:        50%
+      margin-top: -14px
+  
+  #speakers li
+    background:       no-repeat 10px center
+    background-image: url(../images/speaker.png)
+    background-size:  30px 30px
+    &:active
+      background-image:     url(../images/speaker.png), $selectedCollectionGradient
+      background-position:  10px center, left top
+      background-repeat:    no-repeat
+      background-size:      30px 30px, 100% 100%
+  
+  #amplifier li
+    background: no-repeat 10px center
+    float:      left
+    width:      50%
+    -webkit-box-sizing: border-box
+    
+    &.on
+      background-image: url(../images/amplifier_on.png)
+      border-right:  1px solid #3e3e37
+    &.off
+      background-image: url(../images/amplifier_off.png)
+    
+    &:active
+      background-position:  10px center, left top
+      background-repeat:    no-repeat
+      background-size:      29px 29px, 100% 100%
+      
+      &.on
+        background-image:     url(../images/amplifier_on.png), $selectedCollectionGradient
+      &.off
+        background-image:     url(../images/amplifier_off.png), $selectedCollectionGradient

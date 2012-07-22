@@ -1,0 +1,81 @@
+$controllerGradient: -webkit-gradient(linear, left top, left bottom, from(#868D94), to(#434b53))
+
+@mixin controllerIcon($name)
+  &.#{$name} h1
+    background: url(../images/controllers/#{$name}.png) no-repeat 6px center, $controllerGradient
+    &:active
+      background: url(../images/controllers/#{$name}_selected.png) no-repeat 6px center, $selectedCollectionGradient
+
+@mixin collectionIcon($name)
+  &.#{$name}
+    background: url(../images/collections/#{$name}.png) no-repeat 6px center
+    &.selected
+      background: url(../images/collections/#{$name}_selected.png) no-repeat 6px center, $selectedCollectionGradient
+
+#library
+  background:                 #dadfe6
+  border-bottom-left-radius:  $applicationBorder
+  border-right:               1px solid #9e9e9e
+  
+  display:            -webkit-box
+  -webkit-box-orient: vertical
+  
+  > li
+    overflow:           hidden
+    min-height:         $defaultRowHeight
+    
+    > h1
+      padding-left:       42px
+      margin:             0
+      -webkit-box-sizing: border-box
+      border-bottom:      1px solid #1a1d20
+      line-height:        $defaultRowHeight - 1
+      font-size:          170%
+      color:              white
+      text-shadow:        #181b1f 0 -1px 1px
+      background:         $controllerGradient
+    
+    > div
+      -webkit-box-flex:   1
+      -webkit-transition: height .25s ease
+      
+    > div ul
+      
+      > li
+        padding-left:   42px
+        line-height:    $defaultRowHeight - 1
+        font-size:      140%
+        color:          #3c3e40
+        font-weight:    bold
+        overflow:       hidden
+        white-space:    nowrap
+        text-overflow:  ellipsis
+        margin-bottom:  1px
+        
+        &.selected
+          color:        white
+        
+        @include collectionIcon(music)
+        @include collectionIcon(usb)
+        @include collectionIcon(playlist)
+        @include collectionIcon(smartplaylist)
+        @include collectionIcon(radio)
+        @include collectionIcon(film)
+        @include collectionIcon(video)
+        @include collectionIcon(series)
+      
+    &.selected
+      display:            -webkit-box
+      -webkit-box-orient: vertical
+      -webkit-box-flex:   1
+      
+    &:last-child
+      h1
+        border-bottom-left-radius:  $applicationBorder - 1
+      &.selected h1
+        border-bottom-left-radius:  0
+    
+    @include controllerIcon(music)
+    @include controllerIcon(videos)
+    @include controllerIcon(pictures)
+    @include controllerIcon(config)

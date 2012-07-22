@@ -1,0 +1,37 @@
+Client                                                Server
+------                                                ------
+
+Load                                                  
+                                                      Connected -> stuur config
+Config ontvangen -->
+vraag 1e controller op  (get CONTROLLER)
+Sla controller ID op
+                                                      Stuur controller data
+Stel collections in
+.
+.
+Kies collection
+- Sla collection ID op
+- Vraag server voor contents
+                                                      Stuur contents van collection,
+                                                      Stuur collection ID mee
+Als dezelfde collection nog is gekozen
+- Laat inhoud zien
+
+
+
+state: {
+  selectedController: "music",
+  controllers: {
+    music: {
+      selectedCollection: 4,
+      viewModes: {"tracks":"songs","artists":"artists","albums":"albums"},
+      collections: {
+        4: {
+          selectedViewMode: "tracks",
+          selectedItem: 123
+        }
+      }
+    }
+  }
+}

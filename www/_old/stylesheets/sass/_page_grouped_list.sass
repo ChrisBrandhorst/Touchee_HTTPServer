@@ -1,0 +1,140 @@
+$groupedRowHeight:  42px
+$columnWidth:        165px
+
+.page.grouped_list_page
+  > .content
+    
+    &:after
+      -webkit-box-sizing: border-box
+      display:            block
+      position:           absolute
+      left:               0
+      top:                0
+      z-index:            -10
+      height:             100%
+      width:              $columnWidth
+      background:         #f5f5f7
+      border-right:       1px solid #cdd5dc
+      content:            ''
+      
+    .shuffle
+      margin-left:  $columnWidth
+      line-height:  $groupedRowHeight
+      
+    ul
+      overflow:   visible
+      
+      li
+        margin-left:  $columnWidth
+        min-height:   $groupedRowHeight * 4
+        position:     relative
+        padding-top:  $groupedRowHeight
+        background:   white
+        
+        img
+          top:    0
+          left:   18px - $columnWidth
+          
+        h4
+          position: absolute
+          left:     0//$columnWidth
+          right:    0
+          top:      0
+            
+        table
+          width:          100%
+          table-layout:   fixed
+          
+          tr
+            line-height:    $groupedRowHeight - 1
+            border-bottom:  1px solid #ccc
+            font-weight:    lighter
+            td
+              @include  ellipsis
+              
+              &:first-child
+                width:        47px
+                padding-left: 11px
+              &:nth-child(2)
+                font-weight:  bold
+              &:last-child
+                padding:      0 25px 0 10px
+                width:        100px
+                border-left:  1px solid #f2f2f2
+            
+            &.playing
+              td:first-child
+                text-indent:          -1000em
+                background-image:     url(../images/nowplaying_arrow.png)
+                background-repeat:    no-repeat
+                background-position:  10px center
+                
+            &.selected
+              background:         $selectedCollectionGradient
+              background-repeat:  repeat-x
+              color:              white
+              td:last-child
+                border-left:  none
+              
+              &.playing
+                td:first-child
+                  background-image:     url(../images/nowplaying_arrow_sel.png), $selectedCollectionGradient
+                  background-repeat:    no-repeat
+                  background-position:  10px center, left top
+                  
+    // Loading headers for source
+    .loading, .more
+      margin-left: $columnWidth
+
+  // h4
+  //   line-height:    $groupedRowHeight !imporatant
+  //   border-top:     none !imporatant
+  //   border-bottom:  none !imporatant
+  //   background:     url(../images/gradients/grouped_list_header.png) !imporatant
+  h4
+    line-height:    $groupedRowHeight  - 2
+    border-top:     1px solid #dcdddf
+    border-bottom:  1px solid #a7b2bd
+    margin:         0
+    padding:        0 9px
+    background:     -webkit-gradient(linear, left top, left bottom, from(#c5c8cB), to(#e2e4e8))
+    color:          #4f515a
+    text-shadow:    white 0 1px 1px
+    @include        ellipsis
+    
+    &.clone
+      position: absolute
+      top:      0
+      left:     $columnWidth
+      right:    0
+      z-index:  10
+    
+    &.position
+      position:   absolute
+      top:        50%
+      margin-top: -$groupedRowHeight / 2
+      left:       $columnWidth
+      right:      0
+    
+  img
+    position:   absolute
+    width:      $defaultTileWidth
+    height:     $defaultTileHeight
+    border:     none
+    // @include    tileShadow
+    
+    &.clone
+      top:      9px
+      left:     18px
+      z-index:  2
+    
+  &.artist > .content img
+    background: url(../images/artwork/default/album.png)
+
+  // Portrait items
+  &.series_seasons > .content img
+    height:           $portraitTileHeight
+    p:first-child
+      margin-top:     $portraitTileHeight + 6
+  &.series_seasons > .content img
+    background-image: url(../images/artwork/default/seriesseasonsfolder.png)

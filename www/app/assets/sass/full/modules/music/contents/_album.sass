@@ -1,0 +1,18 @@
+.contents > .type-album
+  
+  > div.scrollable
+    
+    li
+      background-image: url(../images/artwork/medium/album.png)
+      
+      span
+        display:        block
+        padding-bottom: 1px
+        @include        ellipsis
+        
+        &:first-child
+          padding-top:      128px + 7px
+          background:       no-repeat center top
+          background-size:  128px 128px
+          font-weight:      bold
+          color:            black

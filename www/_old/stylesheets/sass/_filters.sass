@@ -1,0 +1,117 @@
+body #browser #filters
+  
+  background:     -webkit-gradient(linear, left top, left bottom, from(#969CA5), to(#9499A2))
+  border-bottom:  1px solid #363636
+  text-align:     center
+  
+  #navigation
+    height:       $filtersHeight - 1 + px
+    line-height:  $filtersHeight - 1 + px
+    font-weight:  bold
+    color:        #3c3e40
+    text-shadow:  white 0 1px 1px
+    overflow:     hidden
+    
+    #nav_title
+      font-size: 120%
+    
+    .button
+      color:        #3c3e40
+      padding:      0 15px
+      border:       solid #737373
+      border-width: 0 1px
+      
+      &:active:not(.disabled)
+        background:   -webkit-gradient(linear, left top, left bottom, from(#a6a899), to(#424c53))
+        color:        white
+        text-shadow:  #181b1f 0 -1px 1px
+      
+      &.disabled
+        color:        rgba(60, 62, 64, 0.3)
+        text-shadow:  rgba(255, 255, 255, 0.3) 0 -1px 1px
+    
+    #nav_back
+      float:        left
+      border-left:  none
+      
+      span:first-child
+        margin-right: 5px
+    
+    #nav_next,
+    #nav_prev
+      float:        right
+      border-right: none
+  
+  .button_set
+    display:        inline-block
+    overflow:       hidden
+    border:         1px solid
+    border-color:   #585858 #848484 #b0b3b6 #848484
+    color:          #3e4247
+    font-weight:    bold
+    margin-top:     5px
+    border-radius:  6px
+    text-shadow:    white 0 1px 1px
+    background:     -webkit-gradient(linear, left top, left bottom, from(#F7F7F8), to(#BABEC7))
+    
+    li
+      float:          left
+      padding:        5px 25px
+      // border-right:   1px solid #737373
+      border-top:     1px solid #c1c2c3
+      border-bottom:  1px solid #81868e
+      
+      &:first-child
+        border-radius:  4px 0 0 4px
+        
+      &:last-child
+        border-radius:  0 4px 4px 0
+        border-right:   0
+      
+      &.selected
+        background:           -webkit-gradient(linear, left top, left bottom, from(#9fa3a7), to(#535a61))
+        border-top-color:     #86898d
+        border-bottom-color:  #43484e
+        color:                white
+        text-shadow:          #3e4247 0 -1px 1px
+    
+    &.spotify_status
+      position:     absolute
+      top:  $controlsHeight + px
+      left: $sourcesWidth + 110px
+      margin-left:  10px
+      li
+        background:       url(../images/spotify/logo_32.png) no-repeat 5px 3px
+        background-size:  19px 19px
+        padding:          5px 5px 5px 29px
+      
+      &.selected
+        li
+          background:           url(../images/spotify/logo_32.png), -webkit-gradient(linear, left top, left bottom, from(#9fa3a7), to(#535a61))
+          background-size:      19px 19px, 100% 100%
+          background-repeat:    no-repeat, no-repeat
+          background-position:  5px 3px, top left
+          border-top-color:     #86898d
+          border-bottom-color:  #43484e
+          color:                white
+          text-shadow:          #3e4247 0 -1px 1px
+          
+      &.loading
+        background: none
+        li
+          -webkit-animation-name:             pulsate
+          -webkit-animation-duration:         0.7s
+          -webkit-animation-iteration-count:  infinite
+          -webkit-animation-direction:        alternate
+          -webkit-animation-timing-function:  ease-in-out
+          
+      &.nothing
+        background: none
+        li
+          background-image: url(../images/spotify/logo_gray_32.png)
+        
+@-webkit-keyframes pulsate
+  0%
+    opacity: 0
+  100%
+    opacity: 1

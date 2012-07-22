@@ -1,0 +1,45 @@
+$scrollerMargin: 4
+
+.scroller
+  position:             absolute
+  right:                $scrollerMargin + px
+  margin-top:           $scrollerMargin * 1.5 + px
+  top:                  0
+  z-index:              20
+  color:                #6a737d
+  -webkit-user-select:  none
+  
+  > *
+    width:  27 + px
+  
+  > div
+    border-radius:  14 + px
+    background:     #6a737d
+    height:         100%
+    width:          100%
+    position:       absolute
+    opacity:        0.5
+    display:        none
+  
+  ul.alphabet
+    font-size:    12px
+    font-weight:  bold
+    text-align:   center
+    display:      none
+  
+  ul.bar
+    height:               100%
+    background-image:     url(../images/alphabet/bar_bg_3.png), url(../images/alphabet/bar_bg_5.png), url(../images/alphabet/bar_bg_5.png)
+    background-repeat:    repeat-y, no-repeat, no-repeat
+    background-position:  center top, center top, center bottom
+    display:              none
+  
+  
+  &.hover > div
+    display: block
+  
+  &.alphabet > ul.alphabet
+    display: block
+
+  &.bar > ul.bar
+    display: block

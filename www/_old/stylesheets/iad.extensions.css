@@ -1,0 +1,20 @@
+.ad-scroll-indicator.ad-horizontal>div:nth-of-type(2) {
+  background-image: url(../images/iAd/assets/scrollindicator/UIScrollerIndicatorDefaultHorizontalMiddle.png) !important; }
+
+.ad-scroll-indicator.ad-vertical>div:nth-of-type(2) {
+  background-image: url(../images/iAd/assets/scrollindicator/UIScrollerIndicatorDefaultVerticalMiddle.png) !important; }
+
+.ad-view {
+  position: relative;
+/*  -webkit-backface-visibility: hidden;*/
+}
+
+.ad-hosting-layer {
+  position: static;
+  height:   auto !important;
+/*  -webkit-backface-visibility: hidden;*/
+}
+
+body {
+/*  -webkit-transform:translate3d(0,0,0);*/
+}

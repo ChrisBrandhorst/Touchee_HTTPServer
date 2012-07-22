@@ -1,0 +1,52 @@
+$controlsHeight:      70px
+
+$libraryWidth:        215px
+$defaultRowHeight:    44px
+
+#browser
+  width:              100%
+  height:             100%
+  display:            -webkit-box
+  -webkit-box-orient: vertical
+  
+  > #controls
+    height:             $controlsHeight
+    -webkit-box-sizing: border-box
+    display:            -webkit-box
+    
+    > .nowplaying
+      -webkit-box-flex: 1
+      
+  > :last-child
+    -webkit-box-flex: 1
+    display:          -webkit-box
+    
+    > #library
+      width:              $libraryWidth
+      -webkit-box-sizing: border-box
+      
+    > #content
+      -webkit-box-flex:   1
+      -webkit-box-sizing: border-box
+      display:            -webkit-box
+      overflow:           hidden
+      position:           relative
+      
+      > #navigation_background
+        position:           absolute
+        width:              100%
+        -webkit-box-sizing: border-box
+        height:             $defaultRowHeight
+        
+      .page
+        display:            -webkit-box
+        -webkit-box-orient: vertical
+        width:              100%
+        
+        .navigation
+          height:             $defaultRowHeight
+          -webkit-box-sizing: border-box
+        
+        .content
+          -webkit-box-flex: 1
+          overflow:         hidden

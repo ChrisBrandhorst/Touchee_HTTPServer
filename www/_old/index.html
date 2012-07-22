@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Touchee</title>
+  
+  <!-- iAd files -->
+  <script type="text/javascript" src="iAd/iAd.js" charset="utf-8"></script>
+  <script type="text/javascript" src="iAd/iAdRuntimeAdditions.js" charset="utf-8"></script>
+  <link type="text/css" rel="stylesheet" href="iAd/iAd.css">
+  <link type="text/css" rel="stylesheet" href="iAd/iAdRuntimeAdditions.css">
+  
+  <!-- iAd extensions -->
+  <link type="text/css" rel="stylesheet" href="stylesheets/iad.extensions.css">
+  
+  <script type="text/javascript" src="javascripts/extensions.js"></script>
+  
+  <script type="text/javascript" src="javascripts/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery-ui.touch-punch.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.delaybind.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.tmpl.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.bufferedcontent.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.scroller.js"></script>
+  <script type="text/javascript" src="javascripts/lib/iad.extensions.js"></script>
+  
+  <!-- JS Class init -->
+  <script type="text/javascript">JSCLASS_PATH = "javascripts/lib/js.class";</script>
+  <script type="text/javascript" src="javascripts/lib/js.class/loader-browser.js"></script>
+  <script type="text/javascript" src="javascripts/manifest.js"></script>
+
+  <script type="text/javascript">
+    JS.require('Application', function(){
+      $(function(){
+        Application.start({
+          logLevel:   Logger.levels.debug
+        });
+      });
+    });
+  </script>
+  
+  <!-- jQuery plugins -->
+  <link rel="stylesheet" type="text/css" href="stylesheets/jquery.scroller.css" />
+  
+  
+  <!-- App stylesheets -->
+  <link rel="stylesheet" type="text/css" href="stylesheets/application.css" />
+  
+  <!-- Meta tags -->
+  
+  <!-- Auto-size to viewport -->
+  <!-- Disable zooming and scaling -->
+  <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, initial-scale=1.0" />
+  <!-- Home screen icon (57x57) Default: apple-touch-icon.png in root -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <!-- Gebruik apple-touch-icon-precomposed voor geen effecten -->
+  <!-- <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="touch-icon-ipad.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="touch-icon-iphone4.png" /> -->
+  <!-- Splash screen -->
+  <link rel="apple-touch-startup-image" href="startup.png" />
+  <!-- Hide Safari buttons -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- Do not detect phone numbers -->
+  <meta name="format-detection" content="telephone=no" />
+  <!-- Set status bar -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  
+  <!-- Template for album -->
+  <script id="albumTemplate" type="text/x-jquery-tmpl">
+    <div class="page album_page tracks">
+      <div class="album">
+        
+        <div class="front" data-id="${id}" style="background-image:url(/artwork/${id})"></div>
+        
+        <div class="back">
+          <h1 data-id="${id}" style="background-image:url(/artwork/${id})">${name}<br/>${artist}</h1>
+          <h2>${content.length} song${content.length > 1 ? 's' : ''}</h2>
+          <div class="scrollview">
+            <table>
+            {{each content}}
+              <tr data-id="${$value[0]}">
+                <td>${$value[4]}</td>
+                <td>${$value[1]} {{if $value[2] != $data.artist}}<span> - ${$value[2]}</span>{{/if}}</td>
+                <td>${$value[5]}</td>
+              </tr>
+            {{/each}}
+            </table>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </script>
+  
+  <!-- Template for nowplaying list row -->
+  <script id="nowplayingListTemplate" type="text/x-jquery-tmpl">
+    {{each collection}}
+      <tr data-id="${$value[0]}">
+        <td>${$value[4]}</td>
+        <td>${$value[1]}</td>
+        <td>${$value[2]}</td>
+        <td>${$value[5]}</td>
+      </tr>
+    {{/each}}
+  </script>
+  
+  <!-- Template for controller -->
+  <script id="controllerTemplate" type="text/x-jquery-tmpl">
+    <li class="${id}" data-id="${id}">
+      <h1>${name}</h1>
+      <div><ul></ul></div>
+    </li>
+  </script>
+  
+  <!-- Template for page -->
+  <script id="pageTemplate" type="text/x-jquery-tmpl">
+    <div class="page">
+      <div class="navigation">
+        
+        <ul class="viewmodes button_set">
+        </ul>
+        
+        <div class="controls">
+          <h3></h3>
+          <button data-button="next">&#9654;</button>
+          <button data-button="prev">&#9664;</button>
+          <button data-button="back"><span>&#9664;</span>Back</button>
+        </div>
+        
+      </div>
+      
+      <div class="content">
+      </div>
+    </div>
+  </script>
+  
+</head>
+
+<body>
+
+  <!-- Full screen overlay -->
+  <div id="overlay"></div>
+  
+  <!-- Volume controls popup -->
+  <div class="popup" id="volume_popup">
+    <div class="popup_arrow"></div>
+    <div class="popup_well">
+      <div class="volume_slider"></div>
+      <h1>Speakers<button class="basic black" data-button="mute">Mute</button></h1>
+      <ul id="speakers">
+        <li>Speakers A</li>
+        <li>Speakers B</li>
+        <li>Subwoofer</li>
+      </ul>
+      <h1>Amplifier</h1>
+      <ul id="amplifier">
+        <li class="on">On</li>
+        <li class="off">Off</li>
+      </ul>
+      <div class="mask"></div>
+    </div>
+  </div>
+  
+  <!-- Now playing page -->
+  <div id="nowplaying" class="invisible">
+    
+    <!-- Perspective -->
+    <div class="perspective">
+      
+      <!-- Artwork -->
+      <div class="nowplaying_artwork"></div>
+      
+      <!-- Now playing list -->
+      <div id="nowplaying_list">
+        <div id="rating">
+        </div>
+        <div class="scrollview">
+          <table>
+            <tr>
+              <td>1</td>
+              <td>Title</td>
+              <td>Artist</td>
+              <td>1:32</td>
+            </tr>
+            <tr class="playing">
+              <td>2</td>
+              <td>Title</td>
+              <td>Artist</td>
+              <td>1:32</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Title</td>
+              <td>Artist</td>
+              <td>1:32</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div id="nowplaying_controls">
+      
+      <!-- Volume, info & transport -->
+      <div>
+        
+        <!-- Volume slider -->
+        <div class="volume_slider"></div>
+        
+        <!-- Transport buttons -->
+        <div>
+          <button data-button="prev"></button>
+          <button data-button="play"></button>
+          <button data-button="pause"></button>
+          <button data-button="next"></button>
+        </div>
+        <!-- Current item -->
+        <span class="nowplaying_artist"></span>
+        <span class="nowplaying_title"></span>
+        <span class="nowplaying_collection"></span>
+        
+      </div>
+      
+      <!-- Time, scrobbler, repeat, shuffle -->
+      <div>
+        <button data-button="repeat"></button>
+        <span class="nowplaying_position"></span>
+        <div class="nowplaying_slider"></div>
+        <button data-button="shuffle"></button>
+        <span class="nowplaying_duration"></span>
+        <div id="nowplaying_count"></div>
+      </div>
+      
+    </div>
+    
+    <!-- Footer -->
+    <div id="nowplaying_footer">
+      <button data-button="back"></button>
+      <div class="perspective">
+        <button data-button="list"></button>
+        <button data-button="artwork" class="nowplaying_artwork"></button>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- The browser page -->
+  <div id="browser" class="active">
+    
+    <!-- Upper row of controls -->
+    <div id="controls">
+      
+      <!-- Control buttons -->
+      <div class="controls">
+        <button data-button="prev" disabled="disabled"></button>
+        <button data-button="play" disabled="disabled"></button>
+        <button data-button="pause" disabled="disabled"></button>
+        <button data-button="next" disabled="disabled"></button>
+      </div>
+      
+      <!-- Volume button -->
+      <button class="volume"></button>
+      
+      <!-- Now playing area -->
+      <div class="nowplaying">
+        <button class="nowplaying_artwork"></button>
+        <span class="nowplaying_title"></span>
+        <span class="nowplaying_artist_collection"></span>
+        <div>
+          <span class="nowplaying_position"></span>
+          <div class="nowplaying_slider"></div>
+          <span class="nowplaying_duration"></span>
+        </div>
+      </div>
+      
+      <!-- Global search field -->
+      <form id="search" action="#">
+        <a href="#"></a>
+        <input id="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" />
+      </form>
+      
+    </div>
+    
+    <div>
+      <ul id="library"></ul>
+      <div id="content"></div>
+    </div>
+    
+  </div>
+  
+</body>
+
+</html>

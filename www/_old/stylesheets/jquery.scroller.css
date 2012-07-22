@@ -1,0 +1,35 @@
+.scroller {
+  position: absolute;
+  right: 4px;
+  margin-top: 6px;
+  top: 0;
+  z-index: 20;
+  color: #6a737d;
+  -webkit-user-select: none; }
+  .scroller > * {
+    width: 27px; }
+  .scroller > div {
+    border-radius: 14px;
+    background: #6a737d;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0.5;
+    display: none; }
+  .scroller ul.alphabet {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    display: none; }
+  .scroller ul.bar {
+    height: 100%;
+    background-image: url(../images/alphabet/bar_bg_3.png), url(../images/alphabet/bar_bg_5.png), url(../images/alphabet/bar_bg_5.png);
+    background-repeat: repeat-y, no-repeat, no-repeat;
+    background-position: center top, center top, center bottom;
+    display: none; }
+  .scroller.hover > div {
+    display: block; }
+  .scroller.alphabet > ul.alphabet {
+    display: block; }
+  .scroller.bar > ul.bar {
+    display: block; }

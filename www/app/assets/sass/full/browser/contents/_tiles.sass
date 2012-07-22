@@ -1,0 +1,50 @@
+.contents > .view-tiles
+  background: white
+  
+  > div.scrollable
+    
+    // Tiles layout
+    ul
+      list-style: none
+      padding:    0 26px 28px 0
+      
+    li
+      display:    inline-block
+      margin:     28px 0 25px 26px
+      width:      128px
+      height:     128px
+      text-align: center
+      box-shadow: 0 0 9px 1px #c8c8c8
+      background: white url(../images/artwork/medium/unknown.png) no-repeat center top
+      
+      &:before
+        content:  ''
+        position: absolute
+        width:    128px
+        height:   128px
+      
+      &.selected:before
+        background-color: rgba(0,0,0,.25)
+      
+      &.hidden
+        visibility: hidden
+      
+      span
+        display:        block
+        padding-bottom: 1px
+        @include        ellipsis
+        
+        &:first-child
+          padding-top:      128px + 7px
+          background:       no-repeat center top
+          background-size:  128px 128px
+          font-weight:      bold
+          color:            black
+    
+    .count
+      border-top: 1px solid #ccc
+
+  .quickscroll
+    z-index:  10
+  .overlay
+    z-index:  20

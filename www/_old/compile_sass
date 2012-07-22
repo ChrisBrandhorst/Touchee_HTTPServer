@@ -1,0 +1,4 @@
+#!/bin/bash
+#sass stylesheets/sass/application.sass stylesheets/application.css
+#sass stylesheets/sass/jquery.scroller.sass stylesheets/jquery.scroller.css
+sass --watch stylesheets/sass:stylesheets

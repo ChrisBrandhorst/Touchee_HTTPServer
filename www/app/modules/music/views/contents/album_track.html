@@ -1,0 +1,31 @@
+<%
+var data = get('data');
+%>
+<div class="back" style="background-image:<%=backgroundImage%>">
+  <h1>
+    <% if (data) { %>
+      <%= (data[0][keys.album] || T.T.unknown + " " + T.T.items.album.one.toTitleCase()).htmlEncode() %><br/>
+      <%= (data[0][keys.albumArtist] || T.T.unknown + " " + T.T.items.artist.one.toTitleCase()).htmlEncode() %><br/>
+      <span><%= data.length %> <%= T.t('items.track', {count:data.length}).toTitleCase() %>, <%= meta.totalDuration %></span>
+    <% } %>
+  </h1>
+  
+  <div class="scrollable">
+    <table>
+      <% _.each(data || [], function(track,i){ %>
+        <tr data-index="<%=i%>">
+          <td><%= track[keys.number] ? track[keys.number] + "." : "" %></td>
+          <td>
+            <% 
+            print( track[keys.name].htmlEncode() );
+            if (track[keys.artist] != track[keys.albumArtist]) { %>
+              <span>(<%= track[keys.artist].htmlEncode() %>)</span>
+            <% } %>
+          </td>
+          <td><%= track[keys.duration] %></td>
+        </tr>
+      <% }); %>
+    </table>
+  </div>
+</div>
+<div class="front" style="background-image:<%=backgroundImage%>"></div>

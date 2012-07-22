@@ -1,0 +1,5 @@
+config
+{"controllers":{"music":"Music","videos":"Videos","pictures":"Pictures","config":"Setup"}}
+
+get music
+{"controller":"music","collections":[{"id":6,"name":"All music","type":"music"},{"id":6086,"name":"90’s Music","type":"playlist"},{"id":6087,"name":"Classical Music","type":"playlist"},{"id":6089,"name":"My Top Rated","type":"playlist"},{"id":6090,"name":"Recently Added","type":"playlist"},{"id":6091,"name":"Recently Played","type":"playlist"},{"id":6092,"name":"Top 25 Most Played","type":"playlist"},{"id":6093,"name":"HTPC","type":"playlist"}],"viewmodes":{"tracks":"Songs","artists":"Artists","albums":"Albums"}}

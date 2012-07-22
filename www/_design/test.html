@@ -1,0 +1,291 @@
+<!DOCTYPE>
+<html>
+  
+<head>
+  <title>Touchee</title>
+  
+  <!-- JS libraries -->
+  <script type="text/javascript" src="javascripts/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery-ui-1.8.16.custom.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.ui.touch-punch.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/extensions.js"></script>
+  <script type="text/javascript" src="javascripts/lib/scrollfix.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.scrollfix.js"></script>
+  
+  <!-- App JS -->
+  <script type="text/javascript" src="javascripts/full.js"></script>
+  
+  <!-- Application stylesheet -->
+  <link rel="stylesheet" type="text/css" href="stylesheets/full.css" />
+  
+  <!-- Meta tags for iPad -->
+  
+  <!-- Auto-size to viewport -->
+  <!-- Disable zooming and scaling -->
+  <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, initial-scale=1.0" />
+  <!-- Home screen icon (57x57) Default: apple-touch-icon.png in root -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <!-- Gebruik apple-touch-icon-precomposed voor geen effecten -->
+  <!-- <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="touch-icon-ipad.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="touch-icon-iphone4.png" /> -->
+  <!-- Splash screen -->
+  <link rel="apple-touch-startup-image" href="startup.png" />
+  <!-- Hide Safari buttons -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- Do not detect phone numbers -->
+  <meta name="format-detection" content="telephone=no" />
+  <!-- Set status bar -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  
+</head>
+
+<body>
+  
+  
+  <!-- Main browser section -->
+  <section id="browser">
+    
+    <!-- Playback controls -->
+    <header>
+      
+      <!-- Playback buttons -->
+      <button class="transport small" data-button="prev"></button><button class="transport" data-button="play"></button><button class="transport" data-button="pause"></button><button class="transport small" data-button="next"></button>
+      
+      <!-- Volume button -->
+      <button data-button="volume"></button>
+      
+      <!-- LCD -->
+      <div>
+        <span class="nowplaying_title">Aira Force (Main mix)</span>
+        <span class="nowplaying_artist_collection">Arrakis - Aira Force</span>
+        <div>
+          <span class="nowplaying_position">2:46</span>
+          <div class="nowplaying_slider"><div></div></div>
+          <span class="nowplaying_duration">-6.19</span>
+        </div>
+      </div>
+      
+      <input type="search" placeholder="Zoek" />
+    </header>
+    
+    <!-- Browser content -->
+    <div>
+      
+      <!-- Navigation bar -->
+      <nav>
+        <h1 class="root">Touchee</h1>
+        <div class="scrollable">
+          <a href="#music" class="music">Muziek</a>
+          <a href="#video" class="video selected">Video</a>
+          <a href="#pictures" class="pictures">Pictures</a>
+          <a href="#tv" class="tv">TV</a>
+        </div>
+      </nav>
+      
+      <!-- Contents -->
+      <section class="content">
+      </section>
+      
+    </div>
+    
+    <!-- Viewmodes, now playing button -->
+    <footer>
+      <button data-button="settings"></button>
+      
+      <nav>
+        <button data-button="songs" class="selected"></button><button data-button="artists"></button><button data-button="albums"></button><button data-button="genres"></button><button data-button="composers"></button>
+      </nav>
+      
+      <button data-button="nowplaying">Now Playing</button>
+    </footer>
+    
+    <!-- Album popup -->
+    <section class="album flip" style="display:block;position:absolute">
+      <div class="back">
+        <h1>
+          Junior<br/>
+          Royksopp<br/>
+          <span>Released 23 maart 2009, 13 Songs, 61 Mins.</span>
+        </h1>
+        
+        <div class="scrollable">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>Happy Up Here</td>
+              <td>2:44</td>
+            </tr>
+            <tr>
+              <td>2000.</td>
+              <td>The Girl and the Robot <span> - Other artist</span></td>
+              <td>14:17</td>
+            </tr>
+            <tr>
+              <td>1.</td>
+              <td>Happy Up Here</td>
+              <td>2:44</td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>The Girl and the Robot <span> - Other artist</span></td>
+              <td>4.29</td>
+            </tr>
+            <tr>
+              <td>1.</td>
+              <td>Happy Up Here</td>
+              <td>2:44</td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>The Girl and the Robot <span> - Other artist</span></td>
+              <td>4.29</td>
+            </tr>
+            <tr>
+              <td>1.</td>
+              <td>Happy Up Here</td>
+              <td>2:44</td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>The Girl and the Robot <span> - Other artist</span></td>
+              <td>4.29</td>
+            </tr>
+            <tr>
+              <td>1.</td>
+              <td>Happy Up Here</td>
+              <td>2:44</td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>The Girl and the Robot <span> - Other artist</span></td>
+              <td>4.29</td>
+            </tr>
+            <tr>
+              <td>1.</td>
+              <td>Happy Up Here</td>
+              <td>2:44</td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>The Girl and the Robot <span> - Other artist</span></td>
+              <td>4.29</td>
+            </tr>
+          </table>
+        </div>
+        
+      </div>
+      <div class="front"></div>
+    </section>
+    
+    <!-- Devices popup -->
+    <section class="popup arrow top" id="devices_popup" style="display:none">
+      <span class="arrow"></span>
+      <div>
+        <div class="volume"><div></div></div>
+        <h1>
+          Speakers
+          <button class="glass black selected" data-button="mute">Mute</button>
+        </h1>
+        <ul id="speakers">
+          <li class="speaker" data-device="speaker_a">Speaker A</li>
+          <li class="speaker" data-device="speaker_b">Speaker B</li>
+          <li class="speaker" data-device="speaker_sub">Subwoofer</li>
+        </ul>
+        <h1>Devices</h1>
+        <ul id="devices">
+          <li class="tv" data-device="tv">TV</li>
+        </ul>
+        <h1>Amplifier</h1>
+        <ul id="amplifier" class="toggle">
+          <li class="on" data-device="amp_on">On</li>
+          <li class="off" data-device="amp_off">Off</li>
+        </ul>
+      </div>
+    </section>
+    
+  </section>
+  
+  
+  <!-- Nowplaying -->
+  <section class="nowplaying" data-content="music" id="nowplaying_music" style="display:none">
+    
+    <!--  -->
+    <div>
+      
+      <div class="nowplaying_artwork"></div>
+      <span class="nowplaying_progress">3 van 7</span>
+      
+      <section id="nowplaying_music_album">
+        <div class="scrollable">
+          <table>
+            <tr class="playing">
+              <td>1</td>
+              <td>mahnamahna</td>
+              <td></td>
+              <td>2:18</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>streamerswitch.asp</td>
+              <td></td>
+              <td>0:00</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+      
+    </div>
+    
+    <!--  -->
+    <header>
+      
+      <!-- Transport -->
+      <div>
+        
+        <!-- Volume slider -->
+        <div class="volume"><div></div></div>
+        
+        <!-- Transport buttons -->
+        <button class="transport small" data-button="next"></button>
+        <button class="transport" data-button="pause"></button>
+        <button class="transport" data-button="play"></button>
+        <button class="transport small" data-button="prev"></button>
+        
+        <!-- Nowplaying texts -->
+        <span class="nowplaying_artist">3 Doors Down</span>
+        <span class="nowplaying_title">When I'm Gone</span>
+        <span class="nowplaying_collection">Another 700 Miles asd asd awfe ef aef aefa dadfaef afe qef wef wef</span>
+        
+      </div>
+      
+      <!-- Repeat, position, shuffle -->
+      <div>
+        <button data-button="repeat"></button>
+        <span class="nowplaying_position">0:05</span>
+        
+        <button data-button="shuffle"></button>
+        <span class="nowplaying_duration">-0:28</span>
+        
+        <div class="nowplaying_slider"><div></div></div>
+      </div>
+      
+    </header>
+    
+    <!--  -->
+    <footer>
+      
+      <button data-button="back"></button>
+      <div class="perspective">
+        <button data-button="artwork" class="nowplaying_artwork"></button>
+        <button data-button="list"></button>
+      </div>
+      
+    </footer>
+    
+  </section>
+  
+  
+</body>
+
+</html>

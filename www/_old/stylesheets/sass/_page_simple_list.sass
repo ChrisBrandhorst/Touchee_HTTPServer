@@ -1,0 +1,62 @@
+.page.simple_list_page
+  > .content
+    
+    table
+      border-collapse:  collapse
+      width:            100%
+      table-layout:     fixed
+      background:       url(../images/simple_list_page_bg.png)
+      font-weight:      lighter
+      
+      tr
+        // border-bottom:    1px solid #ccc
+        // 
+        // &:nth-child(even)
+        //   background-color: #f6f6f6
+        
+        td
+          line-height:  $defaultRowHeight
+          padding:      0 12px
+          border-left:  1px solid rgba(0,0,0,.04)
+          @include      ellipsis
+          width:        28%
+          
+          &:first-child
+            padding-left: 31px
+            font-weight:  bold
+          
+          &:last-child
+            width:  16%
+
+        &.playing
+          td:first-child
+            background-image:     url(../images/nowplaying_arrow.png)
+            background-repeat:    no-repeat
+            background-position:  10px center
+            
+        &.selected
+          background:         $selectedCollectionGradient
+          background-size:    100% $defaultRowHeight - 1
+          background-repeat:  repeat-x
+          color:              white
+          
+          &.playing
+            td:first-child
+              background-image:     url(../images/nowplaying_arrow_sel.png), $selectedCollectionGradient
+              background-repeat:    no-repeat
+              background-position:  10px center, left top
+              
+    // Position indicator
+    table.position
+      position:             absolute
+      z-index:              1
+      left:                 0
+      right:                0
+      top:                  50%
+      margin-top:           -27px
+      padding-left:         28%
+      background-position:  0 $defaultRowHeight + 1 !important
+      // -webkit-box-shadow:   0 0 20px 0 #ccc
+      
+      td
+        height: $defaultRowHeight + 1

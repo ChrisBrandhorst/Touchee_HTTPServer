@@ -1,0 +1,92 @@
+.navigation
+  text-align:     center
+  position:       relative
+  z-index:        10
+  
+  background:     -webkit-gradient(linear, left top, left bottom, from(#e5e9eb), to(#898d8f))
+  border-bottom: 1px solid #383B3F
+    
+  // BUTTON SET =================================
+  .button_set
+    display:        inline-block
+    overflow:       hidden
+    border:         1px solid
+    border-color:   #6B6C6C #9B9C9E #BFC1C4 #9B9C9E
+    color:          #4F5459
+    font-weight:    bold
+    font-size:      90%
+    margin-top:     8px
+    border-radius:  6px
+    text-shadow:    white 0 1px 1px
+    background:     -webkit-gradient(linear, left top, left bottom, from(#F7F7F8), to(#BABEC7))
+  
+    li
+      float:          left
+      padding:        4px 25px
+      border-right:   1px solid rgba(0,0,0,.2)
+      border-top:     1px solid #D3D4D5
+      border-bottom:  1px solid #979BA3
+    
+      &:first-child
+        border-radius:  4px 0 0 4px
+      
+      &:last-child
+        border-radius:  0 4px 4px 0
+        border-right:   0
+    
+      &.selected
+        background:           -webkit-gradient(linear, left top, left bottom, from(#AFB2B6), to(#666D74))
+        border-top-color:     #989B9E
+        border-bottom-color:  #555A60
+        color:                white
+        text-shadow:          #3e4247 0 -1px 1px
+  
+  
+  // NAVIGATION =================================
+  .controls
+    height:       $defaultRowHeight - 1
+    line-height:  $defaultRowHeight - 1
+    font-weight:  bold
+    color:        #3c3e40
+    text-shadow:  white 0 1px 1px
+    overflow:     hidden
+    
+    h3
+      display:    inline
+      font-size:  120%
+      margin:     0
+      padding:    0
+    
+    button
+      color:        #3c3e40
+      border:       solid #737373
+      border-width: 0 1px
+      background:   transparent
+      height:       100%
+      font-size:    inherit
+      font-weight:  inherit
+      text-shadow:  inherit
+      margin:       0
+      
+      &:active:not([disabled])
+        background:   $controllerGradient //-webkit-gradient(linear, left top, left bottom, from(#a6a899), to(#424c53))
+        color:        white
+        text-shadow:  #181b1f 0 -1px 1px
+      
+      &[disabled]
+        color:        rgba(60, 62, 64, 0.3)
+        text-shadow:  rgba(255, 255, 255, 0.3) 0 -1px 1px
+      
+      &[data-button=back]
+        float:        left
+        border-left:  none
+        padding:      0 15px
+        
+        span:first-child
+          margin-right: 5px
+      
+      &[data-button=next], &[data-button=prev]
+        float:        right
+        border-right: none
+        width:        $defaultRowHeight - 1
+        text-align:   center

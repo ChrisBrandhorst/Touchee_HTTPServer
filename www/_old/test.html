@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+  <title>Touchee</title>
+
+  <!-- jQuery libraries -->
+  <script type="text/javascript" src="javascripts/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jquery.bufferedcontent.js"></script>
+
+  <!-- iAd files -->
+  <script type="text/javascript" src="iAd/iAd.js" charset="utf-8"></script>
+  <script type="text/javascript" src="iAd/iAdRuntimeAdditions.js" charset="utf-8"></script>
+  <link type="text/css" rel="stylesheet" href="iAd/iAd.css" />
+  <link type="text/css" rel="stylesheet" href="iAd/iAdRuntimeAdditions.css" />
+  
+  <!-- iAd extensions -->
+  <script type="text/javascript" src="javascripts/lib/iad.extensions.js" charset="utf-8"></script>
+  <link type="text/css" rel="stylesheet" href="stylesheets/iad.extensions.css" />
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      
+      var start = new Date();
+      
+      var result;
+      $.ajax({
+        url:      'tracks.json',
+        dataType: 'json',
+        async:    false,
+        success:  function(d){result=d.result.tracks;}
+      });
+      window.c = 10;
+      $('#content').bufferedcontent({
+        
+        minCount:   1000,
+        rows:       20,
+        
+        data: function(container, containerIndex, start, end) {
+          return end ? result.slice(start, end) : result[start];
+        },
+        count: function(container, containerIndex) {
+          return result.length;
+        },
+        template: function(container, containerIndex, data, itemIndex) {
+          return "<tr><td>"+data[1]+"</td><td>"+data[2]+"</td><td>"+data[3]+"</td><td>"+data[5]+"</td></tr>";
+        },
+        
+        positionEl: '<table class="position"><tr><td>&nbsp;</td><td class="pos">asd</td><td>&nbsp;</td><td>&nbsp;</td></tr></table>',
+        positionSelector: '.pos',
+        position: function(container, data, itemIndex) {
+          return data[2];
+        }
+        
+        // or: data: [[data,data],[data,data]] for two containers
+        
+      });
+      
+      console.warn(new Date() - start);
+      
+    });
+  </script>
+  
+  <style type="text/css">
+    body {
+      background: black;
+      font-family:  Arial, Helvetica;
+    }
+    #content {
+      width:      100%;
+      height:     100%;
+      background: white;/*f6f6f6;*/
+      font-size:  120%;
+    }
+    .shuffle {
+      border-bottom:  1px solid #c1c1c1;
+      line-height:    42px;
+      font-weight:    bold;
+      padding-left:   20px;
+      background:     white;
+    }
+    .shuffle:before {
+      content: 'Shuffle';
+    }
+    table {
+      border-collapse:  collapse;
+      width:            100%;
+      table-layout:     fixed;
+      font-size:        100%;
+      background:       url(images/simple_list_page_bg_2.png);/* repeat 0 -43px;*/
+    }
+    td {
+      line-height:  43px;
+      padding:      0 11px;
+      border-left:  1px solid rgba(0,0,0,.04);
+      
+      overflow:     hidden;
+      text-overflow: ellipsis;
+      white-space:  nowrap;
+      width:        28%;
+    }
+    td:first-child {
+      padding-left: 29px;
+      font-weight:  bold;
+      border-left:  none;
+    }
+    td:last-child {
+      width:  16%;
+    }
+    
+    #content .ad-hosting-layer {
+      z-index: 2;
+    }
+    .position {
+      position:     absolute;
+      left:         0;
+      right:        0;
+      top:          50%;
+      line-height:  44px !important;
+      margin-top:   -27px;
+      padding-left: 28%;
+      z-index:      1;
+      background:   url(images/simple_list_page_bg_2.png) 0 -42px;
+      -webkit-box-shadow: 0 0 10px 0 #999;
+    }
+    .position td {
+      line-height:  44px;
+    }
+/*    .position td:first-child {
+      width: 28%;
+    }
+    .position td:last-child {
+      width: auto;
+    }*/
+  </style>
+</head>
+
+<body>
+  
+  <div id="content">
+    
+    <div class="shuffle"></div>
+    <table class="buffered"></table>
+    
+  </div>
+
+</body>
+
+</html>

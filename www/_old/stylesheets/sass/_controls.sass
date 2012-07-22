@@ -1,0 +1,195 @@
+$controlsPaddingVert: 5px
+$controlsPaddingHori: 20px
+
+.windows #controls > .controls > button:before
+  margin: -1px 0 0 -3px
+
+#controls
+  border-top:         1px solid #f9f9f9
+  border-bottom:      1px solid #363636
+  border-radius:      $applicationBorder $applicationBorder 0 0
+  background:         -webkit-gradient(linear, left top, left bottom, from(#e5e9eb), to(#898d8f))
+  -webkit-box-shadow: $defaultDropShadow
+  position:           relative
+  z-index:            5
+  padding:            $controlsPaddingVert $controlsPaddingHori
+  
+  // PLAYBACK CONTROLS ==========================
+  > .controls
+    
+    > button
+      -webkit-box-sizing: border-box
+      background:         -webkit-gradient(radial, 50% 25%, 7, 50% 25%, 30, from(white), to(#adadad))
+      border:             1px solid #888
+      -webkit-box-shadow: 0 0 0 1px #cecece
+      color:              #404040
+      text-shadow:        white 0 1px 1px
+      width:              50px
+      height:             50px
+      border-radius:      25px
+      padding:            0
+      margin:             ($controlsHeight - $controlsPaddingHori / 2 - 50px - 2px) / 2 0 0 0
+      vertical-align:     middle
+      
+      &:active:not([disabled])
+        border:             1px solid #555
+        background:         -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 25, from(#d6d6d6), to(#777)) !important
+        text-shadow:        white 0 -1px 1px
+      
+      &:before
+        display:  block
+        content:  ''
+        width:    48px
+        height:   48px
+        
+      &[data-button=prev], &[data-button=next]
+        width:  34px
+        height: 34px
+      &[data-button=prev]:before, &[data-button=next]:before
+        width:  32px
+        height: 32px
+      &[data-button=prev]
+        margin-right: 5px
+      &[data-button=next]
+        margin-left:  5px
+      &[data-button=prev], &[data-button=next]
+        background: -webkit-gradient(radial, 50% 25%, 5, 50% 25%, 20, from(white), to(#adadad))
+      &[data-button=play]:before
+        background: url(../images/controls/button_play.png) no-repeat 17px center
+      &[data-button=pause]:before
+        background: url(../images/controls/button_pause.png) no-repeat 16px center
+      &[data-button=prev]:before
+        background: url(../images/controls/button_prev.png) no-repeat 6px center
+      &[data-button=next]:before
+        background: url(../images/controls/button_next.png) no-repeat 8px center
+      
+      &[data-button=pause]
+        display:  none
+      
+      &[disabled]:before
+        opacity:  0.5
+  
+  
+  // VOLUME BUTTON ==============================
+  > button.volume
+    display:        block
+    background:     url(../images/controls/volume_button.png) no-repeat center center
+    width:          25px
+    height:         100%
+    border:         none
+    margin-left:    $controlsPaddingHori
+    padding:        0 $controlsPaddingHori
+    &:active
+      opacity: 0.5
+  
+  // NOW PLAYING AREA ===========================
+  > .nowplaying
+    -webkit-box-sizing: border-box
+    height:             $controlsHeight - $controlsPaddingVert - 2
+    background:         -webkit-gradient(linear, left top, left bottom, from(#e9ecd8), color-stop(0.5, #e2e4cb), color-stop(0.5, #d7dcb9), color-stop(0.9, #f9f8d9), to(#f1f1d8))
+    border-radius:      5px
+    border:             1px solid #818571
+    -webkit-box-shadow: 0 0 1px 1px #ced0d1
+    padding:            5px 5px 5px 53px
+    height:             100%
+    position:           relative
+    margin-left:        $controlsPaddingHori
+    
+    > button.nowplaying_artwork
+      width:              48px
+      height:             48px
+      position:           absolute
+      left:               4px
+      top:                4px
+      border:             none
+      background:         url(../images/artwork/default/empty.png)
+      background-size:    cover
+      -webkit-box-shadow: inset 0 0 5px 0 #333
+      border-radius:      3px
+      padding:            0
+      &:active
+        -webkit-box-shadow:   inset 0 0 10px 2px black
+        background-position:  1px 1px
+        
+    > span
+      position:       absolute
+      left:           53px
+      right:          5px
+      line-height:    15px
+      text-align:     center
+      overflow:       hidden
+      white-space:    nowrap
+      text-overflow:  ellipsis
+      
+      &.nowplaying_title
+        font-weight:  bold
+        padding:  0px 5px 3px 5px
+      &.nowplaying_artist_collection
+        top:      18px
+        padding:  2px 5px 1px 5px
+    
+    > div
+      margin-top: 31px
+      display:    -webkit-box
+      
+      > .nowplaying_position, > .nowplaying_duration
+        display:      block
+        width:        50px
+        margin-top:   -1px
+      > .nowplaying_position
+        text-align:   right
+        
+      > .nowplaying_slider
+        -webkit-box-flex: 1
+        height:           6px
+        background:       -webkit-gradient(linear, left top, left bottom, from(#a4a895), color-stop(0.3, #b8bcaa), to(#c1c5b3))
+        border:           1px solid
+        border-color:     #939788 #b7b8a8 #b7b8a8 #939788
+        border-radius:    4px
+        margin:           3px 10px 0 10px
+        position:         relative
+        
+        div
+          background:     -webkit-gradient(linear, left top, left bottom, from(#a6a899), to(#727665))
+          position:       absolute
+          height:         6px
+          border:         1px solid #696e5d
+          margin:         -1px
+          border-radius:  4px
+        
+        a
+          display:            block
+          position:           absolute
+          width:              10px
+          height:             10px
+          background:         -webkit-gradient(linear, left top, right bottom, from(white), to(#eee))
+          -webkit-transform:  rotate(45deg)
+          -webkit-box-shadow: 0 0 4px 0 black
+          margin:             -2px 0 0 -5px
+          
+    
+  // SEARCH FIELD ===============================
+  > #search
+    margin:         ($controlsHeight - 28)/2-$controlsPaddingVert 0 0 $controlsPaddingHori
+    white-space:    nowrap
+    position:       relative
+    vertical-align: middle
+    
+    #query
+      background:         white url(../images/search_loupe.png) no-repeat 7px center
+      border:             none
+      font-size:          110%
+      line-height:        28px
+      border-radius:      14px
+      padding:            0 25px
+      margin:             0
+      width:              120px
+      -webkit-box-shadow: inset 0 2px 2px 0 gray
+      
+    a
+      background:         url(../images/search_clear.png) no-repeat 5px 8px
+      position:           absolute
+      right:              0
+      top:                0
+      height:             28px
+      width:              25px

@@ -1,0 +1,79 @@
+// base color: #2c7de5, +10% -20% lightness
+$controllerGradient: -webkit-gradient(linear, left top, left bottom, from(#717981), to(#333b42))
+
+@mixin controllerIcon($name)
+  &.#{$name} h1
+    background: url(../images/controllers/#{$name}.png) no-repeat 6px center, $controllerGradient
+    &:active
+      background: url(../images/controllers/#{$name}_selected.png) no-repeat 6px center, $selectedCollectionGradient
+
+@mixin collectionIcon($name)
+  &.#{$name}
+    background: url(../images/collections/#{$name}.png) no-repeat 6px center
+    &.selected
+      background: url(../images/collections/#{$name}_selected.png) no-repeat 6px center, $selectedCollectionGradient
+
+body #browser #sources
+  
+  background:                 #d1d8e0
+  border-bottom-left-radius:  10px
+  border-right:               1px solid #8c8c8c
+  
+  > ul
+    
+    li
+      overflow:     hidden
+      
+      @include controllerIcon(music)
+      
+      @include controllerIcon(videos)
+      
+      @include controllerIcon(pictures)
+      
+      @include controllerIcon(config)
+      
+      h1
+        padding-left:       42px
+        margin:             0
+        border-bottom:      1px solid #181b1f
+        line-height:        $filtersHeight - 1 + px
+        font-size:          170%
+        color:              white
+        text-shadow:        #181b1f 0 -1px 1px
+        background:         $controllerGradient
+        -webkit-box-shadow: $defaultDropShadow
+        
+        &.rounded
+          border-bottom-left-radius:  10px
+      
+      > div
+        overflow: hidden
+        
+        ul
+          width:  $sourcesWidth + px
+          
+          li
+            padding-left:   42px
+            line-height:    $filtersHeight + px
+            font-size:      140%
+            color:          #3c3e40
+            font-weight:    bold
+            overflow:       hidden
+            white-space:    nowrap
+            text-overflow:  ellipsis
+            // text-shadow:    white 0 1px 1px
+          
+            &.selected
+              color:        white
+              // text-shadow:  #0E2650 0 -1px 1px
+            
+              button.remotesource
+                display: block !important
+              
+            @include collectionIcon(music)
+          
+            @include collectionIcon(usb)
+          
+            @include collectionIcon(playlist)
+          
+            @include collectionIcon(smartplaylist)

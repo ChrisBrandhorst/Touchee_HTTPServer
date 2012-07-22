@@ -1,0 +1,72 @@
+.popup
+  position:           absolute
+  margin-top:         15px
+  padding:            5px
+  background:         rgba(21,29,49,0.95) -webkit-gradient(linear, left top, left bottom, from(rgba(123,127,137,0.95)), to(rgba(37,44,63,0.95))) no-repeat
+  background-size:    100% 21px
+  border:             1px solid rgba(24,24,24,0.95)
+  border-top-color:   rgba(80,80,80,0.95)
+  border-radius:      7px
+  -webkit-box-shadow: 0 0 5px 0px rgba(0,0,0,0.5) // 0 0 1px 1px rgba(255,255,255,0.5), 
+  color:              white
+  z-index:            25
+  
+  .popup_arrow
+    width:              25px
+    height:             25px
+    -webkit-transform:  translateX(-13px) rotateZ(45deg)
+    margin-top:         -19px
+    margin-left:        50%
+    margin-bottom:      -7px
+    background:         -webkit-gradient(linear, left top, right bottom, from(rgba(189,191,196,0.95)), color-stop(0.5, rgba(123,127,137,0.95)), color-stop(0.5, transparent), to(transparent)) no-repeat
+    border:             1px solid rgba(80,80,80,0.95)
+    border-width:       1px 0 0 1px
+    
+  .popup_well
+    background:     -webkit-gradient(radial, center top, 0, center center, 400, from(#373737), to(black))
+    border-radius:  5px
+    padding-top:    1px
+    position:       relative
+    
+    .mask
+      position:           absolute
+      top:                0px
+      left:               0px
+      width:              100%
+      height:             100%
+      border-radius:      5px
+      padding-top:        1px
+      -webkit-box-shadow: inset 0 0 3px 0px black
+      pointer-events:     none
+  
+  h1
+    margin:         1px 0 0 0
+    height:         39px
+    line-height:    36px
+    font-size:      170%
+    text-align:     center
+    background:     -webkit-gradient(linear, left top, left bottom, from(#767676), color-stop(0.5,#2B2B2B), color-stop(0.5,black), to(black))
+    border-top:     1px solid #979797
+    border-bottom:  1px solid #323232
+    text-shadow:    black 0 -1px 1px
+  
+  ul
+    margin:     0
+    padding:    0
+    list-style: none
+    border-top: 1px solid black
+  
+    li
+      line-height:        $defaultRowHeight
+      -webkit-box-sizing: border-box
+      padding-left:       50px
+      font-size:          150%
+      border-bottom:      1px solid #3e3e37
+      font-weight:        bold
+      
+      &:nth-child(odd)
+        background-color: rgba(0,0,0,0.25)
+      
+      &:active
+        background: $selectedCollectionGradient
+      

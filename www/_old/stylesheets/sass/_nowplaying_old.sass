@@ -1,0 +1,400 @@
+body #nowplaying
+  position:   relative
+  color:      white
+  background: black
+
+  > #nowplaying_controls
+    
+    > div:first-child
+      position: relative
+      padding:    0 280px
+      
+      > span
+        display:        block
+        font-weight:    bold
+        font-size:      110%
+        line-height:    15px
+        text-align:     center
+        overflow:       hidden
+        white-space:    nowrap
+        text-overflow:  ellipsis
+        
+        &#nowplaying_artist
+          margin-top: 29px
+        &#nowplaying_artist, &#nowplaying_collection
+          color: #aaa
+        
+      .buttons
+        position:   absolute
+        top:        50%
+        
+        .button
+          float:        left
+          margin-left:  5px
+          
+          &.prev, &.next
+            width:      42px
+            height:     44px
+            margin-top: 5px !important
+          &.play, &.pause
+            width:  54px
+            height: 55px
+              
+          &.prev
+            background-image: url(../images/controls/WildcatTransportPrevious.png)
+          &.next
+            background-image: url(../images/controls/WildcatTransportNext.png)
+          &.play
+            background-image: url(../images/controls/WildcatTransportPlay.png)
+          &.pause
+            background-image: url(../images/controls/WildcatTransportPause.png)
+            
+      
+      .volume_slider
+        position:             absolute
+        height:               28px
+        width:                164px
+        padding:              0 14px 0 15px
+        top:                  39px
+        left:                 32px
+        border:               1px solid #151515
+        border-bottom-color:  #373737
+        border-top-color:     #111
+        border-radius:        15px
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.55)), color-stop(0.5, rgba(255,255,255,.25)), color-stop(0.5, rgba(0,0,0,.82)), to(rgba(0,0,0,.82))), -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,.87)), color-stop(0.5, rgba(0,0,0,.82)), to(rgba(0,0,0,.82)))
+        background-size:      15px 100%, 100% 100%
+        background-repeat:    no-repeat
+        background-position:  left top, left top
+        
+        -webkit-box-shadow: 0 0 3px 1px rgba(255,255,255,.1)
+        
+        > div
+          height:   100%
+          position: relative
+          
+          > div
+            position:   absolute
+            height:     100%
+            background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.55)), color-stop(0.5, rgba(255,255,255,.25)), color-stop(0.5, rgba(0,0,0,.82)), to(rgba(0,0,0,.82)))
+          > a
+            position:   absolute
+            width:      35px
+            height:     30px
+            background: url(../images/controls/WildcatVolumeThumb.png)
+            margin:     -2px 0 0 -17px
+            outline:    none
+    
+    > div:last-child
+      font-weight:  bold
+      font-size:    90%
+      position:     relative
+      
+      .button
+        width:            25px
+        height:           100%
+        background-size:  100%
+        background:       no-repeat center center
+        
+        &.repeat
+          float:            left
+          margin-left:      11px
+          background-image: url(../images/controls/repeat_off.png)
+          &.on
+            background-image: url(../images/controls/repeat_on.png)
+          &.on_1
+            background-image: url(../images/controls/repeat_on_1.png)
+        &.shuffle
+          float:            right
+          margin-right:     11px
+          background-image: url(../images/controls/shuffle_off.png)
+          &.on
+            background-image: url(../images/controls/shuffle_on.png)
+      
+      span
+        display:      block
+        line-height:  31px
+        width:        42px
+        &.nowplaying_position
+          float:      left
+          text-align: right
+        &.nowplaying_duration
+          float:      right
+          text-align: left
+      
+      .nowplaying_slider
+        background:     rgba(255,255,255,.1)
+        height:         11px
+        border-radius:  5px
+        position:       absolute
+        top:            10px
+        left:           85px
+        right:          85px
+        
+        div
+          background:     rgba(255,255,255,.6)
+          height:         100%
+          border-radius:  5px
+        
+        a
+          position:     absolute
+          display:      block
+          width:        17px
+          height:       18px
+          margin:       -13px 0 0 -8px
+          background: url(../images/controls/UIScrubberKnob.png)
+      
+      #nowplaying_count
+        line-height:    19px
+        text-align:     center
+        width:          94px
+        position:       absolute
+        left:           50%
+        border:         2px solid white
+        border-radius:  15px
+        opacity:        0.7
+        margin-left:    -49px
+        top:            44px
+        background:     black
+        z-index:        1
+        
+  > #nowplaying_perspective
+    position: absolute
+    top:      0
+    left:     0
+    width:    100%
+    height:   100%
+    
+    > .nowplaying_artwork
+      background: no-repeat center center
+
+    > #nowplaying_list
+      position:           absolute
+      left:               0
+      right:              0
+      border:             solid #141414
+      border-width:       0 1px
+    
+      #rating
+        height:   43px
+        border-bottom: 1px solid #414141
+        background: -webkit-gradient(linear, left center, left bottom, from(black), to(#212121))
+    
+      #nowplaying_list_container
+        position:   absolute
+        top:        44px
+        bottom:     0
+        width:      100%
+        overflow:   hidden
+        background: -webkit-gradient(radial, center -200, 0, center -200, 600, from(#282828), to(#0d0d0d))
+      
+        table
+          line-height:      44px
+          border-collapse:  collapse
+          width:            100%
+          margin-top:       1px
+          font-size:        125%
+        
+          tr
+            &:first-child
+              td
+                border-top: none
+            &:nth-child(even)
+              background-color: rgba(0,0,0,0.25)
+          
+            &.playing
+              td:first-child
+                text-indent: -1000em
+                background: url(../images/nowplayinglist_arrow.png) no-repeat 10px center
+              
+            &:active
+              background: $selectedCollectionGradient
+              td
+                border-left-color:  transparent
+                border-right-color: transparent
+              &.playing
+                td:first-child
+                  background-image: url(../images/nowplayinglist_arrow_sel.png)
+          
+            td
+              padding:  0 10px
+              border:   1px solid #414037
+            
+              &:first-child
+                border-left:  none
+                width:        24px
+              &:nth-child(2)
+                font-weight:  bold
+              &:last-child
+                border-right:   none
+                width:          68px
+                text-align:     right
+                padding-right:  23px
+              
+  
+  > #nowplaying_footer
+    position: absolute
+    width:    100%
+    bottom:   0
+    a.button
+      width:      44px
+      height:     44px
+      background: no-repeat center center
+      position:   absolute
+      &.back
+        left:             18px
+        background-image: url(../images/controls/WildcatNowPlayingBack.png)
+      &.flip
+        right:            18px
+        background-image: url(../images/controls/WildcatNowPlayingFlip.png)
+      &.nowplaying_artwork
+        background-size:  contain
+        right:            18px
+  
+  
+  // Stuff for rotating artwork & playlist
+  #nowplaying_perspective
+    -webkit-perspective:  1000px
+  
+  #nowplaying_list, .nowplaying_artwork, .button.flip
+    -webkit-backface-visibility:  hidden
+    -webkit-transition:           -webkit-transform 0.75s ease
+  
+  #nowplaying_list, .button.nowplaying_artwork
+    -webkit-transform:  rotateY(180deg)
+    
+  &.flipped
+    #nowplaying_list, .button.nowplaying_artwork
+      -webkit-transform:  rotateY(0deg)
+    #nowplaying_perspective > .nowplaying_artwork, .button.flip
+      -webkit-transform:  rotateY(-180deg)
+  
+  
+  // Showing / hiding controls & footer
+  &.initial
+    > #nowplaying_controls, > #nowplaying_footer
+      display: none
+  
+      
+  // Additional drop shadow for black buttons
+  .button
+    span
+      display: block
+      height: 53px
+      width:  53px
+      
+      border-radius: 30px
+      -webkit-box-shadow: 0 1px 0 0 rgba(255,255,255,0.2)
+    &:active
+      span
+        -webkit-box-shadow: 0 1px 0 0 rgba(255,255,255,0.4)
+    
+    &.prev, &.next, &.back, &.flip
+      span
+        height: 42px
+        width:  42px
+    &.play, &.pause
+      span
+        height:       53px
+        width:        53px
+        margin-left:  1px
+
+
+
+// Landscape
+@media screen and (min-width: 769px)
+  body #nowplaying
+    height:     100%
+    width:      auto
+    left:       0
+    right:      0
+    padding:    0 13%
+    
+    > #nowplaying_controls
+      position:         absolute
+      background:       rgba(0,0,0,0.73)
+      padding-top:      1px
+      border-bottom:    1px solid rgba(0,0,0,0.6)
+      width:            74%
+
+      > div:first-child
+        height:         111px
+        border:         solid rgba(255,255,255,0.2)
+        border-width:   1px 0
+        
+        .buttons
+          margin-top: -28px
+          right:      21px
+        
+      > div:last-child
+        height:         31px
+        border-top:     1px solid rgba(0,0,0,0.6)
+        border-bottom:  1px solid rgba(255,255,255,0.2)
+    
+    > #nowplaying_perspective
+      
+      > .nowplaying_artwork
+        background-size:  contain
+        height:           100%
+
+      > #nowplaying_list
+        top:          148px
+        bottom:       80px
+        left:         13%
+        right:        13.1%
+
+    > #nowplaying_footer
+      background:         rgba(0,0,0,0.6)
+      height:             79px
+      border-top:         1px solid rgba(255,255,255,0.1)
+      -webkit-box-shadow: 0 -1px 0 0 black
+      width:              74%
+
+      a.button
+        margin-top: 16px
+
+
+// Portrait
+@media screen and (max-width: 768px)
+  body #nowplaying
+    height:     100%
+    width:      100%
+    
+    > #nowplaying_controls
+      border-bottom:  1px solid black
+      
+      > div:first-child
+        height:         105px
+        background:     -webkit-gradient(linear, left top, left bottom, from(#434343), color-stop(0.5, #262626), color-stop(0.5, black), to(black))
+        border-radius:  10px 10px 0 0
+        border-top:     1px solid #626262
+        
+        .buttons
+          margin-top: -25px
+          right:      58px
+          
+      > div:last-child
+        height:         32px
+        border:         solid #2e2e2e
+        border-width:   1px 0
+    
+    > #nowplaying_perspective
+    
+      > .nowplaying_artwork
+        background-size:  contain
+        position:         absolute
+        width:            100%
+        top:              141px
+        bottom:           127px
+        //border-bottom:    1px solid #434343
+
+      > #nowplaying_list
+        top:              141px
+        bottom:           127px
+        
+    > #nowplaying_footer
+      height:     125px
+      border-top: 1px solid #616161
+      background: -webkit-gradient(linear, left top, left bottom, from(#434343), color-stop(0.5, #262626), color-stop(0.5, black), to(black))
+      
+      a.button
+        margin-top: 41px

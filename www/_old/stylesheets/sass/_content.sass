@@ -1,0 +1,25 @@
+@mixin tileShadow
+  -webkit-box-shadow:   0 0 7px 0 #c9c9c9
+
+#content
+  background-color:           white
+  // background-image:           -webkit-gradient(linear, left top, left bottom, from(#e5e9eb), to(#898d8f)), -webkit-gradient(linear, left top, left bottom, from(#383B3F), to(#383B3F))
+  // background-size:            100% $defaultRowHeight - 1, 100% 1px
+  // background-position:        left top, left $defaultRowHeight - 1
+  // background-repeat:          no-repeat
+  border-bottom-right-radius: $applicationBorder
+  
+  &:after
+    content:    ''
+    display:    block
+    height:     5px
+    width:      5px
+    position:   absolute
+    bottom:     0
+    right:      0
+    background: url(../images/app_corner_bottom_right.png)
+    // background-size: 5px 5px
+  // .content
+
+@import "navigation"
+@import "page"

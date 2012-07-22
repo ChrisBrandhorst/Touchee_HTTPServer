@@ -1,0 +1,83 @@
+$browserRowHeight:    44px
+
+@import "browser/layout"
+@import "browser/header"
+@import "browser/footer"
+@import "browser/album"
+@import "browser/popup.devices"
+
+#browser
+
+  // Browser content
+  > div
+    border-bottom:  1px solid #656565
+    
+    // Navigation pane
+    > nav
+      
+      // Current position in nav tree
+      > h1
+        padding:          0 6px
+        line-height:      $browserRowHeight - 1px
+        font-size:        160%
+        @include          ellipsis
+        
+        border-bottom:    1px solid #191c1f
+        border-right:     1px solid #414b53
+        color:            white
+        text-shadow:      0 -1px 0 #353a3f
+        
+        background-image: -webkit-linear-gradient(#899198, #434b53)
+        
+        // Root collection
+        &.root
+          padding-left: 0
+          &:before
+            display:        inline-block
+            width:          29px
+            margin:         -5px 6px 0 6px
+            content:        url(../images/collections/root.png)
+            vertical-align: middle
+          
+      // Items at this position
+      > div
+        background-color: #dadfe6
+        border-right:     1px solid #9e9e9e
+        > a
+          display:      block
+          height:       $browserRowHeight
+          padding:      0 6px 0 0
+          
+          line-height:  $browserRowHeight
+          font-size:    140%
+          font-weight:  bold
+          @include      ellipsis
+          
+          &:before
+            display:        inline-block
+            width:          29px
+            margin:         -3px 6px 0 6px
+            content:        url(../images/collections/folder.png)
+            vertical-align: middle
+            
+          &.selected
+            background: $selectedRowGradient
+            color:      white
+            &:before
+              content:  url(../images/collections/folder_selected.png)
+          
+          @include collection_icon(music)
+          @include collection_icon(video)
+          // @include collection_icon(pictures)
+          @include collection_icon(tv)
+          @include collection_icon(settings)
+        
+        hr
+          border-top:     1px solid #9e9e9e
+          border-right:   none
+          border-bottom:  1px solid #fafafa
+          border-left:    none
+          margin:         0 6px
+          
+  .content
+    background:   white

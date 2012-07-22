@@ -1,0 +1,51 @@
+a
+  text-decoration:  none
+  color:            inherit
+
+h1
+  font-weight:  bold
+
+table
+  border-collapse: collapse
+  
+button
+  border:           none
+  background-color: transparent
+  margin:           0
+  padding:          0
+  
+  &.glass
+    font-size:      12px
+    font-weight:    bold
+    line-height:    27px
+    padding:        0 10px
+    border:         1px solid
+    border-radius:  6px
+    box-shadow:     0 1px 0 rgba(255,255,255,.32), inset 0 1px 0 rgba(0,0,0,.1)
+    position:       relative
+    
+    &:active
+      &:before
+        position: absolute
+        content:  ''
+        top:      0
+        left:     0
+        bottom:   0
+        right:    0
+        background: rgba(0,0,0,.2)
+        box-shadow: inset 0 1px 2px 0 black
+        border-radius: 5px
+    
+    &.black
+      border-top-color:     #333
+      border-right-color:   #383838
+      border-bottom-color:  #363636
+      border-left-color:    #383838
+      background:           -webkit-linear-gradient(#999, #565656 50%, #414141 50%, #444)
+      color:                white
+    
+    &.selected
+      background:           -webkit-linear-gradient(#87B2EA, #5191E3 50%, #3280DF 50%, #3682DF)
+      border-top-color:     #2a354b
+      border-bottom-color:  #1F273A
+      text-shadow:          #345394 0 -1px 1px

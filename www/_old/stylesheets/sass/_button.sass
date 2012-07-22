@@ -1,0 +1,28 @@
+button
+  padding:  0
+  border:   none
+  
+button.basic
+  border-radius:  5px
+  border:         none
+  font-size:      12px
+  line-height:    28px
+  padding:        0 10px
+  font-weight:    bold
+  border-width:   1px 0
+  border-style:   solid
+      
+  &.black
+    background:           -webkit-gradient(linear, left top, left bottom, from(#838383), color-stop(0.5,#444444), color-stop(0.5,#303030), to(#333333))
+    color:                white
+    border-top-color:     #242424
+    border-bottom-color:  #303030 !important
+    text-shadow:          black 0 0 2px
+    -webkit-box-shadow:   inset 0 0 1px 0 black
+  
+  &.active
+    background:           -webkit-gradient(linear, left top, left bottom, from(#7b9eea), color-stop(0.5,#376fe0), color-stop(0.5,#2260dd), to(#2463de))
+    border-top-color:     #2a354b
+    border-bottom-color:  #9dacc0
+    text-shadow:          #345394 0 -1px 1px
+    

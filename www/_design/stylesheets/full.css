@@ -1,0 +1,1620 @@
+@import url("reset.css");
+/* line 1, sass/full/_elements.sass */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* line 5, sass/full/_elements.sass */
+h1 {
+  font-weight: bold;
+}
+
+/* line 8, sass/full/_elements.sass */
+table {
+  border-collapse: collapse;
+}
+
+/* line 11, sass/full/_elements.sass */
+button {
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+}
+/* line 17, sass/full/_elements.sass */
+button.glass {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 27px;
+  padding: 0 10px;
+  border: 1px solid;
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.32), inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+/* line 28, sass/full/_elements.sass */
+button.glass:active:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px 0 black;
+  border-radius: 5px;
+}
+/* line 39, sass/full/_elements.sass */
+button.glass.black {
+  border-top-color: #333333;
+  border-right-color: #383838;
+  border-bottom-color: #363636;
+  border-left-color: #383838;
+  background: -webkit-linear-gradient(#999999, #565656 50%, #414141 50%, #444444);
+  color: white;
+}
+/* line 47, sass/full/_elements.sass */
+button.glass.selected {
+  background: -webkit-linear-gradient(#87b2ea, #5191e3 50%, #3280df 50%, #3682df);
+  border-top-color: #2a354b;
+  border-bottom-color: #1f273a;
+  text-shadow: #345394 0 -1px 1px;
+}
+
+/* line 1, sass/full/_typeface.sass */
+body {
+  font-family: "Helvetica", "Helvetica Neue", "Calibri", Arial;
+  font-size: 0.8em;
+  color: #4c4c4c;
+}
+
+/* line 6, sass/full/_typeface.sass */
+input, textarea, select, button, table {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+/* line 1, sass/full/_layout.sass */
+* {
+  -webkit-box-sizing: border-box;
+}
+
+/* line 4, sass/full/_layout.sass */
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: black;
+}
+/* line 10, sass/full/_layout.sass */
+body > section {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 14, sass/full/_layout.sass */
+.scrollable {
+  overflow: auto;
+  overflow-x: hidden;
+}
+/* line 17, sass/full/_layout.sass */
+.scrollable::-webkit-scrollbar {
+  width: 5px;
+}
+/* line 19, sass/full/_layout.sass */
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 3px;
+}
+/* line 23, sass/full/_layout.sass */
+.scrollable:hover::-webkit-scrollbar-thumb {
+  background-color: #7f7f7f;
+}
+
+/* line 2, sass/full/_popup.sass */
+.popup {
+  position: absolute;
+  z-index: 1;
+  padding: 5px;
+  border: 1px solid rgba(24, 24, 24, 0.95);
+  border-top-color: rgba(80, 80, 80, 0.95);
+  border-radius: 7px;
+  background: -webkit-linear-gradient(rgba(166, 166, 168, 0.85), rgba(145, 150, 159, 0.85) 1px, rgba(35, 46, 68, 0.85) 21px, rgba(0, 10, 35, 0.85) 21px, rgba(0, 10, 35, 0.85));
+  box-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.7), 0 0 50px 0 rgba(0, 0, 0, 0.4);
+}
+/* line 16, sass/full/_popup.sass */
+.popup.arrow:before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: solid rgba(80, 80, 80, 0.95);
+  border-width: 1px 0 0 1px;
+  background: -webkit-linear-gradient(left top, rgba(223, 224, 230, 0.85), rgba(145, 150, 159, 0.85) 50%, transparent 50%, transparent) no-repeat;
+  box-shadow: -1px -1px 2px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 25, sass/full/_popup.sass */
+.popup.arrow.top:before {
+  left: 50%;
+  margin-left: -12px;
+  margin-top: -19px;
+  -webkit-transform: rotateZ(45deg);
+}
+/* line 32, sass/full/_popup.sass */
+.popup > div {
+  position: relative;
+  border-radius: 5px;
+  background: -webkit-gradient(radial, center top, 0, center top, 380, from(#4a4a4a), to(#0b0b0b));
+}
+/* line 38, sass/full/_popup.sass */
+.popup > div:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+  box-shadow: inset 0 3px 2px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+/* line 50, sass/full/_popup.sass */
+.popup > div h1 {
+  border-top: 1px solid #969696;
+  border-bottom: 1px solid #363636;
+  background: -webkit-linear-gradient(#767676, #2f2f2f 50%, black 50%, black);
+  color: white;
+  text-shadow: 0 -1px 0 black;
+  text-align: center;
+  font-size: 150%;
+  line-height: 41px;
+  position: relative;
+}
+
+/* line 3, sass/full/browser/_layout.sass */
+#browser {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+/* line 6, sass/full/browser/_layout.sass */
+#browser > header {
+  height: 65px;
+}
+/* line 8, sass/full/browser/_layout.sass */
+#browser > footer {
+  height: 43px;
+}
+/* line 10, sass/full/browser/_layout.sass */
+#browser > div {
+  -webkit-box-flex: 1;
+  display: -webkit-box;
+}
+/* line 13, sass/full/browser/_layout.sass */
+#browser > div > nav {
+  width: 217px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+/* line 17, sass/full/browser/_layout.sass */
+#browser > div > nav > h1 {
+  height: 44px;
+}
+/* line 19, sass/full/browser/_layout.sass */
+#browser > div > nav > div {
+  -webkit-box-flex: 1;
+}
+/* line 21, sass/full/browser/_layout.sass */
+#browser > div > section {
+  -webkit-box-flex: 1;
+}
+
+/* line 1, sass/full/browser/_header.sass */
+#browser > header {
+  display: -webkit-box;
+  padding: 5px;
+  border-top: 1px solid #f9fafb;
+  border-bottom: 1px solid #484848;
+  border-radius: 5px 5px 0 0;
+  background: -webkit-linear-gradient(#eaedef, #9a9c9f);
+  box-shadow: 0 0 5px black;
+  position: relative;
+  z-index: 1;
+}
+/* line 18, sass/full/browser/_header.sass */
+#browser > header > * {
+  vertical-align: middle;
+}
+/* line 22, sass/full/browser/_header.sass */
+#browser > header button.transport {
+  width: 48px;
+  height: 49px;
+  margin-top: 2px;
+}
+/* line 26, sass/full/browser/_header.sass */
+#browser > header button.transport.small {
+  width: 36px;
+  height: 37px;
+}
+/* line 29, sass/full/browser/_header.sass */
+#browser > header button.transport[data-button=prev] {
+  margin-left: 35px;
+  margin-right: 8px;
+}
+/* line 32, sass/full/browser/_header.sass */
+#browser > header button.transport[data-button=next] {
+  margin-left: 8px;
+}
+/* line 34, sass/full/browser/_header.sass */
+#browser > header button.transport[data-button=pause] {
+  display: none;
+}
+/* line 14, sass/_mixins.sass */
+#browser > header button.transport[data-button=prev] {
+  background-image: url(../images/controls/buttons/gray/prev.png);
+}
+/* line 17, sass/_mixins.sass */
+#browser > header button.transport[data-button=prev]:active {
+  background-image: url(../images/controls/buttons/gray/prev_active.png);
+}
+/* line 14, sass/_mixins.sass */
+#browser > header button.transport[data-button=pause] {
+  background-image: url(../images/controls/buttons/gray/pause.png);
+}
+/* line 17, sass/_mixins.sass */
+#browser > header button.transport[data-button=pause]:active {
+  background-image: url(../images/controls/buttons/gray/pause_active.png);
+}
+/* line 14, sass/_mixins.sass */
+#browser > header button.transport[data-button=play] {
+  background-image: url(../images/controls/buttons/gray/play.png);
+}
+/* line 17, sass/_mixins.sass */
+#browser > header button.transport[data-button=play]:active {
+  background-image: url(../images/controls/buttons/gray/play_active.png);
+}
+/* line 14, sass/_mixins.sass */
+#browser > header button.transport[data-button=next] {
+  background-image: url(../images/controls/buttons/gray/next.png);
+}
+/* line 17, sass/_mixins.sass */
+#browser > header button.transport[data-button=next]:active {
+  background-image: url(../images/controls/buttons/gray/next_active.png);
+}
+/* line 42, sass/full/browser/_header.sass */
+#browser > header button[data-button=volume] {
+  width: 25px;
+  height: 22px;
+  margin: 1px 58px 0 56px;
+  background-image: url(../images/controls/volume_button_3.png);
+}
+/* line 49, sass/full/browser/_header.sass */
+#browser > header > div {
+  -webkit-box-flex: 1;
+  height: 52px;
+  padding: 1px;
+  border-top: 1px solid #6b6d5f;
+  border-right: 1px solid #949886;
+  border-bottom: 1px solid #abaf99;
+  border-left: 1px solid #939785;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 #d7d8da;
+  background: -webkit-linear-gradient(#edf0e0, #e7ead5 50%, #dee3c6 50%, #f9fae1 93%, #eaecd0 100%);
+}
+/* line 63, sass/full/browser/_header.sass */
+#browser > header > div span {
+  display: block;
+  padding: 3px 0 0 0;
+  font-size: 95%;
+}
+/* line 67, sass/full/browser/_header.sass */
+#browser > header > div span.nowplaying_title {
+  font-weight: bold;
+  text-align: center;
+}
+/* line 70, sass/full/browser/_header.sass */
+#browser > header > div span.nowplaying_artist_collection {
+  text-align: center;
+}
+/* line 72, sass/full/browser/_header.sass */
+#browser > header > div > div {
+  display: -webkit-box;
+}
+/* line 74, sass/full/browser/_header.sass */
+#browser > header > div > div .nowplaying_position {
+  padding: 3px 5px 0 5px;
+  min-width: 53px;
+  text-align: right;
+}
+/* line 78, sass/full/browser/_header.sass */
+#browser > header > div > div .nowplaying_duration {
+  padding: 3px 5px 0 5px;
+  min-width: 53px;
+}
+/* line 83, sass/full/browser/_header.sass */
+#browser > header > div > div div.nowplaying_slider {
+  -webkit-box-flex: 1;
+  border-radius: 3px;
+  height: 7px;
+  background: #bbbdab;
+  margin-top: 5px;
+  box-shadow: inset 0 1px 2px 1px #939787;
+  padding-right: 9px;
+}
+/* line 91, sass/full/browser/_header.sass */
+#browser > header > div > div div.nowplaying_slider > div {
+  position: relative;
+}
+/* line 93, sass/full/browser/_header.sass */
+#browser > header > div > div div.nowplaying_slider > div div {
+  -webkit-box-sizing: content-box;
+  height: 5px;
+  padding-right: 2%;
+  border-top: 1px solid #8c8c85;
+  border-bottom: 1px solid #696a58;
+  border-radius: 3px 0 0 3px;
+  background: -webkit-linear-gradient(#abaca2, #97998a 75%, #81836f);
+}
+/* line 101, sass/full/browser/_header.sass */
+#browser > header > div > div div.nowplaying_slider > div a {
+  position: absolute;
+  top: 0;
+  width: 13px;
+  height: 15px;
+  margin: -4px 0 0 -2px;
+  background-image: url(../images/controls/position_knob_square.png);
+}
+/* line 110, sass/full/browser/_header.sass */
+#browser > header input[type=search] {
+  -webkit-appearance: textfield;
+  width: 200px;
+  height: 29px;
+  padding-left: 20px;
+  margin: 12px 23px 0 84px;
+  border-top: 1px solid #6b6b6b;
+  border-right: 1px solid #858585;
+  border-bottom: 1px solid #9a9a9a;
+  border-left: 1px solid #858585;
+  border-radius: 15px;
+  font-size: 120%;
+  background: white url(../images/search_loupe.png) no-repeat 7px 7px;
+  box-shadow: inset 0 1px 1px #b4b4b4, 0 1px 0 #bfc1c3;
+}
+/* line 129, sass/full/browser/_header.sass */
+#browser > header input[type=search]::-webkit-input-placeholder {
+  color: gray;
+}
+/* line 132, sass/full/browser/_header.sass */
+#browser > header input[type=search]:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 900px) {
+  /* line 140, sass/full/browser/_header.sass */
+  #browser > header button[data-button=volume] {
+    margin-left: 17px;
+    margin-right: 23px;
+  }
+  /* line 145, sass/full/browser/_header.sass */
+  #browser > header input[type=search] {
+    margin-left: 19px;
+    margin-right: 14px;
+  }
+}
+/* line 1, sass/full/browser/_footer.sass */
+#browser > footer {
+  padding: 6px 7px 9px 7px;
+  border-top: 1px solid #fafafa;
+  border-radius: 0 0 5px 5px;
+  background: -webkit-linear-gradient(#e9e9ee, #9e9fa1);
+  text-align: center;
+}
+/* line 11, sass/full/browser/_footer.sass */
+#browser > footer nav {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  border-radius: 6px;
+  box-shadow: 0 1px 0 #bec0c3;
+}
+/* line 18, sass/full/browser/_footer.sass */
+#browser > footer nav:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1px;
+  bottom: 0;
+  pointer-events: none;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.17);
+}
+/* line 28, sass/full/browser/_footer.sass */
+#browser > footer nav button {
+  height: 100%;
+  width: 102px;
+  background: -webkit-linear-gradient(white, #babec7);
+  border-top: 1px solid #6d6d6d;
+  border-bottom: 1px solid #999ca4;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  color: #4f5459;
+  font-weight: bold;
+  font-size: 95%;
+  text-shadow: 0 1px 0 #dfe1e4;
+}
+/* line 31, sass/full/browser/_footer.sass */
+#browser > footer nav button:before {
+  content: attr(data-button);
+  text-transform: capitalize;
+}
+/* line 43, sass/full/browser/_footer.sass */
+#browser > footer nav button:first-child {
+  border-radius: 6px 0 0 6px;
+  border-left-color: #919396;
+}
+/* line 46, sass/full/browser/_footer.sass */
+#browser > footer nav button:last-child {
+  border-radius: 0 6px 6px 0;
+  border-right: 1px solid #919396;
+}
+/* line 50, sass/full/browser/_footer.sass */
+#browser > footer nav button.selected {
+  border-top-color: #4e5051;
+  border-bottom-color: #555a60;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  background: -webkit-linear-gradient(#afb2b6, #666d74);
+  color: white;
+  text-shadow: 0 -1px 0 #606467;
+}
+/* line 57, sass/full/browser/_footer.sass */
+#browser > footer nav button.selected + button {
+  border-left-width: 0;
+}
+/* line 59, sass/full/browser/_footer.sass */
+#browser > footer nav button.selected:first-child {
+  border-left-color: rgba(0, 0, 0, 0.3);
+}
+/* line 63, sass/full/browser/_footer.sass */
+#browser > footer button[data-button=settings] {
+  float: left;
+  width: 29px;
+  height: 29px;
+  margin-right: 40px;
+  background: url(../images/settings.png);
+}
+/* line 70, sass/full/browser/_footer.sass */
+#browser > footer button[data-button=nowplaying] {
+  float: right;
+  width: 69px;
+  height: 29px;
+  padding: 1px 3px;
+  line-height: 12px;
+  border: 1px solid;
+  margin-top: -1px;
+  border-color: #545556 #4a4c50 #42454b #4a4c50;
+  border-radius: 6px;
+  background: -webkit-linear-gradient(#6e7073, #404244);
+  box-shadow: 0 1px 0 #c4c7c9, inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  color: white;
+  font-weight: bold;
+  font-size: 85%;
+  text-shadow: 0 -1px 0 #404040;
+}
+/* line 88, sass/full/browser/_footer.sass */
+#browser > footer button[data-button=nowplaying]:active {
+  background: -webkit-linear-gradient(#404244, black);
+}
+
+@media screen and (max-width: 900px) {
+  /* line 93, sass/full/browser/_footer.sass */
+  #browser > footer nav button {
+    width: 85px;
+  }
+}
+/* line 2, sass/full/browser/_album.sass */
+#browser {
+  -webkit-perspective: 2000px;
+}
+
+/* line 10, sass/full/browser/_album.sass */
+section.album {
+  position: absolute;
+  width: 418px;
+  height: 418px;
+  display: none;
+  -webkit-transform: scale(0.31) rotateY(180deg);
+  -webkit-transition-property: -webkit-transform, box-shadow;
+  -webkit-transition-duration: 0.35s;
+  -webkit-transition-timing-function: linear;
+}
+/* line 17, sass/full/browser/_album.sass */
+section.album > div {
+  position: absolute;
+}
+/* line 21, sass/full/browser/_album.sass */
+section.album .front {
+  background-image: url(../images/artwork/large/music.png);
+  background-size: 100%;
+  width: 100%;
+  height: 100%;
+}
+/* line 28, sass/full/browser/_album.sass */
+section.album .back {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #ebecf0;
+  background-size: 63px;
+  background: url(../images/artwork/thumb/music.png) no-repeat 349px 0;
+}
+/* line 38, sass/full/browser/_album.sass */
+section.album .back h1 {
+  -webkit-box-sizing: border-box;
+  height: 63px;
+  padding: 0 8px;
+  margin: 0 63px 0 0;
+  border-top: 1px solid #9298a0;
+  border-bottom: 1px solid #9fa6b0;
+  border-left: 1px solid #aaadb2;
+  background: -webkit-linear-gradient(#a3a9b2, #c2c3ca);
+  font-size: 150%;
+  line-height: 21px;
+  color: white;
+  text-shadow: 0 1px 0 #434343;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 57, sass/full/browser/_album.sass */
+section.album .back h1 span {
+  font-size: 50%;
+  font-weight: bold;
+  color: #555555;
+  text-shadow: none;
+}
+/* line 64, sass/full/browser/_album.sass */
+section.album .back div.scrollable {
+  -webkit-box-flex: 1;
+  border: 1px solid #dfdfdf;
+  border-top: none;
+  background: white;
+}
+/* line 71, sass/full/browser/_album.sass */
+section.album .back div.scrollable table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: #646464;
+}
+/* line 80, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr td {
+  height: 42px;
+  padding: 0;
+  border: solid #dae1e9;
+  border-width: 1px 0;
+  font-size: 115%;
+  line-height: 40px;
+  font-weight: lighter;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 91, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr td:first-child {
+  padding-left: 10px;
+  width: 44px;
+}
+/* line 96, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr td:nth-child(2) {
+  font-weight: bold;
+  padding: 0 10px;
+  border-width: 1px;
+}
+/* line 100, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr td:nth-child(2) span {
+  font-weight: lighter;
+  font-size: 90%;
+}
+/* line 105, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr td:last-child {
+  border-right: none;
+  padding-left: 15px;
+  width: 62px;
+}
+/* line 111, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr:nth-child(even) td {
+  background: #f6f6f6;
+}
+/* line 113, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr:first-child td {
+  border-top-width: 1px;
+}
+/* line 115, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr:last-child td {
+  border-bottom-width: 2px;
+}
+/* line 120, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr.playing td:first-child {
+  color: transparent;
+}
+/* line 122, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr.playing td:first-child:before {
+  content: url(../images/browser_playing.png);
+}
+/* line 127, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr.selected td {
+  background: -webkit-linear-gradient(#058cf5, #015de6);
+  color: white;
+  border-left: none;
+  border-right: none;
+}
+/* line 133, sass/full/browser/_album.sass */
+section.album .back div.scrollable table tr.selected.playing td:first-child:before {
+  content: url(../images/browser_playing_selected.png);
+}
+/* line 143, sass/full/browser/_album.sass */
+section.album .front, section.album .back {
+  -webkit-backface-visibility: hidden;
+}
+/* line 146, sass/full/browser/_album.sass */
+section.album .front {
+  -webkit-transform: rotateY(-180deg);
+}
+/* line 150, sass/full/browser/_album.sass */
+section.album.flip {
+  -webkit-transform: scale(1) rotateY(0deg);
+  box-shadow: 0 0 45px 0 black;
+}
+
+/* line 4, sass/full/browser/_popup.devices.sass */
+#devices_popup {
+  top: 71px;
+  left: 83px;
+  width: 332px;
+}
+/* line 10, sass/full/browser/_popup.devices.sass */
+#devices_popup > div {
+  padding-top: 15px;
+}
+/* line 14, sass/full/browser/_popup.devices.sass */
+#devices_popup > div:before {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+/* line 27, sass/full/browser/_popup.devices.sass */
+#devices_popup .volume {
+  height: 29px;
+  margin: 0 15px 12px 15px;
+  background: black -webkit-linear-gradient(#929394, #67686a 50%, #4f5153 50%, #5c5f62) no-repeat;
+  background-size: 14px 100%;
+  border: 1px solid;
+  border-color: #1c1c1c #212121 #292929 #212121;
+  border-radius: 15px;
+  box-shadow: 0 1px 0 #515151;
+}
+/* line 38, sass/full/browser/_popup.devices.sass */
+#devices_popup .volume > div {
+  position: relative;
+  height: 27px;
+  margin: 0 13px 0 14px;
+}
+/* line 44, sass/full/browser/_popup.devices.sass */
+#devices_popup .volume > div div {
+  position: absolute;
+  height: 100%;
+  background: -webkit-linear-gradient(#929394, #67686a 50%, #4f5153 50%, #5c5f62);
+}
+/* line 50, sass/full/browser/_popup.devices.sass */
+#devices_popup .volume > div a {
+  position: absolute;
+  z-index: 2;
+  width: 35px;
+  height: 31px;
+  margin: -3px 0 0 -17px;
+  background: url(../images/controls/volume_knob.png);
+}
+/* line 59, sass/full/browser/_popup.devices.sass */
+#devices_popup h1 button {
+  position: absolute;
+  right: 7px;
+  top: 6px;
+}
+/* line 65, sass/full/browser/_popup.devices.sass */
+#devices_popup ul {
+  border-top: 1px solid black;
+}
+/* line 69, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li {
+  height: 44px;
+  line-height: 43px;
+  border-bottom: 1px solid #535249;
+  font-size: 150%;
+  font-weight: bold;
+  color: white;
+}
+/* line 78, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* line 82, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li:before {
+  content: "";
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin: 1px 10px 0 10px;
+  background-size: 39px;
+}
+/* line 91, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li:active {
+  background-image: -webkit-linear-gradient(#058cf5, #015de6);
+}
+/* line 95, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li.tv:before {
+  background-image: url(../images/switch_tv.png);
+}
+/* line 97, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li.amp:before {
+  background-image: url(../images/switch_amp.png);
+}
+/* line 99, sass/full/browser/_popup.devices.sass */
+#devices_popup ul li.speaker:before {
+  background-image: url(../images/switch_speaker.png);
+}
+/* line 103, sass/full/browser/_popup.devices.sass */
+#devices_popup ul.toggle {
+  overflow: hidden;
+}
+/* line 105, sass/full/browser/_popup.devices.sass */
+#devices_popup ul.toggle li {
+  width: 50%;
+  float: left;
+}
+/* line 108, sass/full/browser/_popup.devices.sass */
+#devices_popup ul.toggle li:nth-child(odd):before {
+  background-image: url(../images/device_on.png);
+}
+/* line 110, sass/full/browser/_popup.devices.sass */
+#devices_popup ul.toggle li:nth-child(even) {
+  background-color: transparent;
+  border-left: 1px solid #535249;
+}
+/* line 113, sass/full/browser/_popup.devices.sass */
+#devices_popup ul.toggle li:nth-child(even):before {
+  background-image: url(../images/device_off.png);
+}
+/* line 115, sass/full/browser/_popup.devices.sass */
+#devices_popup ul.toggle li:nth-child(4n), #devices_popup ul.toggle li:nth-child(4n - 1) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (max-width: 900px) {
+  /* line 121, sass/full/browser/_popup.devices.sass */
+  #devices_popup {
+    left: 44px;
+  }
+}
+/* line 12, sass/full/_browser.sass */
+#browser > div {
+  border-bottom: 1px solid #656565;
+}
+/* line 19, sass/full/_browser.sass */
+#browser > div > nav > h1 {
+  padding: 0 6px;
+  line-height: 43px;
+  font-size: 160%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: 1px solid #191c1f;
+  border-right: 1px solid #414b53;
+  color: white;
+  text-shadow: 0 -1px 0 #353a3f;
+  background-image: -webkit-linear-gradient(#899198, #434b53);
+}
+/* line 33, sass/full/_browser.sass */
+#browser > div > nav > h1.root {
+  padding-left: 0;
+}
+/* line 35, sass/full/_browser.sass */
+#browser > div > nav > h1.root:before {
+  display: inline-block;
+  width: 29px;
+  margin: -5px 6px 0 6px;
+  content: url(../images/collections/root.png);
+  vertical-align: middle;
+}
+/* line 43, sass/full/_browser.sass */
+#browser > div > nav > div {
+  background-color: #dadfe6;
+  border-right: 1px solid #9e9e9e;
+}
+/* line 46, sass/full/_browser.sass */
+#browser > div > nav > div > a {
+  display: block;
+  height: 44px;
+  padding: 0 6px 0 0;
+  line-height: 44px;
+  font-size: 140%;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 56, sass/full/_browser.sass */
+#browser > div > nav > div > a:before {
+  display: inline-block;
+  width: 29px;
+  margin: -3px 6px 0 6px;
+  content: url(../images/collections/folder.png);
+  vertical-align: middle;
+}
+/* line 63, sass/full/_browser.sass */
+#browser > div > nav > div > a.selected {
+  background: -webkit-linear-gradient(#058cf5, #015de6);
+  color: white;
+}
+/* line 66, sass/full/_browser.sass */
+#browser > div > nav > div > a.selected:before {
+  content: url(../images/collections/folder_selected.png);
+}
+/* line 8, sass/_mixins.sass */
+#browser > div > nav > div > a.music:before {
+  content: url(../images/collections/music.png);
+}
+/* line 10, sass/_mixins.sass */
+#browser > div > nav > div > a.music.selected:before {
+  content: url(../images/collections/music_selected.png);
+}
+/* line 8, sass/_mixins.sass */
+#browser > div > nav > div > a.video:before {
+  content: url(../images/collections/video.png);
+}
+/* line 10, sass/_mixins.sass */
+#browser > div > nav > div > a.video.selected:before {
+  content: url(../images/collections/video_selected.png);
+}
+/* line 8, sass/_mixins.sass */
+#browser > div > nav > div > a.tv:before {
+  content: url(../images/collections/tv.png);
+}
+/* line 10, sass/_mixins.sass */
+#browser > div > nav > div > a.tv.selected:before {
+  content: url(../images/collections/tv_selected.png);
+}
+/* line 8, sass/_mixins.sass */
+#browser > div > nav > div > a.settings:before {
+  content: url(../images/collections/settings.png);
+}
+/* line 10, sass/_mixins.sass */
+#browser > div > nav > div > a.settings.selected:before {
+  content: url(../images/collections/settings_selected.png);
+}
+/* line 75, sass/full/_browser.sass */
+#browser > div > nav > div hr {
+  border-top: 1px solid #9e9e9e;
+  border-right: none;
+  border-bottom: 1px solid #fafafa;
+  border-left: none;
+  margin: 0 6px;
+}
+/* line 82, sass/full/_browser.sass */
+#browser .content {
+  background: white;
+}
+
+/* line 2, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music {
+  position: relative;
+}
+/* line 6, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music > div {
+  height: 100%;
+  position: relative;
+}
+/* line 11, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music > div .nowplaying_artwork {
+  position: absolute;
+  width: 748px;
+  height: 748px;
+  left: 50%;
+  top: 50%;
+  margin: -374px 0 0 -374px;
+}
+/* line 20, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music > div #nowplaying_music_album {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  position: absolute;
+  top: 148px;
+  right: 128px;
+  bottom: 80px;
+  left: 128px;
+}
+/* line 28, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music > div #nowplaying_music_album > div {
+  -webkit-box-flex: 1;
+}
+/* line 32, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music > div .nowplaying_progress {
+  position: absolute;
+  width: 98px;
+  line-height: 19px;
+  top: 158px;
+  left: 50%;
+  margin: 0 0 0 -49px;
+}
+/* line 41, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+/* line 47, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music header > div:first-child {
+  height: 113px;
+  margin: 0 128px;
+}
+/* line 51, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music header > div:last-child {
+  height: 33px;
+  margin: 0 128px;
+}
+/* line 56, sass/full/nowplaying/music/_layout.sass */
+#nowplaying_music footer {
+  position: absolute;
+  height: 80px;
+  right: 128px;
+  bottom: 0;
+  left: 128px;
+}
+
+@media screen and (max-width: 900px) {
+  /* line 67, sass/full/nowplaying/music/_layout.sass */
+  #nowplaying_music > div .nowplaying_artwork {
+    width: 735px;
+    height: 735px;
+    top: 141px;
+    margin: 0 0 0 -367.5px;
+  }
+  /* line 72, sass/full/nowplaying/music/_layout.sass */
+  #nowplaying_music > div #nowplaying_music_album {
+    top: 141px;
+    right: 0;
+    bottom: 128px;
+    left: 0;
+  }
+  /* line 77, sass/full/nowplaying/music/_layout.sass */
+  #nowplaying_music header {
+    right: 0;
+    left: 0;
+  }
+  /* line 80, sass/full/nowplaying/music/_layout.sass */
+  #nowplaying_music header > div:first-child {
+    height: 107px;
+  }
+  /* line 82, sass/full/nowplaying/music/_layout.sass */
+  #nowplaying_music footer {
+    height: 126px;
+    right: 0;
+    left: 0;
+  }
+}
+/* line 2, sass/full/nowplaying/music/_artwork.sass */
+#nowplaying_music > div .nowplaying_artwork {
+  background: url(../images/artwork/full/music.png);
+  background-size: contain;
+}
+/* line 8, sass/full/nowplaying/music/_artwork.sass */
+#nowplaying_music > div .nowplaying_artwork .nowplaying_progress {
+  position: absolute;
+  width: 98px;
+  line-height: 19px;
+  top: 158px;
+  left: 50%;
+  margin: 0 0 0 -49px;
+  text-align: center;
+  font-size: 90%;
+  color: #aaaaaa;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+}
+
+/* line 1, sass/full/nowplaying/music/_progress.sass */
+#nowplaying_music > div .nowplaying_progress {
+  text-align: center;
+  font-size: 90%;
+  color: #aaaaaa;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+}
+
+/* line 2, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header {
+  border-top: 1px solid rgba(0, 0, 0, 0.79);
+  border-bottom: 1px solid rgba(3, 3, 3, 0.69);
+  background: rgba(0, 0, 0, 0.79);
+}
+/* line 8, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* line 14, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child .volume {
+  float: left;
+  width: 193px;
+  height: 31px;
+  border-radius: 16px;
+  padding: 0 13px 0 15px;
+  margin: 46px 5px 0 31px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.08);
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 2px 8px black, 0 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+/* line 28, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child .volume > div {
+  height: 28px;
+  margin-top: 1px;
+  position: relative;
+}
+/* line 34, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child .volume > div > div {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  border-radius: 14px 0 0 14px;
+  background: -webkit-linear-gradient(#92918f, #474543 13px, black 13px, black);
+  margin-left: -13px;
+  padding-right: 13px;
+  -webkit-box-sizing: content-box;
+}
+/* line 45, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child .volume > div > a {
+  position: absolute;
+  width: 35px;
+  height: 30px;
+  left: 40%;
+  background: url(../images/controls/volume_knob_black.png);
+  margin: -2px 0 0 -17px;
+  outline: none;
+}
+/* line 55, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child > span {
+  display: block;
+  height: 1em;
+  color: #aaaaaa;
+  font-weight: 600;
+  text-align: center;
+  font-size: 110%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 63, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child > span.nowplaying_artist {
+  margin-top: 40px;
+}
+/* line 65, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child > span.nowplaying_title {
+  color: white;
+}
+/* line 69, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child button.transport {
+  float: right;
+  width: 54px;
+  height: 55px;
+  margin-top: 38px;
+}
+/* line 75, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child button.transport.small {
+  width: 42px;
+  height: 44px;
+}
+/* line 78, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=prev] {
+  margin: 44px 4px 0 61px;
+}
+/* line 80, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=next] {
+  margin: 44px 21px 0 5px;
+}
+/* line 82, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=pause] {
+  display: none;
+}
+/* line 14, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=prev] {
+  background-image: url(../images/controls/buttons/black/prev.png);
+  position: relative;
+}
+/* line 21, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=prev]:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 2px;
+  border-radius: 26px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 30, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=prev]:active:before {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px black, 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 14, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=pause] {
+  background-image: url(../images/controls/buttons/black/pause.png);
+  position: relative;
+}
+/* line 21, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=pause]:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 2px;
+  border-radius: 26px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 30, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=pause]:active:before {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px black, 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 14, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=play] {
+  background-image: url(../images/controls/buttons/black/play.png);
+  position: relative;
+}
+/* line 21, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=play]:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 2px;
+  border-radius: 26px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 30, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=play]:active:before {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px black, 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 14, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=next] {
+  background-image: url(../images/controls/buttons/black/next.png);
+  position: relative;
+}
+/* line 21, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=next]:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 2px;
+  border-radius: 26px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 30, sass/_mixins.sass */
+#nowplaying_music header > div:first-child button.transport[data-button=next]:active:before {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px black, 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 91, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child {
+  border-top: 1px solid rgba(3, 3, 3, 0.69);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* line 97, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button {
+  position: relative;
+  width: 25px;
+  height: 21px;
+}
+/* line 101, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button:active:before {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  left: 12px;
+  top: 10px;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 12px 12px white;
+}
+/* line 111, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button[data-button=repeat] {
+  float: left;
+  margin: 6px 0 0 10px;
+  background: url(../images/controls/repeat_off.png);
+}
+/* line 115, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button[data-button=repeat].on {
+  background: url(../images/controls/repeat_on.png);
+}
+/* line 117, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button[data-button=repeat].on_1 {
+  background: url(../images/controls/repeat_on_1.png);
+}
+/* line 119, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button[data-button=shuffle] {
+  float: right;
+  margin: 6px 10px 0 0;
+  background: url(../images/controls/shuffle_off.png);
+}
+/* line 123, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child button[data-button=shuffle].on {
+  background: url(../images/controls/shuffle_on.png);
+}
+/* line 126, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child span {
+  color: white;
+  font-size: 95%;
+  line-height: 21px;
+  margin: 6px 0 0 0;
+  width: 43px;
+}
+/* line 133, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child span.nowplaying_position {
+  float: left;
+  text-align: right;
+}
+/* line 136, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child span.nowplaying_duration {
+  float: right;
+}
+/* line 139, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child .nowplaying_slider {
+  background: rgba(255, 255, 255, 0.2);
+  height: 11px;
+  margin: 10px 84px 0 84px;
+  border-radius: 6px;
+  padding: 0 5px;
+}
+/* line 145, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child .nowplaying_slider > div {
+  position: relative;
+  height: 100%;
+}
+/* line 148, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child .nowplaying_slider > div > div {
+  height: 100%;
+  border-radius: 6px 0 0 6px;
+  background: rgba(255, 255, 255, 0.4);
+  margin-left: -5px;
+}
+/* line 153, sass/full/nowplaying/music/_header.sass */
+#nowplaying_music header > div:last-child .nowplaying_slider > div > a {
+  position: absolute;
+  width: 17px;
+  height: 18px;
+  top: -2px;
+  margin-left: -8px;
+  background: url(../images/controls/position_knob_round.png);
+}
+
+@media screen and (max-width: 900px) {
+  /* line 163, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header {
+    border-top: none;
+    border-bottom-color: black;
+  }
+  /* line 166, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child {
+    background: -webkit-linear-gradient(#434343, #262626 52px, black 52px, black);
+    border-top-color: #626262;
+    border-bottom-color: #2e2e2e;
+    border-radius: 5px 5px 0 0;
+  }
+  /* line 171, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child > .volume {
+    margin-top: 38px;
+  }
+  /* line 173, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child > span.nowplaying_artist {
+    margin-top: 31px;
+  }
+  /* line 175, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child button.transport {
+    margin-top: 27px;
+  }
+  /* line 177, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child button.transport.small {
+    margin-top: 32px;
+  }
+  /* line 179, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child button.transport[data-button=prev] {
+    margin-left: 28px;
+  }
+  /* line 181, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:first-child button.transport[data-button=next] {
+    margin-right: 58px;
+  }
+  /* line 183, sass/full/nowplaying/music/_header.sass */
+  #nowplaying_music header > div:last-child {
+    border-top: none;
+    border-bottom-color: #2e2e2e;
+    overflow: auto;
+  }
+}
+/* line 2, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer {
+  background: rgba(0, 0, 0, 0.68);
+  border-top: 1px solid black;
+}
+/* line 7, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+/* line 16, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer > button, #nowplaying_music footer .perspective {
+  margin-top: 17px;
+}
+/* line 18, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer button {
+  width: 42px;
+  height: 44px;
+}
+/* line 21, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer button[data-button=back] {
+  float: left;
+  margin-left: 18px;
+}
+/* line 14, sass/_mixins.sass */
+#nowplaying_music footer button[data-button=back] {
+  background-image: url(../images/controls/buttons/black/back.png);
+  position: relative;
+}
+/* line 21, sass/_mixins.sass */
+#nowplaying_music footer button[data-button=back]:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 2px;
+  border-radius: 26px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 30, sass/_mixins.sass */
+#nowplaying_music footer button[data-button=back]:active:before {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px black, 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 14, sass/_mixins.sass */
+#nowplaying_music footer button[data-button=list] {
+  background-image: url(../images/controls/buttons/black/list.png);
+  position: relative;
+}
+/* line 21, sass/_mixins.sass */
+#nowplaying_music footer button[data-button=list]:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 2px;
+  border-radius: 26px;
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 30, sass/_mixins.sass */
+#nowplaying_music footer button[data-button=list]:active:before {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px black, 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+/* line 28, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer button[data-button=artwork] {
+  float: right;
+  margin-left: -42px;
+  background: url(../images/artwork/thumb/music.png) center center no-repeat;
+  background-size: contain;
+}
+/* line 33, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer button[data-button=artwork]:active {
+  opacity: 0.5;
+}
+/* line 36, sass/full/nowplaying/music/_footer.sass */
+#nowplaying_music footer .perspective {
+  float: right;
+  margin-right: 18px;
+  -webkit-perspective: 200px;
+}
+
+@media screen and (max-width: 900px) {
+  /* line 43, sass/full/nowplaying/music/_footer.sass */
+  #nowplaying_music footer {
+    background: -webkit-linear-gradient(#434343, #262626 62px, black 62px, black);
+    border-top: none;
+  }
+  /* line 44, sass/full/nowplaying/music/_footer.sass */
+  #nowplaying_music footer:before {
+    top: -2px;
+    background: black;
+    border-top: 1px solid #3d3d3d;
+    border-bottom: 1px solid #5a5a5a;
+  }
+  /* line 51, sass/full/nowplaying/music/_footer.sass */
+  #nowplaying_music footer > button, #nowplaying_music footer .perspective {
+    margin-top: 43px;
+  }
+}
+/* line 1, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+/* line 5, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album:before {
+  content: "";
+  display: block;
+  height: 43px;
+  border-bottom: 1px solid #414141;
+  background: -webkit-linear-gradient(black, #2d2d2d);
+}
+/* line 12, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div {
+  -webkit-box-flex: 1;
+  background: -webkit-gradient(radial, center -230, 280, center -230, 700, from(#242424), to(#0d0d0d));
+}
+/* line 16, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table {
+  margin-top: 1px;
+  width: 100%;
+  color: white;
+  font-size: 135%;
+}
+/* line 21, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr {
+  border-bottom: 1px solid #414038;
+}
+/* line 23, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr td {
+  border-left: 1px solid #414038;
+  padding: 13px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* line 27, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr td:first-child {
+  width: 45px;
+  border-left: none;
+  font-weight: bold;
+}
+/* line 31, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr td:first-child:after {
+  content: ".";
+}
+/* line 33, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr td:nth-child(3) {
+  width: 240px;
+}
+/* line 35, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr td:last-child {
+  width: 103px;
+  padding-right: 25px;
+  text-align: right;
+}
+/* line 40, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr:nth-child(even) td {
+  background-color: rgba(0, 0, 0, 0.27);
+}
+/* line 42, sass/full/nowplaying/music/_album.sass */
+#nowplaying_music > div #nowplaying_music_album > div table tr.playing td:first-child {
+  text-indent: -1000em;
+  background: url(../images/playing_nowplaying.png) no-repeat 10px center;
+}
+
+/* line 1, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music {
+  -webkit-perspective: 1000px;
+}
+/* line 4, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music > div .nowplaying_artwork, #nowplaying_music > div #nowplaying_music_album, #nowplaying_music footer button {
+  -webkit-transition: -webkit-transform 0.75s ease;
+  -webkit-backface-visibility: hidden;
+}
+/* line 9, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music > div #nowplaying_music_album {
+  -webkit-transform: rotateY(180deg);
+}
+/* line 11, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music > div .nowplaying_progress {
+  -webkit-transition: opacity 0.75s ease;
+}
+/* line 14, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music footer button {
+  -webkit-transition-delay: 0.55s;
+}
+/* line 17, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music footer button[data-button=artwork] {
+  -webkit-transform: rotateY(180deg);
+}
+/* line 22, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music.flip > div .nowplaying_artwork {
+  -webkit-transform: rotateY(-180deg);
+}
+/* line 24, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music.flip > div #nowplaying_music_album {
+  -webkit-transform: rotateY(0);
+}
+/* line 26, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music.flip > div .nowplaying_progress {
+  opacity: 0;
+}
+/* line 30, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music.flip footer button[data-button=list] {
+  -webkit-transform: rotateY(-180deg);
+}
+/* line 32, sass/full/nowplaying/music/_flip.sass */
+#nowplaying_music.flip footer button[data-button=artwork] {
+  -webkit-transform: rotateY(0);
+}
+
+@media all and (min-device-width: 481px) and (max-device-width: 1024px) {
+  /* line 3, sass/full/_ipad.sass */
+  body > #browser > header > input[type=search] {
+    padding-left: 28px;
+  }
+
+  /* line 6, sass/full/_ipad.sass */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* line 9, sass/full/_ipad.sass */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+  }
+  /* line 11, sass/full/_ipad.sass */
+  .scrollable::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* line 25, sass/full.sass */
+body {
+  -webkit-user-select: none;
+}
+
+/* line 29, sass/full.sass */
+body {
+  width: 1024px;
+  height: 748px;
+  background-repeat: no-repeat;
+  background-position: left -20px;
+}
+
+@media screen and (max-width: 900px) {
+  /* line 40, sass/full.sass */
+  body {
+    width: 768px;
+    height: 1004px;
+  }
+}
