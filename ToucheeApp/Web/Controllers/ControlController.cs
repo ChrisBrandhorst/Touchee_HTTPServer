@@ -19,7 +19,6 @@ namespace Touchee.Web.Controllers {
             int containers_id = GetIntParam("container");
             if (containers_id == 0) return;
             var container = Container.Find(containers_id);
-;
 
         }
 

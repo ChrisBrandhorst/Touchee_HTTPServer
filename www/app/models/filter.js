@@ -29,38 +29,27 @@ define([
   var Filter = Backbone.Model.extend({
     
     
-    // Internal data
-    _filter: {},
-    
-    
     // Constructor
     initialize: function(filter) {
-      this.extend(filter || {});
+      this.set(filter || {});
     },
     
     
     // Extends the filter with the given filter
-    extend: function(filter) {
-      if (typeof filter == 'string')
-        filter = parse(filter);
-      _.extend(this._filter, filter);
-      return this._filter;
-    },
-    
-    
-    // Get the filter value for the given key
-    get: function(key) {
-      return this._filter[key];
+    set: function(attributes, options) {
+      if (typeof attributes == 'string')
+        attributes = parse(attributes);
+      return Backbone.Model.prototype.set.call(this, attributes, options);
     },
     
     
     // Outputs an escaped string representation of the filter
     // with optional filter additions
-    toString: function(filter) {
-      if (typeof filter == 'string')
-        filter = parse(filter);
+    toString: function(attributes) {
+      if (typeof attributes == 'string')
+        attributes = parse(attributes);
       return _.map(
-        _.extend({}, this._filter, filter || {}),
+        _.extend({}, this.toJSON(), attributes || {}),
         function(value, key) {
           return [key, value.toString().replace(',', "\\,")].join(':');
         }
