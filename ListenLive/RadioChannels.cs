@@ -20,7 +20,7 @@ namespace ListenLive {
         public override int Order { get { return 100; } }
         public override string Type { get { return ContainerType.Radio; } }
         public override string ContentType { get { return ContainerContentType.Music; } }
-        public override string[] Views {
+        public override string[] ViewTypes {
             get {
                 return WithArtwork
                     ? new string[] { Types.Channel, Types.Genre }

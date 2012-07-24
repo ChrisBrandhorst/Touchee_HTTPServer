@@ -24,13 +24,13 @@ namespace Touchee.Web.Messages {
             public string Type { get; protected set; }
             public string ContentType { get; protected set; }
             public string Module { get; protected set; }
-            public string[] Views { get; protected set; }
+            public string[] ViewTypes { get; protected set; }
             public ContainersMessageItem(Container container) {
                 this.Id = container.ID;
                 this.Name = container.Name;
                 this.Type = container.Type.ToString();
                 this.ContentType = container.ContentType.ToString();
-                this.Views = container.Views;
+                this.ViewTypes = container.ViewTypes;
 
                 var plugin = Plugins.GetContentsPluginFor(container);
                 if (plugin != null && plugin.CustomFrontend)

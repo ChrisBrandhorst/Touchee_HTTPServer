@@ -34,7 +34,6 @@ namespace Touchee.Web.Controllers {
 
             return Library.Contents(
                 container,
-                GetStringParam("type"),
                 Filter.Build( GetStringParam("filter") )
             );
         }

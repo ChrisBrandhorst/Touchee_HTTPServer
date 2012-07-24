@@ -90,8 +90,8 @@ namespace Touchee.ITunes {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        public IEnumerable<IItem> GetItems(IContainer container, string type, Filter filter) {
-            return _controller.GetItems(container, type, filter);
+        public IEnumerable<IItem> GetItems(IContainer container, Filter filter) {
+            return _controller.GetItems(container, filter);
         }
 
         /// <summary>
@@ -101,8 +101,8 @@ namespace Touchee.ITunes {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        public Contents GetContents(IContainer container, string type, Filter filter) {
-            return _controller.GetContents(container, type, filter);
+        public Contents GetContents(IContainer container, Filter filter) {
+            return _controller.GetContents(container, filter);
         }
 
         /// <summary>

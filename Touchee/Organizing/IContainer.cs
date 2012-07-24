@@ -24,7 +24,7 @@ namespace Touchee {
         /// String array containing names of views by which the contents can be viewed
         /// The first view should be the default one
         /// </summary>
-        string[] Views { get; }
+        string[] ViewTypes { get; }
 
         /// <summary>
         /// The Medium this container belongs to

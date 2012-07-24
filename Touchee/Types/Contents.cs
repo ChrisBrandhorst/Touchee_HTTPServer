@@ -9,7 +9,6 @@ namespace Touchee {
     public class Contents {
 
         public Container Container { get; set; }
-        public string Type { get; set; }
         public string[] Keys { get; set; }
         public object Data { get; set; }
         public ExpandoObject Meta { get; set; }
@@ -17,10 +16,7 @@ namespace Touchee {
         public Contents(Container container) {
             this.Container = container;
         }
-        public Contents(Container container, string type) : this(container) {
-            this.Type = type;
-        }
-        public Contents(Container container, string type, string[] keys, object data, ExpandoObject meta) : this(container, type) {
+        public Contents(Container container, string[] keys, object data, ExpandoObject meta) : this(container) {
             this.Keys = keys;
             this.Data = data;
             this.Meta = meta;

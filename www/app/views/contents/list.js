@@ -10,7 +10,7 @@ define([
     // Constructor
     initialize: function(params) {
       this.container = params.container;
-      this.view = params.view;
+      this.type = params.type;
       this.$el = $('<div class="contents"/>');
       this.el = this.$el[0];
       PagedView.prototype.initialize.apply(this, arguments);

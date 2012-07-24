@@ -43,15 +43,32 @@ define([
     },
     
     
-    // Outputs an escaped string representation of the filter
+    // // Outputs an escaped string representation of the filter
+    // // with optional filter additions
+    // toString: function(attributes) {
+    //   if (typeof attributes == 'string')
+    //     attributes = parse(attributes);
+    //   return _.map(
+    //     _.extend({}, this.toJSON(), attributes || {}),
+    //     function(value, key) {
+    //       return [key, value.toString().replace(',', "\\,")].join(':');
+    //     }
+    //   ).join(',');
+    // },
+    
+    
+    // Ouputs an ordered, escaped string representation of the filter
     // with optional filter additions
     toString: function(attributes) {
       if (typeof attributes == 'string')
         attributes = parse(attributes);
+      
+      var filter = _.extend({}, this.toJSON(), attributes || {});
+      
       return _.map(
-        _.extend({}, this.toJSON(), attributes || {}),
-        function(value, key) {
-          return [key, value.toString().replace(',', "\\,")].join(':');
+        _.keys(filter).sort(),
+        function(key) {
+          return [key, filter[key].toString().replace(',', "\\,")].join(':');
         }
       ).join(',');
     }

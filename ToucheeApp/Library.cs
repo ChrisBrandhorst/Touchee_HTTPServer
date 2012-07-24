@@ -188,12 +188,12 @@ namespace Touchee {
         /// <summary>
         /// Gets a message containing the content for the given container, type and filter combination
         /// </summary>
-        public ContentsMessage Contents(Container container, string type, Filter filter) {
+        public ContentsMessage Contents(Container container, Filter filter) {
             var controller = Plugins.GetContentsPluginFor(container);
             if (controller == null)
                 return null;
             
-            var contents = controller.GetContents(container, type, filter);
+            var contents = controller.GetContents(container, filter);
             return contents == null ? null : new ContentsMessage(container, contents);
         }
 

@@ -26,9 +26,10 @@ define([
       "media/:mid/containers":                              "containers",
       "media/:mid/groups/:group/containers":                "containers",
       "media/:mid/containers/:cid/contents":                "container",
-      "media/:mid/containers/:cid/contents/:type":          "container",
-      "media/:mid/containers/:cid/contents/:type/*filter":  "container",
-      "control/:command/container/:cid/*filter":            "control"
+      // "media/:mid/containers/:cid/contents/:type":          "container",
+      // "media/:mid/containers/:cid/contents/:type/*filter":  "container",
+      "media/:mid/containers/:cid/contents/:viewType/*filter":  "container",
+      "control/:command/container/:cid/*filter":                "control"
     },
     
     
@@ -81,9 +82,8 @@ define([
     
     
     // Show the contents of a single container 
-    container: function(mediumID, containerID, type, filter) {
-      if (filter)
-        filter = decodeURIComponent(filter);
+    container: function(mediumID, containerID, viewType, filter) {
+      filter = new Filter(decodeURIComponent(filter || ""));
       
       // Get the medium
       var medium = this.getMedium(mediumID);
@@ -94,17 +94,17 @@ define([
       if (!container)
         return Logger.error("Container with id " + containerID + " cannot be found. Removed?");
       
-      // Set default view if not present
-      type = type || container.get('views')[0];
-      if (!type)
-        return Logger.error("No type specified for container " + containerID);
+      // Set default view type if not present
+      viewType = viewType || container.get('viewTypes')[0];
+      if (!viewType)
+        return Logger.error("No view type specified for container " + containerID);
       
       var containerView;
       
-      // Only if the request does not include a filter, e.g. is the first for the given container
-      if (!filter) {
-        // Get or create the view which contains the contents pages for this container / type combo
-        containerView = BrowserView.getOrCreateContainerView(container, type);
+      // If this is the first view we open for this container
+      if (!BrowserView.hasViews(container)) {
+        // Get or create the view which contains the contents pages for this container / view type combo
+        containerView = BrowserView.getOrCreateContainerView(container, viewType);
         // Activate it
         BrowserView.activateContainerView(containerView);
       }
@@ -114,8 +114,9 @@ define([
         containerView = BrowserView.activeContainerView;
       
       // If the given view already contains the requested filter, activate that page
+      
       var existingPage;
-      if (existingPage = containerView.getPage(filter))
+      if (existingPage = containerView.getPage(viewType))
         return containerView.activate(existingPage);
       
       // Check which module we must load
@@ -130,7 +131,7 @@ define([
       // Get the processing module
       require([modulePath], function(Module){
         Module.name = module;
-        Module.setContentPage(containerView, type, filter);
+        Module.setContentPage(containerView, viewType, filter);
       });
       
     },

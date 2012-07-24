@@ -7,7 +7,7 @@ define([
   var AlbumContents = Contents.extend({
     
     getUrl: function(id) {
-      return [this.url(), 'track', this.filter.toString({albumid:id})].join("/");
+      return [this.url(), this.filter.toString({type:'track',albumid:id})].join("/");
     }
     
   });

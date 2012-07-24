@@ -71,7 +71,7 @@ namespace Touchee {
         /// <summary>
         /// String array containing names of views by which the contents can be viewed
         /// </summary>
-        public virtual string[] Views { get { return new string[0]; } }
+        public virtual string[] ViewTypes { get { return new string[0]; } }
 
         /// <summary>
         /// Constructs a new container instance
@@ -119,25 +119,25 @@ namespace Touchee {
     public class FilesystemMusicContainer : Container {
         public override string Type { get { return ContainerType.Filesystem; } }
         public override string ContentType { get { return ContainerContentType.Music; } }
-        public override string[] Views { get { return new string[0]; } }
+        public override string[] ViewTypes { get { return new string[0]; } }
         public FilesystemMusicContainer(string name, Medium medium) : base(name, medium) { }
     }
     public class FilesystemVideosContainer : Container {
         public override string Type { get { return ContainerType.Filesystem; } }
         public override string ContentType { get { return ContainerContentType.Video; } }
-        public override string[] Views { get { return new string[0]; } }
+        public override string[] ViewTypes { get { return new string[0]; } }
         public FilesystemVideosContainer(string name, Medium medium) : base(name, medium) { }
     }
     public class FilesystemPicturesContainer : Container {
         public override string Type { get { return ContainerType.Filesystem; } }
         public override string ContentType { get { return ContainerContentType.Pictures; } }
-        public override string[] Views { get { return new string[0]; } }
+        public override string[] ViewTypes { get { return new string[0]; } }
         public FilesystemPicturesContainer(string name, Medium medium) : base(name, medium) { }
     }
     public class DiscMusicContainer : Container {
         public override string Type { get { return ContainerType.Disc; } }
         public override string ContentType { get { return ContainerContentType.Music; } }
-        public override string[] Views { get { return new string[0]; } }
+        public override string[] ViewTypes { get { return new string[0]; } }
         public DiscMusicContainer(string name, Medium medium) : base(name, medium) { }
     }
     

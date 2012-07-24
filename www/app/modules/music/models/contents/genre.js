@@ -7,7 +7,7 @@ define([
   var GenreContents = Contents.extend({
     
     getUrl: function(id) {
-      return [this.url(), 'artist', this.filter.toString({genre:id})].join("/");
+      return [this.url(), this.filter.toString({type:'artist',genre:id})].join("/");
     }
     
   });

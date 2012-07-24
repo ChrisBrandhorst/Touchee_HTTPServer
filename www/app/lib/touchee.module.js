@@ -68,12 +68,12 @@ define([
     
     
     // Default setContentPage
-    setContentPage: function(containerView, type, filter) {
+    setContentPage: function(containerView, viewType, filter) {
       var containerIsEmpty = containerView.isEmpty();
       
       // If there are no pages yet
-      if (containerIsEmpty && filter || !containerIsEmpty && !filter)
-        return console.error('ShouldNotHappenException');
+      // if (containerIsEmpty && filter || !containerIsEmpty && !filter)
+      //   return console.error('ShouldNotHappenException');
       
       // Get the container from the view
       var container         = containerView.container,

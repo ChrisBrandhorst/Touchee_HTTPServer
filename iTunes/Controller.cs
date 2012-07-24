@@ -29,8 +29,8 @@ namespace Touchee.ITunes {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        public IEnumerable<IItem> GetItems(IContainer container, string type, Filter filter) {
-            var tracks = GetTracks(container, type, filter);
+        public IEnumerable<IItem> GetItems(IContainer container, Filter filter) {
+            var tracks = GetTracks(container, filter);
             return tracks == null ? null : tracks.Cast<IItem>();
         }
 
@@ -42,11 +42,11 @@ namespace Touchee.ITunes {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        public Contents GetContents(IContainer container, string type, Filter filter) {
-            var tracks = GetTracks(container, type, filter);
+        public Contents GetContents(IContainer container, Filter filter) {
+            var tracks = GetTracks(container, filter);
             if (tracks == null) return null;
             var playlist = (Playlist)container;
-            return BuildContents(tracks, type ?? playlist.Views.First(), filter, playlist);
+            return BuildContents(tracks, filter, playlist);
         }
 
 
@@ -57,7 +57,7 @@ namespace Touchee.ITunes {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        IEnumerable<ITrack> GetTracks(IContainer container, string type, Filter filter) {
+        IEnumerable<ITrack> GetTracks(IContainer container, Filter filter) {
 
             // Check if we have a playlist, just to be sure
             if (!(container is Playlist)) return null;
@@ -119,13 +119,16 @@ namespace Touchee.ITunes {
         /// Builds the contents object
         /// </summary>
         /// <param name="tracks">The tracks source</param>
-        /// <param name="type">The type of content that is requested</param>
+        /// <param name="filter">The request filter</param>
         /// <param name="playlist">The playlist the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
-        Contents BuildContents(IEnumerable<ITrack> tracks, string type, Filter filter, Playlist playlist) {
+        Contents BuildContents(IEnumerable<ITrack> tracks, Filter filter, Playlist playlist) {
+
+            // Get type
+            var type = (filter.ContainsKey("type") ? filter["type"] : playlist.ViewTypes.FirstOrDefault()) ?? Types.Track;
 
             // Create contents instance
-            var contents = new Contents(playlist, type);
+            var contents = new Contents(playlist);
 
             // Set meta data
             dynamic meta = new ExpandoObject();

@@ -24,8 +24,8 @@ define([
     // Modified fetch method for including type and filter parameters
     fetch: function(options) {
       options = _.extend({}, options, { data: {
-        type:   this.get('type'),
-        filter: this.filter.toString()
+        // type:   this.get('type'),
+        filter: this.filter.toString({type:this.get('type')})
       }});
       Backbone.Model.prototype.fetch.call(this, options);
     },
@@ -63,7 +63,7 @@ define([
     
     // Get the title for this content object
     getTitle: function() {
-      return T.T.views[ this.get('type') ].toTitleCase();
+      return T.T.viewTypes[ this.get('type') ].toTitleCase();
     },
     
     

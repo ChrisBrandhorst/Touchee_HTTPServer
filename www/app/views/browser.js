@@ -10,24 +10,41 @@ define([
     el:             $('#browser'),
     containerViews: {},
     
+    events: {
+      'click [data-href]': 'followNonAnchor'
+    },
+    
+    
     initialize: function(params) {
       this.$containersViews = this.$('> div');
     },
     
-    getContainerView: function(container, view) {
-      var key = [container.id, view].join("_");
-      return this.containerViews[key];
+    
+    hasViews: function(container) {
+      var views = this.containerViews[container.id];
+      return views ? _.isEmpty(views) : false;
     },
     
-    getOrCreateContainerView: function(container, view) {
-      var key = [container.id, view].join("_");
-      if (!this.containerViews[key])
-        this.containerViews[key] = new ContentsListView({
+    
+    getContainerView: function(container, type) {
+      var views = this.containerViews[container.id];
+      return views ? views[type] : null;
+    },
+    
+    
+    getOrCreateContainerView: function(container, type) {
+      var views = this.containerViews[container.id];
+      if (!views)
+        views = this.containerViews[container.id] = {};
+      
+      var view = views[type];
+      if (!view)
+        view = views[type] = new ContentsListView({
           container:  container,
-          view:       view
+          type:       type
         });
-      this.containerViews[key].$el.attr('data-key', key);
-      return this.containerViews[key];
+      
+      return view;
     },
     
     
@@ -44,20 +61,20 @@ define([
     setViewButtons: function(view) {
       if (view == this.activeContainerView) return;
       this.activeContainerView = view;
-      var views = view.container.get('views');
+      var viewTypes = view.container.get('viewTypes');
       
       var $footer = this.$('> footer');
       $footer.find('> nav, > h1').remove();
       
-      if (views.length == 1)
-        $footer.append('<h1>' + T.T.views[views[0]] + '</h1>');
+      if (viewTypes.length == 1)
+        $footer.append('<h1>' + T.T.viewTypes[viewTypes[0]] + '</h1>');
       else {
         $nav = $('<nav/>').appendTo($footer);
-        _.each(views, function(v){
+        _.each(viewTypes, function(v){
           var $button = $('<a class="button"/>')
-            .text( T.T.views[v] )
-            .attr('href', "#" + view.container.url() + "/contents/" + v);
-          if (view.view == v) $button.addClass('selected');
+            .text( T.T.viewTypes[v] )
+            .attr('href', "#" + view.container.url() + "/contents/type:" + v);
+          if (view.type == v) $button.addClass('selected');
           $nav.append($button);
         });
       }
@@ -67,9 +84,7 @@ define([
     
     
     
-    events: {
-      'click [data-href]': 'followNonAnchor'
-    },
+
     
     followNonAnchor: function(ev) {
       window.trigger('navigate', $(ev.target).closest('[data-href]'));

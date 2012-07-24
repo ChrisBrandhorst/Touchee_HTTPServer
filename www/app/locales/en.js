@@ -5,7 +5,7 @@ Touchee.T = {
   
   shuffle:  "Shuffle",
   
-  views: {
+  viewTypes: {
     track:    "Songs",
     artist:   "Artists",
     album:    "Albums",

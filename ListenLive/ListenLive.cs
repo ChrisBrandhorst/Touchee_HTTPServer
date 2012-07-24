@@ -136,8 +136,8 @@ namespace ListenLive {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        public IEnumerable<IItem> GetItems(IContainer container, string type, Filter filter) {
-            var channels = GetChannels(container, type, filter);
+        public IEnumerable<IItem> GetItems(IContainer container,Filter filter) {
+            var channels = GetChannels(container, filter);
             return channels == null ? null : channels.Cast<IItem>();
         }
 
@@ -149,11 +149,11 @@ namespace ListenLive {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        public Contents GetContents(IContainer container, string type, Filter filter) {
-            var channels = GetChannels(container, type, filter);
+        public Contents GetContents(IContainer container, Filter filter) {
+            var channels = GetChannels(container, filter);
             if (channels == null) return null;
             var channelsContainer = (RadioChannels)container;
-            return BuildContents(channels, type, filter, channelsContainer);
+            return BuildContents(channels, filter, channelsContainer);
         }
 
 
@@ -164,7 +164,7 @@ namespace ListenLive {
         /// <param name="view">How to view the results</param>
         /// <param name="query">The filter object</param>
         /// <returns>The results</returns>
-        IEnumerable<RadioChannel> GetChannels(IContainer container, string type, Filter filter) {
+        IEnumerable<RadioChannel> GetChannels(IContainer container, Filter filter) {
 
             // Check if we have a radiochannels container, just to be sure
             if (!(container is RadioChannels)) return null;
@@ -216,13 +216,14 @@ namespace ListenLive {
         /// Builds the contents object
         /// </summary>
         /// <param name="channels">The channels source</param>
-        /// <param name="type">The type of content that is requested</param>
         /// <param name="channelsContainer">The radio channels container the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
-        Contents BuildContents(IEnumerable<RadioChannel> channels, string type, Filter filter, RadioChannels channelsContainer) {
+        Contents BuildContents(IEnumerable<RadioChannel> channels, Filter filter, RadioChannels channelsContainer) {
 
             // Create contents instance
-            var contents = new Contents(channelsContainer, type);
+            var contents = new Contents(channelsContainer);
+
+            var type = (filter.ContainsKey("type") ? filter["type"] : channelsContainer.ViewTypes.FirstOrDefault()) ?? Types.Channel;
 
             // Set meta data
             dynamic meta = new ExpandoObject();
