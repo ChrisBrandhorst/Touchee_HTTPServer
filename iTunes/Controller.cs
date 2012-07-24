@@ -26,8 +26,7 @@ namespace Touchee.ITunes {
         /// Gets the items collection for the given parameters
         /// </summary>
         /// <param name="container">The container for which the items should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         public IEnumerable<IItem> GetItems(IContainer container, Filter filter) {
             var tracks = GetTracks(container, filter);
@@ -39,8 +38,7 @@ namespace Touchee.ITunes {
         /// Gets the contents object for the given parameters
         /// </summary>
         /// <param name="container">The container for which the contents should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         public Contents GetContents(IContainer container, Filter filter) {
             var tracks = GetTracks(container, filter);
@@ -54,8 +52,7 @@ namespace Touchee.ITunes {
         /// Gets the tracks collection for the given parameters
         /// </summary>
         /// <param name="container">The container for which the tracks should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         IEnumerable<ITrack> GetTracks(IContainer container, Filter filter) {
 
@@ -80,7 +77,7 @@ namespace Touchee.ITunes {
         /// Filters the given collection of tracks by the given filter
         /// </summary>
         /// <param name="tracks">The tracks to filter</param>
-        /// <param name="filter">The filter to use</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>A IEnumerable of filtered tracks</returns>
         IEnumerable<ITrack> FilterTracks(IEnumerable<ITrack> tracks, Filter filter) {
 
@@ -119,7 +116,7 @@ namespace Touchee.ITunes {
         /// Builds the contents object
         /// </summary>
         /// <param name="tracks">The tracks source</param>
-        /// <param name="filter">The request filter</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <param name="playlist">The playlist the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
         Contents BuildContents(IEnumerable<ITrack> tracks, Filter filter, Playlist playlist) {

@@ -133,8 +133,7 @@ namespace ListenLive {
         /// Gets the items collection for the given parameters
         /// </summary>
         /// <param name="container">The container for which the items should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         public IEnumerable<IItem> GetItems(IContainer container,Filter filter) {
             var channels = GetChannels(container, filter);
@@ -146,8 +145,7 @@ namespace ListenLive {
         /// Gets the contents object for the given parameters
         /// </summary>
         /// <param name="container">The container for which the contents should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         public Contents GetContents(IContainer container, Filter filter) {
             var channels = GetChannels(container, filter);
@@ -161,8 +159,7 @@ namespace ListenLive {
         /// Gets the channels collection for the given parameters
         /// </summary>
         /// <param name="container">The container for which the channels should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         IEnumerable<RadioChannel> GetChannels(IContainer container, Filter filter) {
 
@@ -188,7 +185,7 @@ namespace ListenLive {
         /// Filters the given collection of channels by the given filter
         /// </summary>
         /// <param name="channels">The channels to filter</param>
-        /// <param name="filter">The filter to use</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>A IEnumerable of filtered channels</returns>
         IEnumerable<RadioChannel> FilterChannels(IEnumerable<RadioChannel> channels, Filter filter) {
 
@@ -216,6 +213,7 @@ namespace ListenLive {
         /// Builds the contents object
         /// </summary>
         /// <param name="channels">The channels source</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <param name="channelsContainer">The radio channels container the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
         Contents BuildContents(IEnumerable<RadioChannel> channels, Filter filter, RadioChannels channelsContainer) {

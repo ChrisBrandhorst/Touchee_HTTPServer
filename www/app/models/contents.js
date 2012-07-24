@@ -24,7 +24,6 @@ define([
     // Modified fetch method for including type and filter parameters
     fetch: function(options) {
       options = _.extend({}, options, { data: {
-        // type:   this.get('type'),
         filter: this.filter.toString({type:this.get('type')})
       }});
       Backbone.Model.prototype.fetch.call(this, options);

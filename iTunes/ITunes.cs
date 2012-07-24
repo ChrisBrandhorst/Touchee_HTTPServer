@@ -87,8 +87,7 @@ namespace Touchee.ITunes {
         /// Gets the items collection for the given parameters
         /// </summary>
         /// <param name="container">The container for which the items should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         public IEnumerable<IItem> GetItems(IContainer container, Filter filter) {
             return _controller.GetItems(container, filter);
@@ -98,8 +97,7 @@ namespace Touchee.ITunes {
         /// Gets the contents object for the given parameters
         /// </summary>
         /// <param name="container">The container for which the contents should be retreived</param>
-        /// <param name="view">How to view the results</param>
-        /// <param name="query">The filter object</param>
+        /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
         public Contents GetContents(IContainer container, Filter filter) {
             return _controller.GetContents(container, filter);

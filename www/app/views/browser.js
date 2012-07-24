@@ -43,7 +43,6 @@ define([
           container:  container,
           type:       type
         });
-      
       return view;
     },
     

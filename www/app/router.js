@@ -22,14 +22,12 @@ define([
     
     
     routes: {
-      "":                                                   "root",
-      "media/:mid/containers":                              "containers",
-      "media/:mid/groups/:group/containers":                "containers",
-      "media/:mid/containers/:cid/contents":                "container",
-      // "media/:mid/containers/:cid/contents/:type":          "container",
-      // "media/:mid/containers/:cid/contents/:type/*filter":  "container",
-      "media/:mid/containers/:cid/contents/:viewType/*filter":  "container",
-      "control/:command/container/:cid/*filter":                "control"
+      "":                                             "root",
+      "media/:mid/containers":                        "containers",
+      "media/:mid/groups/:group/containers":          "containers",
+      "media/:mid/containers/:cid/contents":          "container",
+      "media/:mid/containers/:cid/contents/*filter":  "container",
+      "control/:command/container/:cid/*filter":      "control"
     },
     
     
@@ -82,8 +80,7 @@ define([
     
     
     // Show the contents of a single container 
-    container: function(mediumID, containerID, viewType, filter) {
-      filter = new Filter(decodeURIComponent(filter || ""));
+    container: function(mediumID, containerID, filter) {
       
       // Get the medium
       var medium = this.getMedium(mediumID);
@@ -94,17 +91,25 @@ define([
       if (!container)
         return Logger.error("Container with id " + containerID + " cannot be found. Removed?");
       
-      // Set default view type if not present
-      viewType = viewType || container.get('viewTypes')[0];
-      if (!viewType)
-        return Logger.error("No view type specified for container " + containerID);
       
-      var containerView;
+      // Build filter object
+      filter = new Filter(decodeURIComponent(filter || ""));
+      
+      // If we were not given any specific type to show in the filter, we get the first viewType
+      var type = filter.get('type') || container.get('viewTypes')[0];
+      if (!type)
+        return Logger.error("No type specified for container " + containerID);
+      
+      // Check if any attributes other then type was in the filter
+      filter.unset('type');
+      var filterBesidesType = _.keys(filter.attributes).length > 0;
+      filter.set('type', type);
       
       // If this is the first view we open for this container
-      if (!BrowserView.hasViews(container)) {
-        // Get or create the view which contains the contents pages for this container / view type combo
-        containerView = BrowserView.getOrCreateContainerView(container, viewType);
+      var containerView;
+      if (!filterBesidesType) {
+        // Get or create the view which contains the contents pages for this container / type combo
+        containerView = BrowserView.getOrCreateContainerView(container, type);
         // Activate it
         BrowserView.activateContainerView(containerView);
       }
@@ -113,10 +118,9 @@ define([
       else
         containerView = BrowserView.activeContainerView;
       
-      // If the given view already contains the requested filter, activate that page
-      
+      // If we already have a view for the given filter, activate that page
       var existingPage;
-      if (existingPage = containerView.getPage(viewType))
+      if (existingPage = containerView.getPage( filter.toString() ))
         return containerView.activate(existingPage);
       
       // Check which module we must load
@@ -131,7 +135,7 @@ define([
       // Get the processing module
       require([modulePath], function(Module){
         Module.name = module;
-        Module.setContentPage(containerView, viewType, filter);
+        Module.setContentPage(containerView, type, filter);
       });
       
     },

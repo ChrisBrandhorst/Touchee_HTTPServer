@@ -68,8 +68,8 @@ define([
     
     
     // Default setContentPage
-    setContentPage: function(containerView, viewType, filter) {
-      var containerIsEmpty = containerView.isEmpty();
+    setContentPage: function(containerView, type, filter) {
+      var containerIsEmpty  = containerView.isEmpty();
       
       // If there are no pages yet
       // if (containerIsEmpty && filter || !containerIsEmpty && !filter)
@@ -124,7 +124,7 @@ define([
     // Default setContentsView
     setContentsView: function(containerView, itemView) {
       itemView.render();
-      containerView.storePage(itemView.contents.get('filter'), itemView);
+      containerView.storePage(itemView.contents.filter.toString(), itemView);
       containerView.activate(itemView);
     }
     
