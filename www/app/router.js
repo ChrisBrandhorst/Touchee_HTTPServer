@@ -91,7 +91,6 @@ define([
       if (!container)
         return Logger.error("Container with id " + containerID + " cannot be found. Removed?");
       
-      
       // Build filter object
       filter = new Filter(decodeURIComponent(filter || ""));
       

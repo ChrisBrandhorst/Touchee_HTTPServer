@@ -17,7 +17,7 @@ define([
     // Constructor
     initialize: function(params) {
       this.container = params.container;
-      this.filter = params.filter instanceof Filter ? params.filter : new Filter(params.filter);
+     this.filter = params.filter instanceof Filter ? params.filter : new Filter(params.filter);
     },
     
     

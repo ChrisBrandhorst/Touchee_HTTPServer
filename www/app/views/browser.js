@@ -81,10 +81,6 @@ define([
     },
     
     
-    
-    
-
-    
     followNonAnchor: function(ev) {
       window.trigger('navigate', $(ev.target).closest('[data-href]'));
     }

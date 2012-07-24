@@ -6,8 +6,8 @@ define([
   
   var GenreContents = Contents.extend({
     
-    getUrl: function(genre) {
-      return [this.url(), 'channel', this.filter.toString({genre:genre})].join("/");
+    getUrl: function(id) {
+      return [this.url(), this.filter.toString({type:'channel',genre:id})].join("/");
     }
     
   });
