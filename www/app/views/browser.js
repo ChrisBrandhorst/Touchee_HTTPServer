@@ -11,7 +11,9 @@ define([
     containerViews: {},
     
     events: {
-      'click [data-href]': 'followNonAnchor'
+      'click [data-href]':        'followNonAnchor',
+      'click [data-button=prev]': 'prev',
+      'click [data-button=next]': 'next'
     },
     
     
@@ -82,7 +84,16 @@ define([
     
     
     followNonAnchor: function(ev) {
-      window.trigger('navigate', $(ev.target).closest('[data-href]'));
+      Backbone.history.loadUrl($(ev.target).closest('[data-href]'));
+    },
+    
+    
+    prev: function() {
+      Backbone.history.loadUrl("control/prev");
+    },
+    
+    next: function() {
+      Backbone.history.loadUrl("control/next");
     }
     
     

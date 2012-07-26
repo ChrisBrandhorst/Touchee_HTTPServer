@@ -14,13 +14,34 @@ namespace Touchee.Web.Controllers {
         /// </summary>
         public void Play() {
 
+            // Build the filter
             var filter = Filter.Build(GetStringParam("filter"));
 
+            // Check container id
             int containers_id = GetIntParam("container");
-            if (containers_id == 0) return;
+            if (containers_id == 0 || !Container.Exists(containers_id)) return;
+            
+            // Get container
             var container = Container.Find(containers_id);
 
+            // Play it
+            Library.Play(container, filter);
         }
+
+
+
+        public void Prev() {
+            Library.Prev();
+        }
+
+
+        public void Next() {
+            Library.Next();
+        }
+
+        
+
+
 
 
     }

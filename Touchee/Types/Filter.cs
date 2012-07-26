@@ -44,6 +44,20 @@ namespace Touchee {
         public Filter(Dictionary<string, string> filter) : base(filter) { }
 
 
+        public int TryGetInt(string key, out int value) {
+            value = 0;
+            if (this.ContainsKey(key))
+                Int32.TryParse(this[key], out value);
+            return value;
+        }
+
+        public int GetInt(string key) {
+            var value = 0;
+            this.TryGetInt(key, out value);
+            return value;
+        }
+
+
     }
 
 }

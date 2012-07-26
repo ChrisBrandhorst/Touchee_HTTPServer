@@ -68,6 +68,9 @@ namespace Touchee.ITunes {
             // Filter tracks
             tracks = FilterTracks(tracks, filter);
 
+            // Sort tracks
+            tracks = SortTracks(tracks, filter, playlist is MasterPlaylist);
+
             // Return tracks
             return tracks;
         }
@@ -107,7 +110,23 @@ namespace Touchee.ITunes {
                         break;
                 }
             }
-        
+
+            return tracks;
+        }
+
+
+        /// <summary>
+        /// Sorts the given tracks collection based on the filter and sortByName parameters
+        /// </summary>
+        /// <param name="tracks">The tracks to sort</param>
+        /// <param name="filter">The filter used</param>
+        /// <param name="sortByName">Whether the tracks should be sorted by name</param>
+        /// <returns>The sorted track collection</returns>
+        IEnumerable<ITrack> SortTracks(IEnumerable<ITrack> tracks, Filter filter, bool sortByName) {
+            if (sortByName)
+                tracks = SortTracksByName(tracks);
+            else if (filter.ContainsKey("albumid") || filter.ContainsKey("artist"))
+                tracks = SortTracksByAlbum(tracks);
             return tracks;
         }
 
@@ -136,17 +155,9 @@ namespace Touchee.ITunes {
             // Get the data for the given type
             switch(type) {
                 case Types.Track:
-                    bool getAlbum = filter.ContainsKey("albumid");
-
-                    var sortStyle = TrackSortStyle.None;
-                    if (getAlbum || filter.ContainsKey("artist"))
-                        sortStyle = TrackSortStyle.Album;
-                    else if (playlist is MasterPlaylist)
-                        sortStyle = TrackSortStyle.Name;
-
-                    contents.Data = GetTracksData(tracks, sortStyle);
+                    contents.Data = GetTracksData(tracks, meta.SortedByAlpha);
                     contents.Keys = new string[] { "id", "name", "artist", "album", "albumArtist", "number", "duration", "index" };
-                    if (getAlbum) {
+                    if (filter.ContainsKey("albumid")) {
                         meta.Albumid = filter["albumid"];
                         //meta.TotalDuration = tracks.Aggregate<ITrack, TimeSpan>(new TimeSpan(0), (total, t) => total + t.Duration).ToStringShort();
                     }
@@ -206,13 +217,9 @@ namespace Touchee.ITunes {
         /// The result is sorted by name of the track.
         /// </summary>
         /// <param name="tracks">The tracks source</param>
-        /// <param name="sort">The sort type</param>
+        /// <param name="sortedByName">Whether the given tracks collection is sorted by name</param>
         /// <returns>An array of track data</returns>
-        object GetTracksData(IEnumerable<ITrack> tracks, TrackSortStyle sortStyle) {
-            switch (sortStyle) {
-                case TrackSortStyle.Album:  tracks = SortTracksByAlbum(tracks); break;
-                case TrackSortStyle.Name:   tracks = SortTracksByName(tracks);  break;
-            }
+        object GetTracksData(IEnumerable<ITrack> tracks, bool sortedByName) {
             return tracks
                 .Select(t => new object[]{
                     ((Collectable<Track>)t).ID,
@@ -222,7 +229,7 @@ namespace Touchee.ITunes {
                     t.AlbumArtist,
                     t.TrackNumber,
                     t.Duration.ToStringShort(),
-                    Util.GetIndex(sortStyle == TrackSortStyle.Album ? t.SortAlbum : t.SortName)
+                    Util.GetIndex(sortedByName ? t.SortName : t.SortAlbum)
                 });
         }
 

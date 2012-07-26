@@ -42,7 +42,7 @@ define([
     
     // 
     clickedAllAlbums: function() {
-      window.trigger('navigate', this.contents.getUrl("") );
+      Backbone.history.loadUrl(this.contents.getUrl(""));
     }
     
     

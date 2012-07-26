@@ -268,10 +268,16 @@ namespace System.Drawing {
     /// Resize modes
     /// </summary>
     public enum ResizeMode {
-        /// <summary>
-        /// Stretches the original image to the given bounds.
+                /// <summary>
+        /// Scale the image as small as possible while ensuring both the dimensions are greater than or equal to the corresponding dimensions of the given bounds.
+        /// The resulting image size is equal to the given bounds.
         /// </summary>
-        Stretch,
+        Cover,
+        /// <summary>
+        /// Scale the image as small as possible while ensuring both the dimensions are greater than or equal to the corresponding dimensions of the given bounds.
+        /// The resulting image size is equal to the scaled image, which may be larger in one single dimension than the given bounds.
+        /// </summary>
+        CoverAndGrow,
         /// <summary>
         /// Scales the image as large as possible while ensuring both the dimensions are less than or equal to the corresponding dimensions of the given bounds.
         /// The resulting image size is equal to the given bounds.
@@ -288,15 +294,9 @@ namespace System.Drawing {
         /// </summary>
         ContainAndFill,
         /// <summary>
-        /// Scale the image as small as possible while ensuring both the dimensions are greater than or equal to the corresponding dimensions of the given bounds.
-        /// The resulting image size is equal to the given bounds.
+        /// Stretches the original image to the given bounds.
         /// </summary>
-        Cover,
-        /// <summary>
-        /// Scale the image as small as possible while ensuring both the dimensions are greater than or equal to the corresponding dimensions of the given bounds.
-        /// The resulting image size is equal to the scaled image, which may be larger in one single dimension than the given bounds.
-        /// </summary>
-        CoverAndGrow
+        Stretch
     }
 
 }

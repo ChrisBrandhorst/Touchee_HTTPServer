@@ -27,6 +27,7 @@ define([
       "media/:mid/groups/:group/containers":          "containers",
       "media/:mid/containers/:cid/contents":          "container",
       "media/:mid/containers/:cid/contents/*filter":  "container",
+      "control/:command":                             "control",
       "control/:command/container/:cid/*filter":      "control"
     },
     

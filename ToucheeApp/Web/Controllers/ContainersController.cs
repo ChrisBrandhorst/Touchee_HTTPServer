@@ -29,7 +29,7 @@ namespace Touchee.Web.Controllers {
         /// <returns></returns>
         public ContentsMessage Contents() {
             int containers_id = GetIntParam("containers_id");
-            if (containers_id == 0) return null;
+            if (containers_id == 0 || !Container.Exists(containers_id)) return null;
             var container = Container.Find(containers_id);
 
             return Library.Contents(

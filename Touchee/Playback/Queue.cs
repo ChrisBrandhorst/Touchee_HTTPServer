@@ -8,7 +8,7 @@ namespace Touchee.Playback {
     /// <remarks>
     /// Represents a playing queue
     /// </remarks>
-    public class Queue {
+    public class Queue : Base {
 
 
         #region Privates
@@ -67,7 +67,7 @@ namespace Touchee.Playback {
                 items.Add(new QueueItem() { Item = item, Status = QueueItemStatus.Priority });
             
             // Add pending items
-            for (int i = Index; i < _items.Count; i++) {
+            for (int i = Math.Max(0, Index); i < _items.Count; i++) {
                 var item = _items[i];
                 items.Add(new QueueItem() { Item = item, Status = QueueItemStatus.Pending });
             }
@@ -81,12 +81,14 @@ namespace Touchee.Playback {
             return items;
         } }
 
+
         /// <summary>
         /// Gets or sets the shuffling of the queue
         /// </summary>
         public bool Shuffle {
             get { return _shuffle; }
             set {
+                if (_shuffle == value) return;
                 if (_shuffle = value) {
                     var current = Current;
                     _items.Clear();
@@ -97,11 +99,11 @@ namespace Touchee.Playback {
                     Index = 0;
                 }
                 else {
-                    Index = _itemsUnshuffled.IndexOf(Current);
-                    _items = new List<IItem>(_itemsUnshuffled);
+                    ResetItems();
                 }
             }
         }
+
 
         /// <summary>
         /// The repeat mode of the queue
@@ -109,14 +111,36 @@ namespace Touchee.Playback {
         public RepeatMode Repeat { get; set; }
 
 
-        public IItem Current { get; protected set; }
+        IItem _current;
+        /// <summary>
+        /// The current item in the queue
+        /// </summary>
+        public IItem Current {
+            get {
+                return _current;
+            }
+            protected set {
+                _current = value;
 
+                if (_current is ITrack)
+                    Log((_current as ITrack).Name);
+                else if (_current is IWebcast)
+                    Log((_current as IWebcast).Name);
 
-        int Index {
-            get { return _index; }
-            set { _index = value >= 0 && value < _items.Count ? value : -1; }
+            }
         }
 
+
+        /// <summary>
+        /// The index of the current item in the queue
+        /// </summary>
+        public int Index {
+            get { return _index; }
+            set {
+                _index = value >= 0 && value < _items.Count ? value : -1;
+                Current = _index > -1 ? _items[_index] : null;
+            }
+        }
 
 
         #endregion
@@ -142,7 +166,7 @@ namespace Touchee.Playback {
         /// <param name="item">The item to add to the queue</param>
         public Queue(IItem item) : this() {
             _itemsUnshuffled.Add(item);
-            Shuffle = Shuffle;
+            ResetItems();
         }
 
 
@@ -152,7 +176,7 @@ namespace Touchee.Playback {
         /// <param name="items">The initial set of items in the queue</param>
         public Queue(IEnumerable<IItem> items) : this() {
             _itemsUnshuffled.AddRange(items);
-            Shuffle = Shuffle;
+            ResetItems();
         }
 
 
@@ -160,11 +184,9 @@ namespace Touchee.Playback {
         /// Constructs a new queue with one item in it.
         /// </summary>
         /// <param name="item">The item to add to the queue</param>
-        /// <param name="repeat">The repeat mode of the queue</param>
-        /// <param name="shuffle">The shuffle status of the queue</param>
-        public Queue(IItem item, bool shuffle, RepeatMode repeat) : this(item) {
-            this.Shuffle = shuffle;
-            this.Repeat = repeat;
+        /// <param name="index">The intial index of the queue</param>
+        public Queue(IItem item, int index) : this(item) {
+            Index = index;
         }
 
 
@@ -172,11 +194,9 @@ namespace Touchee.Playback {
         /// Constructs a new queue with a number of items in it.
         /// </summary>
         /// <param name="items">The initial set of items in the queue</param>
-        /// <param name="repeat">The repeat mode of the queue</param>
-        /// <param name="shuffle">The shuffle status of the queue</param>
-        public Queue(IEnumerable<IItem> items, bool shuffle, RepeatMode repeat) : this(items) {
-            this.Shuffle = shuffle;
-            this.Repeat = repeat;
+        /// <param name="index">The intial index of the queue</param>
+        public Queue(IEnumerable<IItem> items, int index) : this(items) {
+            Index = index;
         }
 
 
@@ -280,7 +300,7 @@ namespace Touchee.Playback {
         /// <returns>The new current item, or null if none</returns>
         public IItem Prev() {
             --Index;
-            return Current = Index > -1 ? _items[Index] : null;
+            return Current;
         }
 
 
@@ -344,10 +364,8 @@ namespace Touchee.Playback {
 
             }
 
-            // Set index and current item
+            // Set index and return current item
             Index = nextIndex;
-            Current = Index > -1 ? _items[Index] : null;
-
             return Current;
         }
 
@@ -379,6 +397,16 @@ namespace Touchee.Playback {
                     break;
             }
             return Repeat;
+        }
+
+        #endregion
+
+
+        #region Helpers
+
+        void ResetItems() {
+            Index = _itemsUnshuffled.IndexOf(Current);
+            _items = new List<IItem>(_itemsUnshuffled);
         }
 
         #endregion

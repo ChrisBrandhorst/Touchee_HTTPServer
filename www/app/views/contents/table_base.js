@@ -56,7 +56,7 @@ define([
     // Clicked on a row in the table
     clickedRow: function(ev) {
       var id = $(ev.target).closest('tr').attr('data-' + this.contents.idAttribute);
-      if (typeof id != 'undefined') window.trigger('navigate', this.contents.getUrl(id) );
+      if (typeof id != 'undefined') Backbone.history.loadUrl(this.contents.getUrl(id));
     },
     
     

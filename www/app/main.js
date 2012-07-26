@@ -1,7 +1,7 @@
 // Require.js allows us to configure shortcut alias
 // There usage will become more apparent futher along in the tutorial.
 require.config({
-  // urlArgs: "_=" + (new Date()).getTime(),
+  urlArgs: "_=" + (new Date()).getTime(),
   paths: {
     jquery:     '../lib/jquery-1.7.1.min',
     Underscore: 'lib/underscore.amd',

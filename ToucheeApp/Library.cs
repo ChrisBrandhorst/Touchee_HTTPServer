@@ -6,6 +6,8 @@ using System.Text;
 using Touchee.Web;
 using Touchee.Web.Messages;
 using Touchee.Artwork;
+using Touchee.Playback;
+
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -55,6 +57,11 @@ namespace Touchee {
         /// </summary>
         TimeSpan _artworkRetryPeriod;
 
+        /// <summary>
+        /// The main queue
+        /// </summary>
+        Queue _queue;
+
         #endregion
 
 
@@ -82,6 +89,9 @@ namespace Touchee {
             Container.AfterCreate += new Collectable<Container>.ItemEventHandler(Container_AfterCreate);
             Container.AfterUpdate += new Collectable<Container>.ItemEventHandler(Container_AfterUpdate);
             Container.AfterDispose += new Collectable<Container>.ItemEventHandler(Container_AfterDispose);
+
+            // Set queue
+            _queue = new Queue();
 
             // Build local medium
             string name = Program.Config.GetString("name", "Touchee");
@@ -426,10 +436,31 @@ namespace Touchee {
 
         
         public void Play(Container container, Filter filter) {
-            var controller = Plugins.GetContentsPluginFor(container);
-            if (controller == null)
-                return;
+
+            // Get the plugin for the container
+            var contentsPlugin = Plugins.GetContentsPluginFor(container);
+            if (contentsPlugin == null) return;
+
+            // Get the items for this container / filter combination
+            var items = contentsPlugin.GetItems(container, filter);
+
+            // Build queue
+            _queue = new Playback.Queue(items, filter.GetInt("index")) {
+                Repeat = _queue.Repeat,
+                Shuffle = _queue.Shuffle
+            };
         }
+
+
+        public void Prev() {
+            _queue.Prev();
+        }
+
+        public void Next() {
+            _queue.Next();
+        }
+
+
 
 
         #endregion
