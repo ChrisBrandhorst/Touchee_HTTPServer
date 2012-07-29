@@ -17,14 +17,11 @@ namespace Touchee.ITunes {
     /// The media types used
     /// </summary>
     public static class Types {
-        //public const string Tracks = "tracks";
         public const string Track = "track";
-        //public const string Artists = "artists";
         public const string Artist = "artist";
-        //public const string Albums = "albums";
         public const string Album = "album";
-        //public const string Genres = "genres";
         public const string Genre = "genre";
+        public const string Webcast = "webcast";
     }
 
 

@@ -70,6 +70,22 @@ namespace Touchee {
             return Regex.IsMatch(input, "^[a-z]", RegexOptions.IgnoreCase);
         }
 
+        public static int CompareToCustom(this string one, string other) {
+            var oneIsNull = one == null;
+            var otherIsNull = other == null;
+            int c;
+
+            if (!oneIsNull && !otherIsNull) {
+                c = (!Util.FirstIsAlpha(one)).CompareTo(!Util.FirstIsAlpha(other));
+                if (c == 0)
+                    c = one.CompareTo(other);
+            }
+            else
+                c = oneIsNull ? 1 : -1;
+
+            return c;
+        }
+
         public static string ToTitleCase(this string input) {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(input.ToLower());
         }

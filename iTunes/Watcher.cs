@@ -19,6 +19,8 @@ namespace Touchee.ITunes {
     public class Watcher : Base, IMediumWatcher {
 
         Medium _localMedium;
+        Medium _webMedium;
+        WebcastContainer _webcastContainer;
 
         /// <summary>
         /// Constructor
@@ -32,11 +34,18 @@ namespace Touchee.ITunes {
         /// <param name="medium">The Medium to watch</param>
         public bool Watch(Medium medium) {
 
-            // Check if the itunes plugin is disabled
+            // TODO: Check if the itunes plugin is disabled
 
-            // Do nothing if we already have a local medium
-            if (medium.Type != MediumType.Local || _localMedium != null) return false;
-            _localMedium = medium;
+            // First, collect all media
+            if (medium.Type == MediumType.Local && _localMedium == null)
+                _localMedium = medium;
+            else if (medium.Type == MediumType.Web && _webMedium == null)
+                _webMedium = medium;
+            else
+                return false;
+
+            // Bail out if we do not have both media
+            if (_localMedium == null || _webMedium == null) return false;
 
             // Do initial library load
             LoadLibrary();
@@ -61,6 +70,10 @@ namespace Touchee.ITunes {
                 // TODO: clear containers
                 // For now, we can assume this call is never made, since the local
                 // medium will never be ejected
+                return true;
+            }
+            else if (_webMedium == medium) {
+                _webMedium = null;
                 return true;
             }
             return false;
@@ -123,6 +136,32 @@ namespace Touchee.ITunes {
                 if (toucheeTrack.TrackID >= trackIDs.Length)
                     Array.Resize(ref trackIDs, trackIDs.Length * 2);
                 trackIDs[toucheeTrack.TrackID] = toucheeTrack.PersistentID;
+            }
+
+            #endregion
+
+
+            #region Webcasts
+
+            // Find al webcasts
+            var webcasts = Track.All<Webcast>();
+
+            // If we have any
+            if (webcasts.Count() > 0) {
+                
+                // Build the container if not present
+                if (_webcastContainer == null)
+                    _webcastContainer = new WebcastContainer("Library", _webMedium);
+
+                // Set the items
+                _webcastContainer.Update(webcasts);
+                _webcastContainer.Save();
+            }
+
+            // Else, remove the container
+            else if (_webcastContainer != null) {
+                _webcastContainer.Dispose();
+                _webcastContainer = null;
             }
 
             #endregion

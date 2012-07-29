@@ -87,7 +87,7 @@ namespace ListenLive {
         public bool Watch(Medium medium) {
 
             // Do nothing if we already have a local medium
-            if (medium.Type != MediumType.Radio || _radioMedium != null) return false;
+            if (medium.Type != MediumType.Web || _radioMedium != null) return false;
             _radioMedium = medium;
 
             // Set container

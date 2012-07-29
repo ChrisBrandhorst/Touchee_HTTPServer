@@ -7,18 +7,40 @@ using Touchee;
 
 namespace ListenLive {
 
+    /// <remarks>
+    /// Represents a radio channel from the ListLive.eu site
+    /// </remarks>
     public class RadioChannel : Collectable<RadioChannel>, IWebcast, IItem, IComparable {
 
+
+        #region Statics
+
+        /// <summary>
+        /// Finds or creates a radio channel with the given name
+        /// </summary>
+        /// <param name="name">The name of the channel</param>
+        /// <param name="genre">The genre of the channel</param>
+        /// <param name="website">The website of the channel</param>
+        /// <returns>The found or created radio channel</returns>
+        public static RadioChannel FindOrCreateByName(string name, string genre, string website) {
+            var channel = RadioChannel.FirstOrDefault(c => c.Name == name);
+            return channel ?? new RadioChannel(name, genre, website);
+        }
+
+        #endregion
+
+
+        #region Privates
 
         /// <summary>
         /// The streams which are available for this channel
         /// </summary>
         IList<StreamInfo> _streams = new List<StreamInfo>();
 
-        public static RadioChannel FindOrCreateByName(string name, string genre, string website) {
-            var channel = RadioChannel.FirstOrDefault(c => c.Name == name);
-            return channel ?? new RadioChannel(name, genre, website);
-        }
+        #endregion
+
+
+        #region Constructors
 
         /// <summary>
         /// Creates a new RadioChannel object
@@ -32,6 +54,8 @@ namespace ListenLive {
             this.Genre = genre;
             this.Website = website;
         }
+
+        #endregion
 
 
         #region IWebCast implementation
@@ -84,8 +108,8 @@ namespace ListenLive {
         /// <summary>
         /// Comparetor
         /// </summary>
-        public int CompareTo(object other) {
-            return this.SortName.CompareTo(((IWebcast)other).SortName);
+        public int CompareTo(object obj) {
+            return this.SortName.CompareToCustom(((IWebcast)obj).SortName);
         }
 
         #endregion

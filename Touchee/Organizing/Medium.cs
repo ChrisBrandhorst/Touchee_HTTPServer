@@ -12,7 +12,7 @@ namespace Touchee {
     public class MediumType {
         public const string Unknown = "unknown";
         public const string Local = "local";
-        public const string Radio = "radio";
+        public const string Web = "web";
         public const string AudioCD = "audio_cd";
         public const string DVDVideo = "dvd_video";
         public const string BluRayVideo = "bluray_video";

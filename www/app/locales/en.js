@@ -10,7 +10,8 @@ Touchee.T = {
     artist:   "Artists",
     album:    "Albums",
     genre:    "Genres",
-    channel:  "Channels"
+    channel:  "Channels",
+    webcast:  "Webcasts"
   },
   
   items: {
@@ -29,6 +30,10 @@ Touchee.T = {
     genre: {
       one:    'genre',
       more:   'genres'
+    },
+    webcast: {
+      one:    'webcast',
+      more:   'webcasts'
     }
   }
   

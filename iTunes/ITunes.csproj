@@ -51,12 +51,13 @@
     <Compile Include="ITCParser\Structures\ITCFILE_HEADER.cs" />
     <Compile Include="ITCParser\Structures\ITCFILE_HEADER2.cs" />
     <Compile Include="ITunes.cs" />
+    <Compile Include="Media\WebcastContainer.cs" />
     <Compile Include="Watcher.cs" />
     <Compile Include="Media\MasterPlaylist.cs" />
     <Compile Include="Media\FileTrack.cs" />
     <Compile Include="Media\Playlist.cs" />
     <Compile Include="Media\Track.cs" />
-    <Compile Include="Media\URLTrack.cs" />
+    <Compile Include="Media\Webcast.cs" />
     <Compile Include="Messages\TracksMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

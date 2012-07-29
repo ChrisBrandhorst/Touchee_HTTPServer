@@ -10,11 +10,6 @@ namespace Touchee {
     /// </remarks>
     public interface ITrack {
 
-        ///// <summary>
-        ///// The ID of this track
-        ///// </summary>
-        //int ID { get; }
-
         /// <summary>
         /// The title of this track
         /// </summary>

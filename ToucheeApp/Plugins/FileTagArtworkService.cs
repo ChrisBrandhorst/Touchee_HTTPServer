@@ -56,7 +56,7 @@ namespace Touchee.Service {
             artwork = null;
 
             // We only do files
-            if (!(track is IFileTrack)) return ServiceResultStatus.NoResult;
+            if (!(track is ITrack)) return ServiceResultStatus.NoResult;
 
             // Get uri of file
             var uri = new Uri(track.Location);

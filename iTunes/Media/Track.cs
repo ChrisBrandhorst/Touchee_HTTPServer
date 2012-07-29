@@ -11,7 +11,7 @@ namespace Touchee.ITunes.Media {
     /// <remarks>
     /// Represents an iTUnes track
     /// </remarks>
-    public abstract class Track : Collectable<Track>, ITrack, IItem {
+    public abstract class Track : Collectable<Track>, ITrack, IItem, IComparable {
 
 
         #region Statics
@@ -33,7 +33,7 @@ namespace Touchee.ITunes.Media {
                     track = new FileTrack();
                     break;
                 case "URL":
-                    track = new URLTrack();
+                    track = new Webcast();
                     break;
                 default:
                     return null;
@@ -179,22 +179,24 @@ namespace Touchee.ITunes.Media {
         } }
         public TimeSpan Duration { get; protected set; }
 
+
+        /// <summary>
+        /// The album ID of the track (combination of artist and album name)
+        /// </summary>
+        public string AlbumID {
+            get {
+                return (this.AlbumArtist + "=" + this.Album).GetInt64HashCode();
+            }
+        }
+
         #endregion 
         
 
         #region Overrides
 
         public override object SourceID { get { return PersistentID; } }
-
+        
         #endregion
-
-
-        /// <summary>
-        /// The album ID of the track (combination of artist and album name)
-        /// </summary>
-        public string AlbumID { get {
-            return (this.AlbumArtist + "=" + this.Album).GetInt64HashCode();
-        } }
 
 
         #region IItem implementation
@@ -207,6 +209,17 @@ namespace Touchee.ITunes.Media {
 
         #endregion
 
+
+        #region IComparable implementation
+
+        /// <summary>
+        /// Comparetor
+        /// </summary>
+        public int CompareTo(object obj) {
+            return this.SortName.CompareToCustom(((Track)obj).SortName);
+        }
+
+        #endregion
 
     }
 

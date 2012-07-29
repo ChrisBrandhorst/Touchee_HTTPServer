@@ -6,13 +6,16 @@ define([
   
   var TrackContents = Contents.extend({
     
+    
     idAttribute: 'index',
+    
     
     getUrl: function(id) {
       var filter = {};
       filter[this.idAttribute] = id;
       return ["control", "play", "container", this.container.id, this.filter.toString(filter)].join("/");
     },
+    
     
     getTitle: function() {
       var title = this.filter.get('artist');
@@ -24,6 +27,7 @@ define([
         title = Contents.prototype.getTitle.apply(this, arguments);
       return title;
     },
+    
     
     //
     getViewType: function() {

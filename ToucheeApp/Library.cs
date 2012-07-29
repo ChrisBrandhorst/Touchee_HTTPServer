@@ -96,7 +96,7 @@ namespace Touchee {
             // Build local medium
             string name = Program.Config.GetString("name", "Touchee");
             new Medium(name, MediumType.Local).Save();
-            new Medium("Radio", MediumType.Radio).Save();
+            new Medium("Webcasts", MediumType.Web).Save();
 
             // Instantiate all available MediaWatchers
             // These generate Medium instances

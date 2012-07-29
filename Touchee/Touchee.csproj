@@ -58,7 +58,6 @@
     <Compile Include="Playback\RepeatMode.cs" />
     <Compile Include="Plugins\IArtworkService.cs" />
     <Compile Include="Organizing\IContainer.cs" />
-    <Compile Include="Media\IFileTrack.cs" />
     <Compile Include="Media\IItem.cs" />
     <Compile Include="Organizing\IMediaWatcher.cs" />
     <Compile Include="Organizing\IMediumWatcher.cs" />

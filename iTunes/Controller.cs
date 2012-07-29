@@ -43,8 +43,7 @@ namespace Touchee.ITunes {
         public Contents GetContents(IContainer container, Filter filter) {
             var tracks = GetTracks(container, filter);
             if (tracks == null) return null;
-            var playlist = (Playlist)container;
-            return BuildContents(tracks, filter, playlist);
+            return BuildContents(tracks, filter, container);
         }
 
 
@@ -56,20 +55,32 @@ namespace Touchee.ITunes {
         /// <returns>The results</returns>
         IEnumerable<ITrack> GetTracks(IContainer container, Filter filter) {
 
-            // Check if we have a playlist, just to be sure
-            if (!(container is Playlist)) return null;
+            // Vars
+            bool isPlaylist = container is Playlist;
+            bool isWebcastContainer = container is WebcastContainer;
+            IEnumerable<ITrack> tracks;
+            
+            // If we have a playlist, get tracks
+            if (isPlaylist) {
+                var playlist = (Playlist)container;
+                tracks = playlist.Tracks;
+            }
 
-            // Get playlist
-            var playlist = (Playlist)container;
+            // If we have webcasts, get them
+            else if (isWebcastContainer) {
+                var webcastContainer = (WebcastContainer)container;
+                tracks = webcastContainer.Webcasts.Cast<ITrack>();
+            }
 
-            // Get all tracks
-            var tracks = playlist.Tracks;
+            // Otherwise, bail out
+            else
+                return null;
 
             // Filter tracks
             tracks = FilterTracks(tracks, filter);
 
             // Sort tracks
-            tracks = SortTracks(tracks, filter, playlist is MasterPlaylist);
+            tracks = SortTracks(tracks, filter, container is MasterPlaylist);
 
             // Return tracks
             return tracks;
@@ -136,21 +147,21 @@ namespace Touchee.ITunes {
         /// </summary>
         /// <param name="tracks">The tracks source</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
-        /// <param name="playlist">The playlist the tracks are sources from</param>
+        /// <param name="container">The container the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
-        Contents BuildContents(IEnumerable<ITrack> tracks, Filter filter, Playlist playlist) {
+        Contents BuildContents(IEnumerable<ITrack> tracks, Filter filter, IContainer container) {
 
             // Get type
-            var type = (filter.ContainsKey("type") ? filter["type"] : playlist.ViewTypes.FirstOrDefault()) ?? Types.Track;
+            var type = (filter.ContainsKey("type") ? filter["type"] : container.ViewTypes.FirstOrDefault()) ?? Types.Track;
 
             // Create contents instance
-            var contents = new Contents(playlist);
+            var contents = new Contents(container);
 
             // Set meta data
             dynamic meta = new ExpandoObject();
             contents.Meta = meta;
             meta.Shuffable = type == Types.Track;
-            meta.SortedByAlpha = playlist is MasterPlaylist;
+            meta.SortedByAlpha = container is MasterPlaylist || container is WebcastContainer;
 
             // Get the data for the given type
             switch(type) {
@@ -173,6 +184,10 @@ namespace Touchee.ITunes {
                 case Types.Genre:
                     contents.Data = GetGenresData(tracks);
                     contents.Keys = new string[] { "genre", "index" };
+                    break;
+                case Types.Webcast:
+                    contents.Data = GetWebcastsData(tracks.Cast<IWebcast>());
+                    contents.Keys = new string[] { "id", "name", "index" };
                     break;
             }
 
@@ -222,7 +237,7 @@ namespace Touchee.ITunes {
         object GetTracksData(IEnumerable<ITrack> tracks, bool sortedByName) {
             return tracks
                 .Select(t => new object[]{
-                    ((Collectable<Track>)t).ID,
+                    ((IItem)t).ID,
                     t.Name,
                     t.Artist,
                     t.Album,
@@ -332,6 +347,23 @@ namespace Touchee.ITunes {
                 .Select(g =>
                     new string[]{ g.Item1, Util.GetIndex(g.Item2) }
                 );
+        }
+
+
+        /// <summary>
+        /// Retrieves an array of webcast data (id, name, index) for the given webcast set.
+        /// The result is sorted by name of the webcast.
+        /// </summary>
+        /// <param name="tracks">The tracks source</param>
+        /// <param name="sortedByName">Whether the given tracks collection is sorted by name</param>
+        /// <returns>An array of track data</returns>
+        object GetWebcastsData(IEnumerable<IWebcast> webcasts) {
+            return webcasts
+                .Select(wc => new object[]{
+                    ((IItem)wc).ID,
+                    wc.Name,
+                    Util.GetIndex(wc.SortName)
+                });
         }
 
 

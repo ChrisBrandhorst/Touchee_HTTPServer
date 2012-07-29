@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Touchee.ITunes.Media {
 
-    public class URLTrack : Track, IWebcast {
+    public class Webcast : Track, IWebcast {
 
         public string Meta {
             get { return null; }

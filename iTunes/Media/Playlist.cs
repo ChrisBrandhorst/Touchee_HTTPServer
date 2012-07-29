@@ -13,6 +13,7 @@ namespace Touchee.ITunes.Media {
     /// </remarks>
     public class Playlist : Container, IPlaylist {
 
+
         #region Statics
 
         /// <summary>
@@ -110,7 +111,14 @@ namespace Touchee.ITunes.Media {
 
         #region Properties
 
+        /// <summary>
+        /// The persistend ID of this playlist
+        /// </summary>
         public string PersistentID { get; protected set; }
+
+        /// <summary>
+        /// The tracks contained in this playlist
+        /// </summary>
         public IEnumerable<ITrack> Tracks { get; protected set; }
 
         #endregion

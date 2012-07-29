@@ -8,7 +8,8 @@ define([
     
     // Only the genre view is inherited
     inheritedTypes: {
-      genre: {view: true}
+      genre:    {view: true},
+      webcast:  {view: true}
     },
     
     

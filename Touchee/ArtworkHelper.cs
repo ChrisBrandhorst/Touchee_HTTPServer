@@ -24,7 +24,7 @@ namespace Touchee.Artwork {
             string identifier = null;
 
             // Track
-            if (item is IFileTrack) {
+            if (item is ITrack) {
                 var track = (ITrack)item;
                 identifier = track.AlbumArtist + "=" + track.Album;
             }
@@ -118,7 +118,7 @@ namespace Touchee.Artwork {
             var result = new ArtworkResult();
 
             // Track: get album artwork from services until one is found
-            if (item is IFileTrack)
+            if (item is ITrack)
                 result = GetFromPlugins<Service.IAlbumArtworkService>(ArtworkType.Album, new object[] { (ITrack)item });
 
             // Set result object
@@ -223,7 +223,7 @@ namespace Touchee.Artwork {
         public static string GetDefaultArtworkType(IItem item) {
             var type = ArtworkType.Unknown;
 
-            if (item is IFileTrack)
+            if (item is ITrack)
                 type = ArtworkType.Album;
             else if (item is IWebcast)
                 type = ArtworkType.Webcast;

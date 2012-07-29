@@ -672,6 +672,14 @@ body > section {
 #navigation div.scrollable a.radio.selected:before {
   content: url(../images/containers/radio_selected.png);
 }
+/* line 8, ../sass/_mixins.sass */
+#navigation div.scrollable a.web:before {
+  content: url(../images/containers/web.png);
+}
+/* line 10, ../sass/_mixins.sass */
+#navigation div.scrollable a.web.selected:before {
+  content: url(../images/containers/web_selected.png);
+}
 
 /* line 2, ../sass/full/browser/_footer.sass */
 #browser > footer {

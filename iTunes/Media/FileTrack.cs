@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Touchee.ITunes.Media {
 
-    public class FileTrack : Track, IFileTrack {
+    public class FileTrack : Track {
     }
 
 }

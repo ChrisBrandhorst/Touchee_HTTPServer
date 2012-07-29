@@ -11,10 +11,10 @@ namespace Touchee {
     public interface IItem {
 
 
-        ///// <summary>
-        ///// The ID of the item within the container
-        ///// </summary>
-        //int ID { get; }
+        /// <summary>
+        /// The ID of the item within the container
+        /// </summary>
+        int ID { get; }
 
 
         ///// <summary>

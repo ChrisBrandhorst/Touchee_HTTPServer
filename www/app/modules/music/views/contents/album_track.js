@@ -36,7 +36,7 @@ define([
       // Get the album thumb that was clicked
       var $thumb = this.$thumb;
       if (!$thumb)
-        $thumb = this.$thumb = $('.contents:not(.hidden) section.type-album li[data-' + this.contents.idAttribute + '=' + this.contents.filter.get('albumid') + ']');
+        $thumb = this.$thumb = $('.contents:not(.hidden) section.type-album li[data-id=' + this.contents.filter.get('albumid') + ']');
       if (!$thumb.length)
         return;
       else

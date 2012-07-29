@@ -16,7 +16,6 @@ define([
       var artworkURL = options.contents.container.getArtworkUrl({size:'small', item:"artist:"});
       
       options.scrolllistOptions = {
-        rows:       0,
         showID:     true,
         renderItem: function(id, data, odd) {
           return [
