@@ -14,15 +14,23 @@ namespace Touchee.Web.Controllers {
         /// </summary>
         public void Play() {
 
-            // Build the filter
-            var filter = Filter.Build(GetStringParam("filter"));
+            // Container id
+            int containers_id = GetIntParam("container");
+
+            // No params? Do unpause
+            if (containers_id == 0) {
+                Library.Play();
+                return;
+            }
 
             // Check container id
-            int containers_id = GetIntParam("container");
-            if (containers_id == 0 || !Container.Exists(containers_id)) return;
-            
+            if (!Container.Exists(containers_id)) return;
+
             // Get container
             var container = Container.Find(containers_id);
+
+            // Build the filter
+            var filter = Filter.Build(GetStringParam("filter"));
 
             // Play it
             Library.Play(container, filter);
@@ -39,6 +47,10 @@ namespace Touchee.Web.Controllers {
             Library.Next();
         }
 
+
+        public void Pause() {
+            Library.Pause();
+        }
         
 
 

@@ -103,7 +103,7 @@ namespace Touchee.ITunes.Media {
         /// </summary>
         /// <param name="trackIDs">A list of trackIDs</param>
         void SetTracks(IEnumerable<string> trackIDs) {
-            this.Tracks = trackIDs.Select(t => Track.FindBySourceID(t));
+            this.Tracks = trackIDs.Select(t => Track.FindBySourceID(t)).Cast<ITrack>();
         }
 
         #endregion
@@ -132,7 +132,7 @@ namespace Touchee.ITunes.Media {
         /// <param name="itemID">The ID of the item to return</param>
         /// <returns>The item with the given ID, or null if it does not exist</returns>
         public override IItem GetItem(int itemID) {
-            return this.Tracks.FirstOrDefault(t => ((Track)t).ID == itemID) as IItem;
+            return this.Tracks.FirstOrDefault(t => ((IItem)t).ID == itemID) as IItem;
         }
 
         public override object SourceID { get { return PersistentID; } }

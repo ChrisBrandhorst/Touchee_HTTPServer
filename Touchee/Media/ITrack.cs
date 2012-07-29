@@ -80,9 +80,9 @@ namespace Touchee {
         /// </summary>
         int Rating { get; }
         /// <summary>
-        /// A string defining the location of this track
+        /// The uri for this track
         /// </summary>
-        string Location { get; }
+        Uri Uri { get; }
 
     }
 

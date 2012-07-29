@@ -58,9 +58,14 @@ namespace Touchee {
         TimeSpan _artworkRetryPeriod;
 
         /// <summary>
-        /// The main queue
+        /// The current queue
         /// </summary>
         Queue _queue;
+
+        /// <summary>
+        /// The current player
+        /// </summary>
+        IPlayer _player;
 
         #endregion
 
@@ -434,7 +439,11 @@ namespace Touchee {
         #region Controlling
 
 
-        
+        /// <summary>
+        /// Start playing a set of items
+        /// </summary>
+        /// <param name="container">The container in which the items reside</param>
+        /// <param name="filter">Filter used to get the items from the container</param>
         public void Play(Container container, Filter filter) {
 
             // Get the plugin for the container
@@ -444,22 +453,158 @@ namespace Touchee {
             // Get the items for this container / filter combination
             var items = contentsPlugin.GetItems(container, filter);
 
+            // Bail out if no items
+            if (items.Count() == 0) return;
+
             // Build queue
-            _queue = new Playback.Queue(items, filter.GetInt("index")) {
-                Repeat = _queue.Repeat,
-                Shuffle = _queue.Shuffle
-            };
+            var newQueue = new Playback.Queue(items);
+            if (_queue != null) {
+                newQueue.Repeat = _queue.Repeat;
+                newQueue.Shuffle = _queue.Shuffle;
+            }
+            _queue = newQueue;
+
+            // Set callbacks on queue
+            _queue.IndexChanged += _queue_IndexChanged;
+            _queue.ItemsUpdated += _queue_ItemsUpdated;
+            _queue.Finished += _queue_Finished;
+
+            // Stop current playback
+            if (_player != null)
+                _player.Stop();
+            
+            // Set index, starting the queue
+            var id = filter.GetInt("id");
+            if (id > 0) {
+                var item = items.FirstOrDefault(i => i.ID == id);
+                _queue.Current = item;
+            }
+            else
+                _queue.Index = filter.GetInt("index");
         }
 
 
+        /// <summary>
+        /// Skip to the next item in the current queue
+        /// </summary>
         public void Prev() {
-            _queue.Prev();
+            if (_queue != null) {
+                if (_queue.IsAtFirstItem)
+                    _queue.Index = 0;
+                else
+                    _queue.Prev();
+            }
         }
 
+
+        /// <summary>
+        /// Skip to the previous item in the current queue
+        /// </summary>
         public void Next() {
-            _queue.Next();
+            if (_queue != null && !_queue.IsAtLastItem)
+                _queue.Next();
         }
 
+
+        /// <summary>
+        /// Pause the playback of the current item in the queue
+        /// </summary>
+        public void Pause() {
+            if (_player != null)
+                _player.Pause();
+        }
+
+
+        /// <summary>
+        /// Resume the playback of the current item in the queue
+        /// </summary>
+        public void Play() {
+            if (_player != null)
+                _player.Play();
+        }
+
+
+        /// <summary>
+        /// Called when the index of the current queue is changed. Starts playing the next track
+        /// </summary>
+        /// <param name="queue">The queue whos index has changed</param>
+        /// <param name="previous">The previous item that was played</param>
+        /// <param name="current">The item that is about the be played</param>
+        void _queue_IndexChanged(Queue queue, IItem previous, IItem current) {
+
+            // Stop player if there is nu current item
+            if (current == null) {
+                DisposePlayer();
+                return;
+            }
+
+            // If we have a different type to play, or have no player yet, find the player to use
+            IPlayer newPlayer = null;
+            if (_player == null || previous == null || previous.GetType() != current.GetType()) {
+
+                // Find the new player
+                newPlayer = Plugins.Get<IPlayer>().FirstOrDefault(p => p.CanPlay(current));
+
+                // None found
+                if (newPlayer == null)
+                    Log("No player found for item with type " + current.GetType().ToString(), Logger.LogLevel.Error);
+
+                // Set player callbacks unless we have the same player
+                else if (newPlayer != _player)
+                    newPlayer.PlaybackFinished += player_PlaybackFinished;
+
+                // Dispose current player if the new one is different and set the new one as current
+                if (newPlayer != _player) {
+                    DisposePlayer();
+                    _player = newPlayer;
+                }
+            }
+
+            // Play the current item
+            if (_player != null)
+                _player.Play(current);
+        }
+
+
+        /// <summary>
+        /// Nicely disposes of the current player
+        /// </summary>
+        void DisposePlayer() {
+            if (_player != null) {
+                _player.Stop();
+                _player.PlaybackFinished -= player_PlaybackFinished;
+                _player = null;
+            }
+        }
+
+
+        /// <summary>
+        /// Called when the playback of an item has finished
+        /// </summary>
+        /// <param name="player">The player who was playing the item</param>
+        /// <param name="item">The item that has finished</param>
+        void player_PlaybackFinished(IPlayer player, IItem item) {
+            Next();
+        }
+
+        
+        /// <summary>
+        /// Called when the contents of a queue has changed
+        /// </summary>
+        /// <param name="queue">The queue whos contents have changed</param>
+        void _queue_ItemsUpdated(Queue queue) {
+            
+        }
+
+
+        /// <summary>
+        /// Called when a queue is done
+        /// </summary>
+        /// <param name="queue">The corresponding queue</param>
+        void _queue_Finished(Queue queue) {
+            DisposePlayer();
+            _queue = null;
+        }
 
 
 

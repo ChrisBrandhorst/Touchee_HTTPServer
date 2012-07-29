@@ -11,9 +11,11 @@ define([
     containerViews: {},
     
     events: {
-      'click [data-href]':        'followNonAnchor',
-      'click [data-button=prev]': 'prev',
-      'click [data-button=next]': 'next'
+      'click [data-href]':          'followNonAnchor',
+      'click [data-button=prev]':   'prev',
+      'click [data-button=next]':   'next',
+      'click [data-button=play]':   'play',
+      'click [data-button=pause]':  'pause'
     },
     
     
@@ -88,14 +90,10 @@ define([
     },
     
     
-    prev: function() {
-      Backbone.history.loadUrl("control/prev");
-    },
-    
-    next: function() {
-      Backbone.history.loadUrl("control/next");
-    }
-    
+    prev:   function() { Backbone.history.loadUrl("control/prev"); },
+    next:   function() { Backbone.history.loadUrl("control/next"); },
+    play:   function() { Backbone.history.loadUrl("control/play"); },
+    pause:  function() { Backbone.history.loadUrl("control/pause"); }
     
   });
   

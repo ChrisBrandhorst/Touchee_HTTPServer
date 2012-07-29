@@ -11,7 +11,7 @@ namespace Touchee.ITunes.Media {
             get { return null; }
         }
 
-        public IList<StreamInfo> Streams {
+        public ISet<StreamInfo> Streams {
             get { throw new NotImplementedException(); }
         }
     }

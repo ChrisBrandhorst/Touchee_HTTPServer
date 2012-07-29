@@ -25,7 +25,7 @@ namespace Touchee {
         /// <summary>
         /// The streams from which this webcast can be streamed
         /// </summary>
-        IList<StreamInfo> Streams { get; }
+        ISet<StreamInfo> Streams { get; }
 
         /// <summary>
         /// The meta-text for this stream

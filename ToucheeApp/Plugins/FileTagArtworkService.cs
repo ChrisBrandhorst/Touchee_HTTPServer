@@ -59,7 +59,7 @@ namespace Touchee.Service {
             if (!(track is ITrack)) return ServiceResultStatus.NoResult;
 
             // Get uri of file
-            var uri = new Uri(track.Location);
+            var uri = track.Uri;
 
             // We only process local files
             if (!uri.IsFile) return ServiceResultStatus.NoResult;

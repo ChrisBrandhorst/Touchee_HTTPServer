@@ -35,7 +35,7 @@ namespace ListenLive {
         /// <summary>
         /// The streams which are available for this channel
         /// </summary>
-        IList<StreamInfo> _streams = new List<StreamInfo>();
+        ISet<StreamInfo> _streams = new SortedSet<StreamInfo>();
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace ListenLive {
         /// <summary>
         /// The streams from which this webcast can be streamed
         /// </summary>
-        public IList<StreamInfo> Streams { get { return _streams; } }
+        public ISet<StreamInfo> Streams { get { return _streams; } }
 
         #endregion
 

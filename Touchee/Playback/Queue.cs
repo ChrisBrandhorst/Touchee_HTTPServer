@@ -21,14 +21,6 @@ namespace Touchee.Playback {
         /// Contains the unshuffled non-priority items
         /// </summary>
         List<IItem> _itemsUnshuffled;
-        /// <summary>
-        /// Contains the priority items
-        /// </summary>
-        List<IItem> _itemsPriority;
-        /// <summary>
-        /// Contains the items to be played after the queue is finished
-        /// </summary>
-        List<IItem> _itemsAfterFinish;
 
         /// <summary>
         /// Shuffle value
@@ -40,11 +32,6 @@ namespace Touchee.Playback {
         /// </summary>
         int _index = -1;
 
-        /// <summary>
-        /// Whether we are playing a priority item
-        /// </summary>
-        bool _playingPriority = false;
-
         #endregion
 
 
@@ -53,33 +40,7 @@ namespace Touchee.Playback {
         /// <summary>
         /// The items in the queue in the order in which they will be played
         /// </summary>
-        public IEnumerable<QueueItem> Items { get {
-            var items = new List<QueueItem>();
-
-            // Add previous and current items
-            for (int i = 0; i <= Index; i++) {
-                var item = _items[i];
-                items.Add(new QueueItem() { Item = item, Status = i == Index ? QueueItemStatus.Current : QueueItemStatus.Previous });
-            }
-
-            // Add priority items
-            foreach (var item in _itemsPriority)
-                items.Add(new QueueItem() { Item = item, Status = QueueItemStatus.Priority });
-            
-            // Add pending items
-            for (int i = Math.Max(0, Index); i < _items.Count; i++) {
-                var item = _items[i];
-                items.Add(new QueueItem() { Item = item, Status = QueueItemStatus.Pending });
-            }
-
-            // Add after finish item
-            if (_itemsAfterFinish.Count > 0) {
-                var item = _itemsAfterFinish.First();
-                items.Add(new QueueItem() { Item = item, Status = QueueItemStatus.AfterFinish });
-            }
-
-            return items;
-        } }
+        public IEnumerable<IItem> Items { get { return _items; } }
 
 
         /// <summary>
@@ -111,23 +72,12 @@ namespace Touchee.Playback {
         public RepeatMode Repeat { get; set; }
 
 
-        IItem _current;
         /// <summary>
         /// The current item in the queue
         /// </summary>
         public IItem Current {
-            get {
-                return _current;
-            }
-            protected set {
-                _current = value;
-
-                if (_current is ITrack)
-                    Log((_current as ITrack).Name);
-                else if (_current is IWebcast)
-                    Log((_current as IWebcast).Name);
-
-            }
+            get { return Index >= 0 && Index < _items.Count ? _items[Index] : null; }
+            set { Index = _items.IndexOf(value); }
         }
 
 
@@ -137,11 +87,51 @@ namespace Touchee.Playback {
         public int Index {
             get { return _index; }
             set {
-                _index = value >= 0 && value < _items.Count ? value : -1;
-                Current = _index > -1 ? _items[_index] : null;
+                //if (value == _index)
+                //    return;
+                //else 
+                if (value >= 0 && value < _items.Count) {
+                    var previous = Current;
+                    _index = value;
+                    if (IndexChanged != null)
+                        IndexChanged.Invoke(this, previous, Current);
+                }
+                else {
+                    _index = -1;
+                    if (Finished != null)
+                        Finished.Invoke(this);
+                }
+
             }
         }
 
+
+        /// <summary>
+        /// Whether the queue has started
+        /// </summary>
+        public bool IsBeforeFirstItem { get { return Current != null; } }
+
+
+        /// <summary>
+        /// Whether the current item is the first item of the queue
+        /// </summary>
+        public bool IsAtFirstItem { get { return _index == 0; } }
+
+
+        /// <summary>
+        /// Whether the current item is the last item of the queue
+        /// </summary>
+        public bool IsAtLastItem { get { return _index == _items.Count - 1; } }
+
+
+        #endregion
+
+
+        #region Events
+
+        public event QueueItemsUpdatedEventHandler ItemsUpdated;
+        public event QueueIndexChangedEventHandler IndexChanged;
+        public event QueueFinishedEventHandler Finished;
 
         #endregion
 
@@ -155,8 +145,6 @@ namespace Touchee.Playback {
             Repeat = RepeatMode.Off;
             _items = new List<IItem>();
             _itemsUnshuffled = new List<IItem>();
-            _itemsPriority = new List<IItem>();
-            _itemsAfterFinish = new List<IItem>();
         }
 
 
@@ -180,114 +168,104 @@ namespace Touchee.Playback {
         }
 
 
-        /// <summary>
-        /// Constructs a new queue with one item in it.
-        /// </summary>
-        /// <param name="item">The item to add to the queue</param>
-        /// <param name="index">The intial index of the queue</param>
-        public Queue(IItem item, int index) : this(item) {
-            Index = index;
-        }
-
-
-        /// <summary>
-        /// Constructs a new queue with a number of items in it.
-        /// </summary>
-        /// <param name="items">The initial set of items in the queue</param>
-        /// <param name="index">The intial index of the queue</param>
-        public Queue(IEnumerable<IItem> items, int index) : this(items) {
-            Index = index;
-        }
-
-
         #endregion
 
 
         #region Enqueueing
 
+
         /// <summary>
-        /// Queue a single item at the end of the priority queue
+        /// Enqueue an item at the end of the queue
         /// </summary>
         /// <param name="item">The item to add</param>
         public void Enqueue(IItem item) {
-            _itemsPriority.Add(item);
+            _items.Add(item);
+            _itemsUnshuffled.Add(item);
+            OnItemsUpdated();
         }
 
 
         /// <summary>
-        /// Queue a single item at a specific index of the priority queue
+        /// Enqueue an item at a specific index
         /// </summary>
         /// <param name="item">The item to add</param>
         /// <param name="index">The index to add the item at</param>
         /// <exception cref="ArgumentOutOfRangeException">index is less than 0 -or- index is greater than Count.</exception>
         public void Enqueue(IItem item, int index) {
-            _itemsPriority.Insert(index, item);
+            _items.Insert(index, item);
+            _itemsUnshuffled.Insert(index, item);
+            OnItemsUpdated();
         }
 
 
         /// <summary>
-        /// Queue a number of items at the end of the priority queue
+        /// Enqueue a number of items at the end of the queue
         /// </summary>
         /// <param name="items">The items to add</param>
         public void Enqueue(IEnumerable<IItem> items) {
-            _itemsPriority.AddRange(items);
+            _items.AddRange(items);
+            _itemsUnshuffled.AddRange(items);
+            OnItemsUpdated();
         }
-        
+
 
         /// <summary>
-        /// Queue a number of items at the end of the priority queue
+        /// Enqueue a number of items at a specific index
         /// </summary>
-        /// <param name="items">The items to add</param>
+        /// <param name="item">The item sto add</param>
         /// <param name="index">The index to add the items at</param>
         /// <exception cref="ArgumentOutOfRangeException">index is less than 0 -or- index is greater than Count.</exception>
         public void Enqueue(IEnumerable<IItem> items, int index) {
-            _itemsPriority.InsertRange(index, items);
+            _items.InsertRange(index, items);
+            _itemsUnshuffled.InsertRange(index, items);
+            OnItemsUpdated();
         }
 
 
         /// <summary>
-        /// Moves the specified item in the priority queue to the specified index
+        /// Moves the specified item in the queue to the specified index
         /// </summary>
         /// <param name="item">The item to move</param>
         /// <param name="index">The index to place the item at</param>
         /// <exception cref="ArgumentOutOfRangeException">item does not exist in the List</exception>
         /// <exception cref="ArgumentOutOfRangeException">to is not a valid index in the List</exception>
         public void MoveQueued(IItem item, int index) {
-            this.MoveQueued(_itemsPriority.IndexOf(item), index);
+            this.MoveQueued(_items.IndexOf(item), index);
         }
 
 
         /// <summary>
-        /// Moves the item at the specied index in the priority queue to the target index
+        /// Moves the item at the specied index in the queue to the target index.
+        /// Only items that are after the current index can be moved to after the current index.
         /// </summary>
         /// <param name="from">The index of the item to move</param>
         /// <param name="to">The index to place the item at</param>
         /// <exception cref="ArgumentOutOfRangeException">from is not a valid index in the List</exception>
         /// <exception cref="ArgumentOutOfRangeException">to is not a valid index in the List</exception>
         public void MoveQueued(int from, int to) {
-            this.Enqueue(_itemsPriority[from], to);
-            _itemsPriority.RemoveAt(from);
+            if (from <= Index || to <= Index) return;
+
+            _items.Insert(to, _items[from]);
+            _items.RemoveAt(from);
+
+            if (!Shuffle) {
+                _itemsUnshuffled.Insert(to, _itemsUnshuffled[from]);
+                _itemsUnshuffled.RemoveAt(from);
+            }
+
+            OnItemsUpdated();
         }
 
 
         /// <summary>
-        /// Sets a single item to play after the current queue has been fully played
+        /// Called when items are updated: firest the event
         /// </summary>
-        /// <param name="item">The item to add</param>
-        public void EnqueueAfterFinish(IItem item) {
-            _itemsAfterFinish = new List<IItem>() { item };
+        void OnItemsUpdated() {
+            if (ItemsUpdated != null)
+                ItemsUpdated.Invoke(this);
         }
 
-
-        /// <summary>
-        /// Sets a number of items to play after the current queue has been fully played
-        /// </summary>
-        /// <param name="items">The items to add</param>
-        public void EnqueueAfterFinish(IEnumerable<IItem> items) {
-            _itemsAfterFinish = new List<IItem>(items);
-        }
-
-
+        
         #endregion
 
 
@@ -320,17 +298,7 @@ namespace Touchee.Playback {
         /// <returns>The new current item, or null if none</returns>
         public IItem Next(bool ignoreRepeat) {
 
-            // If we have a priority item, we play that first
-            lock (_itemsPriority) {
-                _playingPriority = _itemsPriority.Count > 0;
-                if (_playingPriority) {
-                    Current = _itemsPriority[0];
-                    _itemsPriority.RemoveAt(0);
-                    return Current;
-                }
-            }
-
-            // No priority items, so we proceed with the 'normal' items
+            // Calculate next index
             int nextIndex = Index + 1;
 
             // Handle repeat
@@ -351,18 +319,8 @@ namespace Touchee.Playback {
             }
 
             // If we are at the end
-            if (nextIndex == _items.Count) {
-
-                if (_itemsAfterFinish.Count > 0) {
-                    _itemsUnshuffled.Clear();
-                    _itemsUnshuffled.AddRange(_itemsAfterFinish);
-                    Shuffle = Shuffle;
-                    nextIndex = 0;
-                }
-                else
-                    nextIndex = -1;
-
-            }
+            if (nextIndex == _items.Count)
+                nextIndex = -1;
 
             // Set index and return current item
             Index = nextIndex;
@@ -413,5 +371,12 @@ namespace Touchee.Playback {
 
 
     }
+
+
+
+    public delegate void QueueItemsUpdatedEventHandler(Queue queue);
+    public delegate void QueueIndexChangedEventHandler(Queue queue, IItem previous, IItem current);
+    public delegate void QueueFinishedEventHandler(Queue queue);
+
 
 }

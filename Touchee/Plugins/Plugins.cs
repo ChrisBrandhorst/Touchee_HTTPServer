@@ -56,6 +56,12 @@ namespace Touchee {
             return plugins.Count() > 0 ? plugins.First() : null;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static IEnumerable<T> Get<T>() {
             return _plugins.Where(p => typeof(T).IsAssignableFrom(p.GetType())).Cast<T>();
         }

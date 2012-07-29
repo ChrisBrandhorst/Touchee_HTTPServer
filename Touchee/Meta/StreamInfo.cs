@@ -6,17 +6,21 @@ using System.Text;
 namespace Touchee {
 
     public enum StreamEncoding {
-        MP3,
         HEAAC,
+        MP3,
         WindowsMedia
     }
 
-    public class StreamInfo {
-        public string Location { get; protected set; }
+    public class StreamInfo : IComparable {
+        public Uri Uri { get; protected set; }
         public StreamEncoding Encoding { get; protected set; }
-        public StreamInfo(string location, StreamEncoding encoding) {
-            this.Location = location;
+        public StreamInfo(Uri uri, StreamEncoding encoding) {
+            this.Uri = uri;
             this.Encoding = encoding;
+        }
+        public int CompareTo(object obj) {
+            var other = (StreamInfo)obj;
+            return this.Encoding.CompareTo(other.Encoding);
         }
     }
 

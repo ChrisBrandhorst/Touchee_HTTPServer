@@ -135,7 +135,10 @@ namespace Touchee.ITunes {
                 // Map trackID to persitentID
                 if (toucheeTrack.TrackID >= trackIDs.Length)
                     Array.Resize(ref trackIDs, trackIDs.Length * 2);
-                trackIDs[toucheeTrack.TrackID] = toucheeTrack.PersistentID;
+
+                // Only save trackIDs (for gathering playlists) if we have a filetrack
+                if (toucheeTrack is FileTrack)
+                    trackIDs[toucheeTrack.TrackID] = toucheeTrack.PersistentID;
             }
 
             #endregion

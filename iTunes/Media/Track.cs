@@ -11,7 +11,7 @@ namespace Touchee.ITunes.Media {
     /// <remarks>
     /// Represents an iTUnes track
     /// </remarks>
-    public abstract class Track : Collectable<Track>, ITrack, IItem, IComparable {
+    public abstract class Track : Collectable<Track>, IItem, IComparable {
 
 
         #region Statics
@@ -188,6 +188,14 @@ namespace Touchee.ITunes.Media {
                 return (this.AlbumArtist + "=" + this.Album).GetInt64HashCode();
             }
         }
+
+        /// <summary>
+        /// The uri for this track
+        /// </summary>
+        public Uri Uri { get {
+            return new Uri(this.Location);
+        } }
+
 
         #endregion 
         

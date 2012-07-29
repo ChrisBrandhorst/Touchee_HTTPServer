@@ -389,7 +389,7 @@ namespace ListenLive {
                 var channel = RadioChannel.FindOrCreateByName(channelName, genre, channelURL);
 
                 // Get encodings
-                var encodingStrings = row.SelectNodes("td[3]/img").Select(n => n.GetAttributeValue("alt", ""));
+                var encodingStrings = row.SelectNodes("td[3]/img").Select(n => n.GetAttributeValue("alt", "").ToLower());
                 if (encodingStrings == null) continue;
 
                 // Get streams
@@ -404,9 +404,9 @@ namespace ListenLive {
                     // Get encoding enum
                     StreamEncoding streamEncoding;
                     switch (encodingString) {
-                        case "Windows Media": streamEncoding = StreamEncoding.WindowsMedia; break;
+                        case "windows media": streamEncoding = StreamEncoding.WindowsMedia; break;
                         case "aacplus": streamEncoding = StreamEncoding.HEAAC; break;
-                        case "MP3": streamEncoding = StreamEncoding.MP3; break;
+                        case "mp3": streamEncoding = StreamEncoding.MP3; break;
                         default: continue;
                     }
 
@@ -420,9 +420,16 @@ namespace ListenLive {
                     else if (walkNode != null) walkNode = walkNode.NextSibling;
 
                     // Add stream to channel
-                    var streamLocation = lastStreamNode.GetAttributeValue("href", "");
-                    var stream = new StreamInfo(streamLocation, streamEncoding);
-                    channel.Streams.Add(stream);
+                    string streamHref = "";
+                    try {
+                        streamHref = lastStreamNode.GetAttributeValue("href", "");
+                        var streamUri = new Uri(streamHref);
+                        var stream = new StreamInfo(streamUri, streamEncoding);
+                        channel.Streams.Add(stream);
+                    }
+                    catch (Exception) {
+                        Log("Invalid uri: " + streamHref);
+                    }
                 }
 
                 // Add channel
