@@ -67,6 +67,10 @@ namespace Touchee {
         /// </summary>
         IPlayer _player;
 
+
+        IDictionary<Type, IPlayer> _players;
+        IDictionary<Type, Queue> _queues;
+
         #endregion
 
 
@@ -525,6 +529,16 @@ namespace Touchee {
 
 
         /// <summary>
+        /// Gets the IPlayer plugin which can play the given item
+        /// </summary>
+        /// <param name="item">The item to play</param>
+        /// <returns>The corresponding IPlayer</returns>
+        IPlayer GetPlayerForItem(IItem item) {
+            return Plugins.Get<IPlayer>().FirstOrDefault(p => p.CanPlay(item));
+        }
+
+
+        /// <summary>
         /// Called when the index of the current queue is changed. Starts playing the next track
         /// </summary>
         /// <param name="queue">The queue whos index has changed</param>
@@ -543,8 +557,8 @@ namespace Touchee {
             if (_player == null || previous == null || previous.GetType() != current.GetType()) {
 
                 // Find the new player
-                newPlayer = Plugins.Get<IPlayer>().FirstOrDefault(p => p.CanPlay(current));
-
+                newPlayer = GetPlayerForItem(current);
+                
                 // None found
                 if (newPlayer == null)
                     Log("No player found for item with type " + current.GetType().ToString(), Logger.LogLevel.Error);

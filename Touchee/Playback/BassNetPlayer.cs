@@ -14,7 +14,7 @@ namespace Touchee.Playback {
     /// <remarks>
     /// 
     /// </remarks>
-    public class BassNetPlayer : Base, IPlayer, IPlugin {
+    public class BassNetPlayer : Base, IImagePlayer, IPlugin {
 
 
         #region IPlugin implementation
