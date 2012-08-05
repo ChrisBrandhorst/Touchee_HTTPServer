@@ -19,8 +19,9 @@ define([
         showID:     true,
         renderItem: function(id, data, odd) {
           return [
-            '<tr ', (odd ? 'class="odd" ' : ''), 'data-', options.contents.idAttribute, '="', data[0], '"><td>',
-            '<img src="', artworkURL, data[0], '" onload="this.style.display=\'inline-block\'" />',
+            '<tr ', (odd ? 'class="odd" ' : ''), 'data-', options.contents.idAttribute, '="', data[0], '">',
+            // '<td><img src="', artworkURL, data[0], '" onload="this.style.display=\'inline-block\'" />',
+            '<td style="background-image:url(\'', artworkURL, data[0], '\')">',
             '</td><td>',
             (data[0] || T.T.unknown).htmlEncode(),
             '</td><td>',

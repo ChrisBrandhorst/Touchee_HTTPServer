@@ -71,7 +71,7 @@ namespace Touchee.Web.Controllers {
             TryGetIntParam("item", out itemID);
 
             // Vars
-            Filter filter = null;
+            Options filter = null;
             IItem item = null;
             ArtworkResult result = null;
 
@@ -81,7 +81,7 @@ namespace Touchee.Web.Controllers {
                 result = Library.Artwork(container, item, Client, Request.Uri);
             }
             else {
-                filter = Filter.Build(GetStringParam("item"));
+                filter = Options.Build(GetStringParam("item"));
                 if (filter.Count > 0)
                     result = Library.Artwork(container, filter, Client, Request.Uri);
                 else

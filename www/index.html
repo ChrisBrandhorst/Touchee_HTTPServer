@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   
 </head>
-
-<body style="-webkit-transform:translate3d(0,0,-10px)">
+ <!-- style="-webkit-transform:translate3d(0,0,-10px)" -->
+<body>
   
   <!-- Main browser section -->
   <section id="browser">
@@ -71,6 +71,7 @@
     <!-- Viewmodes, now playing button -->
     <footer>
       <button data-button="settings" onclick="window.location.replace('http://htpc/');"></button>
+      <span id="debug" style="position:absolute;top:13px;left:42px"></span>
       <button data-button="nowplaying">Now Playing</button>
     </footer>
     

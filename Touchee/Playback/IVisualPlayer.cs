@@ -8,7 +8,7 @@ namespace Touchee.Playback {
     /// <remarks>
     /// Specifies a player which emmits images (either still or moving)
     /// </remarks>
-    public interface IImagePlayer : IPlayer {
+    public interface IVisualPlayer : IPlayer {
     }
 
 }

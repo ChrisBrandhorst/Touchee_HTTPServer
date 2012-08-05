@@ -9,7 +9,7 @@ define([
     getUrl: function(id) {
       var filter = {};
       filter[this.idAttribute] = id;
-      return ["control", "play", "container", this.container.id, this.filter.toString(filter)].join("/");
+      return ["play", "container", this.container.id, this.filter.toString(filter)].join("/");
     },
     
     

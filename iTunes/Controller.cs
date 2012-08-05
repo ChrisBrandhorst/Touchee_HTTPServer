@@ -28,7 +28,7 @@ namespace Touchee.ITunes {
         /// <param name="container">The container for which the items should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        public IEnumerable<IItem> GetItems(IContainer container, Filter filter) {
+        public IEnumerable<IItem> GetItems(IContainer container, Options filter) {
             var tracks = GetTracks(container, filter);
             return tracks == null ? null : tracks.Cast<IItem>();
         }
@@ -40,7 +40,7 @@ namespace Touchee.ITunes {
         /// <param name="container">The container for which the contents should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        public Contents GetContents(IContainer container, Filter filter) {
+        public Contents GetContents(IContainer container, Options filter) {
             var tracks = GetTracks(container, filter);
             if (tracks == null) return null;
             return BuildContents(tracks, filter, container);
@@ -53,7 +53,7 @@ namespace Touchee.ITunes {
         /// <param name="container">The container for which the tracks should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        IEnumerable<Track> GetTracks(IContainer container, Filter filter) {
+        IEnumerable<Track> GetTracks(IContainer container, Options filter) {
 
             // Vars
             IEnumerable<Track> tracks;
@@ -91,7 +91,7 @@ namespace Touchee.ITunes {
         /// <param name="tracks">The tracks to filter</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>A IEnumerable of filtered tracks</returns>
-        IEnumerable<Track> FilterTracks(IEnumerable<Track> tracks, Filter filter) {
+        IEnumerable<Track> FilterTracks(IEnumerable<Track> tracks, Options filter) {
 
             foreach (var key in filter.Keys) {
                 var value = filter[key];
@@ -131,10 +131,10 @@ namespace Touchee.ITunes {
         /// <param name="filter">The filter used</param>
         /// <param name="master">Whether the tracks are from the master playlist</param>
         /// <returns>The sorted track collection</returns>
-        IEnumerable<Track> SortTracks(IEnumerable<Track> tracks, Filter filter, bool master) {
+        IEnumerable<Track> SortTracks(IEnumerable<Track> tracks, Options filter, bool master) {
             if (filter.ContainsKey("albumid") || filter.ContainsKey("artist"))
                 tracks = SortTracksByAlbum(tracks);
-            else if (master)
+            else if (master && filter.ContainsKey("type") && filter["type"] == Types.Track)
                 tracks = SortTracksByName(tracks);
             return tracks;
         }
@@ -147,7 +147,7 @@ namespace Touchee.ITunes {
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <param name="container">The container the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
-        Contents BuildContents(IEnumerable<Track> tracks, Filter filter, IContainer container) {
+        Contents BuildContents(IEnumerable<Track> tracks, Options filter, IContainer container) {
 
             // Get type
             var type = (filter.ContainsKey("type") ? filter["type"] : container.ViewTypes.FirstOrDefault()) ?? Types.Track;

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Touchee.Playback;
+
 namespace Touchee.Web.Controllers {
 
     public class ControlController : ApplicationController {
@@ -14,46 +16,61 @@ namespace Touchee.Web.Controllers {
         /// </summary>
         public void Play() {
 
-            // Container id
-            int containers_id = GetIntParam("container");
+            // Get container or queue
+            int containerID = GetIntParam("container");
 
-            // No params? Do unpause
-            if (containers_id == 0) {
-                Library.Play();
-                return;
+            // If we have a container ID
+            if (containerID > 0) {
+
+                // Get container
+                if (!Container.Exists(containerID)) return;
+                var container = Container.Find(containerID);
+
+                // Build the filter
+                var filter = Options.Build(GetStringParam("filter"));
+
+                // Play it
+                Library.Play(container, filter);
+            }
+            
+            // Else, do queue action
+            else {
+                var queue = GetQueue();
+                if (queue != null)
+                    Library.Play(queue);
             }
 
-            // Check container id
-            if (!Container.Exists(containers_id)) return;
-
-            // Get container
-            var container = Container.Find(containers_id);
-
-            // Build the filter
-            var filter = Filter.Build(GetStringParam("filter"));
-
-            // Play it
-            Library.Play(container, filter);
+            // TODO: no params --> command on all queues
         }
 
 
 
         public void Prev() {
-            Library.Prev();
+            var queue = GetQueue();
+            if (queue != null)
+                Library.Prev(queue);
         }
 
 
         public void Next() {
-            Library.Next();
+            var queue = GetQueue();
+            if (queue != null)
+                Library.Next(queue);
         }
 
 
         public void Pause() {
-            Library.Pause();
+            var queue = GetQueue();
+            if (queue != null)
+                Library.Pause(queue);
         }
-        
 
 
+        Queue GetQueue() {
+            int queueID = GetIntParam("queue");
+            if (!(queueID > 0)) return null;
+            return Queue.Exists(queueID) ? Queue.Find(queueID) : null;
+        }
 
 
     }

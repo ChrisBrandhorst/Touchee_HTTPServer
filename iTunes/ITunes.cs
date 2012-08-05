@@ -86,7 +86,7 @@ namespace Touchee.ITunes {
         /// <param name="container">The container for which the items should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        public IEnumerable<IItem> GetItems(IContainer container, Filter filter) {
+        public IEnumerable<IItem> GetItems(IContainer container, Options filter) {
             return _controller.GetItems(container, filter);
         }
 
@@ -96,7 +96,7 @@ namespace Touchee.ITunes {
         /// <param name="container">The container for which the contents should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        public Contents GetContents(IContainer container, Filter filter) {
+        public Contents GetContents(IContainer container, Options filter) {
             return _controller.GetContents(container, filter);
         }
 
@@ -113,7 +113,7 @@ namespace Touchee.ITunes {
         /// Returns unavailable, so the default Touchee artwork process is used
         /// </summary>
         /// <returns>ArtworkStatus.Unavailable</returns>
-        public ArtworkStatus GetArtwork(IContainer container, Filter filter, out Image artwork) {
+        public ArtworkStatus GetArtwork(IContainer container, Options filter, out Image artwork) {
             artwork = null;
             return ArtworkStatus.Unavailable;
         }

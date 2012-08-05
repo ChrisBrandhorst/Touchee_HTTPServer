@@ -58,7 +58,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Media\IFileTrack.cs" />
     <Compile Include="Playback\IAudioPlayer.cs" />
-    <Compile Include="Playback\IImagePlayer.cs" />
+    <Compile Include="Playback\IVisualPlayer.cs" />
     <Compile Include="Playback\Player.cs" />
     <Compile Include="Playback\RepeatMode.cs" />
     <Compile Include="Playback\BassNetPlayer.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="Organizing\Container.cs" />
     <Compile Include="Organizing\DriveMediaWatcher.cs" />
     <Compile Include="Types\Contents.cs" />
-    <Compile Include="Types\Filter.cs" />
+    <Compile Include="Types\Options.cs" />
     <Compile Include="Organizing\Medium.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Media\ITrack.cs" />

@@ -135,7 +135,7 @@ namespace ListenLive {
         /// <param name="container">The container for which the items should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        public IEnumerable<IItem> GetItems(IContainer container,Filter filter) {
+        public IEnumerable<IItem> GetItems(IContainer container,Options filter) {
             var channels = GetChannels(container, filter);
             return channels == null ? null : channels.Cast<IItem>();
         }
@@ -147,7 +147,7 @@ namespace ListenLive {
         /// <param name="container">The container for which the contents should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        public Contents GetContents(IContainer container, Filter filter) {
+        public Contents GetContents(IContainer container, Options filter) {
             var channels = GetChannels(container, filter);
             if (channels == null) return null;
             var channelsContainer = (RadioChannels)container;
@@ -161,7 +161,7 @@ namespace ListenLive {
         /// <param name="container">The container for which the channels should be retreived</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>The results</returns>
-        IEnumerable<RadioChannel> GetChannels(IContainer container, Filter filter) {
+        IEnumerable<RadioChannel> GetChannels(IContainer container, Options filter) {
 
             // Check if we have a radiochannels container, just to be sure
             if (!(container is RadioChannels)) return null;
@@ -187,7 +187,7 @@ namespace ListenLive {
         /// <param name="channels">The channels to filter</param>
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <returns>A IEnumerable of filtered channels</returns>
-        IEnumerable<RadioChannel> FilterChannels(IEnumerable<RadioChannel> channels, Filter filter) {
+        IEnumerable<RadioChannel> FilterChannels(IEnumerable<RadioChannel> channels, Options filter) {
 
             foreach (var key in filter.Keys) {
                 var value = filter[key];
@@ -216,7 +216,7 @@ namespace ListenLive {
         /// <param name="filter">The filter object which contains the parameters with which to query for items</param>
         /// <param name="channelsContainer">The radio channels container the tracks are sources from</param>
         /// <returns>A filled contents object</returns>
-        Contents BuildContents(IEnumerable<RadioChannel> channels, Filter filter, RadioChannels channelsContainer) {
+        Contents BuildContents(IEnumerable<RadioChannel> channels, Options filter, RadioChannels channelsContainer) {
 
             // Create contents instance
             var contents = new Contents(channelsContainer);
@@ -309,7 +309,7 @@ namespace ListenLive {
         /// Not used.
         /// </summary>
         /// <returns>ArtworkStatus.Unavailable</returns>
-        public ArtworkStatus GetArtwork(IContainer container, Filter filter, out Image artwork) {
+        public ArtworkStatus GetArtwork(IContainer container, Options filter, out Image artwork) {
             artwork = null;
             return ArtworkStatus.Unavailable;
         }

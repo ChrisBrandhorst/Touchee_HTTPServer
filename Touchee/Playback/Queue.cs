@@ -8,7 +8,7 @@ namespace Touchee.Playback {
     /// <remarks>
     /// Represents a playing queue
     /// </remarks>
-    public class Queue : Base {
+    public class Queue : Collectable<Queue> {
 
 
         #region Privates
@@ -82,6 +82,24 @@ namespace Touchee.Playback {
 
 
         /// <summary>
+        /// Returns the previous item in the queue
+        /// </summary>
+        public IItem Prev { get {
+            var i = _index - 1;
+            return i >= 0 && i < _items.Count ? _items[i] : null;
+        } }
+
+
+        /// <summary>
+        /// Returns the next item in the queue
+        /// </summary>
+        public IItem Next { get {
+            var i = _index + 1;
+            return i >= 0 && i < _items.Count ? _items[i] : null;
+        } }
+
+
+        /// <summary>
         /// The index of the current item in the queue
         /// </summary>
         public int Index {
@@ -124,6 +142,18 @@ namespace Touchee.Playback {
         public bool IsAtLastItem { get { return _index == _items.Count - 1; } }
 
 
+        /// <summary>
+        /// The content type of the items in the queue
+        /// </summary>
+        public string ContentType { get; protected set; }
+
+
+        /// <summary>
+        /// Can be used for keeping track of the current player
+        /// </summary>
+        public IPlayer CurrentPlayer { get; set; }
+
+
         #endregion
 
 
@@ -141,7 +171,9 @@ namespace Touchee.Playback {
         /// <summary>
         /// Constructs a new, empty queue.
         /// </summary>
-        public Queue() {
+        /// <param name="contentType">The content type of the items in the queue</param>
+        public Queue(string contentType) {
+            ContentType = contentType;
             Repeat = RepeatMode.Off;
             _items = new List<IItem>();
             _itemsUnshuffled = new List<IItem>();
@@ -152,7 +184,8 @@ namespace Touchee.Playback {
         /// Constructs a new queue with one item in it.
         /// </summary>
         /// <param name="item">The item to add to the queue</param>
-        public Queue(IItem item) : this() {
+        /// <param name="contentType">The content type of the items in the queue</param>
+        public Queue(IItem item, string contentType) : this(contentType) {
             _itemsUnshuffled.Add(item);
             ResetItems();
         }
@@ -162,7 +195,8 @@ namespace Touchee.Playback {
         /// Constructs a new queue with a number of items in it.
         /// </summary>
         /// <param name="items">The initial set of items in the queue</param>
-        public Queue(IEnumerable<IItem> items) : this() {
+        /// <param name="contentType">The content type of the items in the queue</param>
+        public Queue(IEnumerable<IItem> items, string contentType) : this(contentType) {
             _itemsUnshuffled.AddRange(items);
             ResetItems();
         }
@@ -276,7 +310,7 @@ namespace Touchee.Playback {
         /// Go to the previous item
         /// </summary>
         /// <returns>The new current item, or null if none</returns>
-        public IItem Prev() {
+        public IItem GoPrev() {
             --Index;
             return Current;
         }
@@ -286,8 +320,8 @@ namespace Touchee.Playback {
         /// Move to the next item
         /// </summary>
         /// <returns>The new current item, or null if none</returns>
-        public IItem Next() {
-            return this.Next(false);
+        public IItem GoNext() {
+            return this.GoNext(false);
         }
 
 
@@ -296,7 +330,7 @@ namespace Touchee.Playback {
         /// </summary>
         /// <param name="ignoreRepeat">Whether the repeat property should be ignored when determining the nex item</param>
         /// <returns>The new current item, or null if none</returns>
-        public IItem Next(bool ignoreRepeat) {
+        public IItem GoNext(bool ignoreRepeat) {
 
             // Calculate next index
             int nextIndex = Index + 1;
@@ -377,6 +411,5 @@ namespace Touchee.Playback {
     public delegate void QueueItemsUpdatedEventHandler(Queue queue);
     public delegate void QueueIndexChangedEventHandler(Queue queue, IItem previous, IItem current);
     public delegate void QueueFinishedEventHandler(Queue queue);
-
 
 }

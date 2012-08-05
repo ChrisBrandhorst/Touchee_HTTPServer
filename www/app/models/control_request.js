@@ -21,7 +21,8 @@ define([
     // 
     save: function(attributes, options) {
       var data = this.toJSON();
-      data.filter = this.filter.toString();
+      if (this.filter)
+        data.filter = this.filter.toString();
       
       options = _.extend({}, options, {
         data:         data,

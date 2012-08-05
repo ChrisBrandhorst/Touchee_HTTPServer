@@ -9,12 +9,12 @@ using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Tags;
 using Un4seen.Bass.AddOn.Mix;
 
-namespace Touchee.Playback {
+namespace   Touchee.Playback {
     
     /// <remarks>
     /// 
     /// </remarks>
-    public class BassNetPlayer : Base, IImagePlayer, IPlugin {
+    public class BassNetPlayer : Base, IVisualPlayer, IPlugin {
 
 
         #region IPlugin implementation
@@ -32,8 +32,13 @@ namespace Touchee.Playback {
         /// <param name="config">The configuration object for this plugin</param>
         /// <returns>Always true</returns>
         public bool Start(dynamic config) {
+
+            var path = Path.Combine( Path.GetDirectoryName( new Uri( System.Reflection.Assembly.GetExecutingAssembly().CodeBase ).LocalPath ), @"lib\bass" );
+            
+            Bass.LoadMe(path);
+            BassMix.LoadMe(path);
+            Bass.BASS_PluginLoadDirectory(Path.Combine(path, "plugins"));
             Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_NET_PLAYLIST, 1);
-            Bass.BASS_PluginLoadDirectory("plugins\\bass");
             Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
             return true;
         }
@@ -211,6 +216,7 @@ namespace Touchee.Playback {
 
 
         void ChannelEnd(int handle, int channel, int data, IntPtr user) {
+            this.Item = null;
             if (PlaybackFinished != null)
                 PlaybackFinished.Invoke(this, this.Item);
         }

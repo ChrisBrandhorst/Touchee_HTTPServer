@@ -7,7 +7,9 @@ define([
   var Container = Backbone.Model.extend({
     
     getArtworkUrl: function(options) {
-      options = options || {};
+      options = _.extend({
+        ratio: window.devicePixelRatio
+      }, options || {});
       var item = options.item;
       if (item) delete options.item;
       options = $.param(options);

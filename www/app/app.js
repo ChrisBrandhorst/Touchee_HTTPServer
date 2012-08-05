@@ -137,7 +137,7 @@ define([
       if (response.containers) {
         var medium = Media.get(response.containers.mediumID);
         if (medium)
-          medium.containers.reset(response.containers.items);
+          medium.containers.updateAll(response.containers.items);
       }
       
       if (response.contents) {

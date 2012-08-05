@@ -36,7 +36,7 @@ define([
       // Get the album thumb that was clicked
       var $thumb = this.$thumb;
       if (!$thumb)
-        $thumb = this.$thumb = $('.contents:not(.hidden) section.type-album li[data-id=' + this.contents.filter.get('albumid') + ']');
+        $thumb = this.$thumb = $('.contents:not(.hidden) section.type-album li[data-id=' + this.contents.filter.get('albumid') + ']').first();
       if (!$thumb.length)
         return;
       else
@@ -47,7 +47,7 @@ define([
         albumPopupTemplate(
           _.extend({
             backgroundImage: this.backgroundImage
-          },this.contents)
+          }, this.contents)
         )
       );
       
@@ -60,9 +60,6 @@ define([
       
       // Already placed, bail out
       if (this.el.parentNode) return;
-      
-      // Hide thumbnail
-      $thumb.addClass('hidden');
       
       // Get some values
       var $scrollable = $thumb.closest('.scrollable'),
@@ -95,13 +92,16 @@ define([
       
       // Calculate deltas
       var deltaX = Math.min(
-        $scrollable[0].offsetWidth - thumbMargin.left - this.$el[0].offsetWidth,
+        $scrollable[0].offsetWidth - thumbMargin.left - this.el.offsetWidth,
         Math.max(thumbMargin.left, albumPos.left)
       ) - albumPos.left;
       var deltaY = Math.min(
-        $scrollable[0].offsetHeight - thumbMargin.top - this.$el[0].offsetHeight,
+        $scrollable[0].offsetHeight - thumbMargin.top - this.el.offsetHeight,
         Math.max(thumbMargin.top, albumPos.top)
       ) - albumPos.top;
+      
+      // Hide thumbnail
+      $thumb.addClass('hidden');
       
       // Animate!
       _.defer(function(){
@@ -125,8 +125,10 @@ define([
           // After animation is complete, remove this view
           _.delay(function(){
             $thumb.removeClass('hidden');
-            view.$overlay.remove();
-            view.remove();
+            _.delay(function(){
+              view.$overlay.remove();
+              view.remove();
+            }, 100);
           }, parseFloat($album.css('-webkit-transition-duration')) * 1000);
           
           ev.preventDefault();

@@ -26,7 +26,8 @@ define([
     // Default touchscroll options for a tile view
     touchScrollOptions: {
       selectable:     'li',
-      keepSelection:  false
+      keepSelection:  false,
+      delay:          40
     },
     
     
@@ -37,7 +38,7 @@ define([
       // Default scrolllist options for a table view
       var contents = this.contents, view = this;
       var scrolllistOptions = this.scrolllistOptions = _.extend({
-        rows:         0,
+        rows:         5,
         showIndices:  false,
         count:  function(el, elI) {
           return contents.get('data').length;

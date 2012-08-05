@@ -56,20 +56,7 @@ namespace Touchee {
         /// Timespan representing the period that should be waited before retrying a non-available artwork
         /// </summary>
         TimeSpan _artworkRetryPeriod;
-
-        /// <summary>
-        /// The current queue
-        /// </summary>
-        Queue _queue;
-
-        /// <summary>
-        /// The current player
-        /// </summary>
-        IPlayer _player;
-
-
-        IDictionary<Type, IPlayer> _players;
-        IDictionary<Type, Queue> _queues;
+        
 
         #endregion
 
@@ -99,9 +86,6 @@ namespace Touchee {
             Container.AfterUpdate += new Collectable<Container>.ItemEventHandler(Container_AfterUpdate);
             Container.AfterDispose += new Collectable<Container>.ItemEventHandler(Container_AfterDispose);
 
-            // Set queue
-            _queue = new Queue();
-
             // Build local medium
             string name = Program.Config.GetString("name", "Touchee");
             new Medium(name, MediumType.Local).Save();
@@ -127,7 +111,7 @@ namespace Touchee {
         void Medium_AfterCreate(object sender, Collectable<Medium>.ItemEventArgs e) {
             var beingWatched = false;
             _mediumWatchers.ForEach(w => beingWatched |= w.Watch(e.Item));
-            if (beingWatched)
+            //if (beingWatched)
                 _server.Broadcast(Media());
         }
 
@@ -139,7 +123,7 @@ namespace Touchee {
         void Medium_AfterDispose(object sender, Collectable<Medium>.ItemEventArgs e) {
             var beingWatched = false;
             _mediumWatchers.ForEach(w => beingWatched |= w.UnWatch(e.Item));
-            if (beingWatched)
+            //if (beingWatched)
                 _server.Broadcast(Media());
         }
 
@@ -207,7 +191,7 @@ namespace Touchee {
         /// <summary>
         /// Gets a message containing the content for the given container, type and filter combination
         /// </summary>
-        public ContentsMessage Contents(Container container, Filter filter) {
+        public ContentsMessage Contents(Container container, Options filter) {
             var controller = Plugins.GetContentsPluginFor(container);
             if (controller == null)
                 return null;
@@ -259,7 +243,7 @@ namespace Touchee {
         /// <param name="client">The client for which the artwork is retrieved</param>
         /// <param name="uri">The uri which was called</param>
         /// <returns>An ArtworkResult object containing the artwork and its status and type</returns>
-        public ArtworkResult Artwork(IContainer container, Filter filter, Client client, Uri uri) {
+        public ArtworkResult Artwork(IContainer container, Options filter, Client client, Uri uri) {
 
             // Get hash input from filter
             var uniqueKey = String.Join(",", 
@@ -286,7 +270,7 @@ namespace Touchee {
         /// <param name="client">The client for which the artwork is retrieved</param>
         /// <param name="uri">The uri which was called</param>
         /// <returns>An ArtworkResult object</returns>
-        ArtworkResult Artwork(IContainer container, string uniqueKey, IItem item, Filter filter, Client client, Uri uri) {
+        ArtworkResult Artwork(IContainer container, string uniqueKey, IItem item, Options filter, Client client, Uri uri) {
 
             // Result var
             ArtworkResult result;
@@ -358,7 +342,7 @@ namespace Touchee {
         /// <param name="client">The client for which the artwork is retrieved</param>
         /// <param name="uri">The uri which was called</param>
         /// <returns>An image if artwork was found, otherwise null</returns>
-        ArtworkResult GetNonCachedArtwork(ArtworkResult result, IContainer container, string uniqueKey, IItem item, Filter filter, Client client, Uri uri) {
+        ArtworkResult GetNonCachedArtwork(ArtworkResult result, IContainer container, string uniqueKey, IItem item, Options filter, Client client, Uri uri) {
 
             // Artwork result object
             result.Status = ArtworkStatus.Pending;
@@ -448,83 +432,89 @@ namespace Touchee {
         /// </summary>
         /// <param name="container">The container in which the items reside</param>
         /// <param name="filter">Filter used to get the items from the container</param>
-        public void Play(Container container, Filter filter) {
+        public Queue Play(Container container, Options filter) {
 
             // Get the plugin for the container
             var contentsPlugin = Plugins.GetContentsPluginFor(container);
-            if (contentsPlugin == null) return;
+            if (contentsPlugin == null) return null;
 
             // Get the items for this container / filter combination
             var items = contentsPlugin.GetItems(container, filter);
 
             // Bail out if no items
-            if (items.Count() == 0) return;
+            if (items.Count() == 0) return null;
 
-            // Build queue
-            var newQueue = new Playback.Queue(items);
-            if (_queue != null) {
-                newQueue.Repeat = _queue.Repeat;
-                newQueue.Shuffle = _queue.Shuffle;
+            // Build queue and queue info object
+            var queue = new Queue(items, container.ContentType);
+
+            // Find existing queue of same type
+            var existingQueue = Queue.FirstOrDefault(q => q.ContentType == queue.ContentType);
+
+            // If we have a similar queue, move repeat and shuffle settings
+            if (existingQueue != null) {
+                queue.Repeat = existingQueue.Repeat;
+                queue.Shuffle = existingQueue.Shuffle;
             }
-            _queue = newQueue;
 
             // Set callbacks on queue
-            _queue.IndexChanged += _queue_IndexChanged;
-            _queue.ItemsUpdated += _queue_ItemsUpdated;
-            _queue.Finished += _queue_Finished;
+            queue.IndexChanged += queue_IndexChanged;
+            queue.ItemsUpdated += queue_ItemsUpdated;
+            queue.Finished += queue_Finished;
 
-            // Stop current playback
-            if (_player != null)
-                _player.Stop();
-            
+            // Save the queue
+            queue.Save();
+
             // Set index, starting the queue
             var id = filter.GetInt("id");
             if (id > 0) {
                 var item = items.FirstOrDefault(i => i.ID == id);
-                _queue.Current = item;
+                queue.Current = item;
             }
             else
-                _queue.Index = filter.GetInt("index");
+                queue.Index = filter.GetInt("index");
+            
+            return queue;
         }
 
 
         /// <summary>
         /// Skip to the next item in the current queue
         /// </summary>
-        public void Prev() {
-            if (_queue != null) {
-                if (_queue.IsAtFirstItem)
-                    _queue.Index = 0;
-                else
-                    _queue.Prev();
-            }
+        /// <param name="queue">The queue to apply this action on</param>
+        public void Prev(Queue queue) {
+            if (queue.IsAtFirstItem)
+                queue.Index = 0;
+            else
+                queue.GoPrev();
         }
 
 
         /// <summary>
         /// Skip to the previous item in the current queue
         /// </summary>
-        public void Next() {
-            if (_queue != null && !_queue.IsAtLastItem)
-                _queue.Next();
+        /// <param name="queue">The queue to apply this action on</param>
+        public void Next(Queue queue) {
+            queue.GoNext();
         }
 
 
         /// <summary>
         /// Pause the playback of the current item in the queue
         /// </summary>
-        public void Pause() {
-            if (_player != null)
-                _player.Pause();
+        /// <param name="queue">The queue to apply this action on</param>
+        public void Pause(Queue queue) {
+            if (queue.CurrentPlayer != null)
+                queue.CurrentPlayer.Pause();
         }
 
 
         /// <summary>
         /// Resume the playback of the current item in the queue
         /// </summary>
-        public void Play() {
-            if (_player != null)
-                _player.Play();
+        /// <param name="queue">The queue to apply this action on</param>
+        public void Play(Queue queue) {
+            if (queue.CurrentPlayer != null)
+                queue.CurrentPlayer.Play();
         }
 
 
@@ -544,50 +534,66 @@ namespace Touchee {
         /// <param name="queue">The queue whos index has changed</param>
         /// <param name="previous">The previous item that was played</param>
         /// <param name="current">The item that is about the be played</param>
-        void _queue_IndexChanged(Queue queue, IItem previous, IItem current) {
+        void queue_IndexChanged(Queue queue, IItem previous, IItem current) {
 
-            // Stop player if there is nu current item
-            if (current == null) {
-                DisposePlayer();
-                return;
-            }
+            // If we have a different type to play, start the correct player and stop colliding players
+            if (previous == null || previous.GetType() != current.GetType()) {
 
-            // If we have a different type to play, or have no player yet, find the player to use
-            IPlayer newPlayer = null;
-            if (_player == null || previous == null || previous.GetType() != current.GetType()) {
+                // Get the player for the current item
+                var newPlayer = GetPlayerForItem(current);
 
-                // Find the new player
-                newPlayer = GetPlayerForItem(current);
-                
                 // None found
-                if (newPlayer == null)
+                if (newPlayer == null) {
                     Log("No player found for item with type " + current.GetType().ToString(), Logger.LogLevel.Error);
-
-                // Set player callbacks unless we have the same player
-                else if (newPlayer != _player)
-                    newPlayer.PlaybackFinished += player_PlaybackFinished;
-
-                // Dispose current player if the new one is different and set the new one as current
-                if (newPlayer != _player) {
-                    DisposePlayer();
-                    _player = newPlayer;
+                    StopQueue(queue);
+                    return;
                 }
+
+                // Stop queues and players that collide with the new one
+                var queues = Queue.Where(q => q != queue).ToList();
+                foreach (var q in queues) {
+                    if (q.CurrentPlayer is IAudioPlayer && newPlayer is IAudioPlayer)
+                        StopQueue(q);
+                    else if (q.CurrentPlayer is IVisualPlayer && newPlayer is IVisualPlayer)
+                        StopQueue(q);
+                }
+
+                // If we are using an other player, stop the old one and set the necessary callbacks
+                if (newPlayer != queue.CurrentPlayer) {
+                    StopPlayer(queue.CurrentPlayer);
+                    newPlayer.PlaybackFinished += player_PlaybackFinished;
+                    queue.CurrentPlayer = newPlayer;
+                }
+
             }
 
             // Play the current item
-            if (_player != null)
-                _player.Play(current);
+            queue.CurrentPlayer.Play(current);
         }
 
 
         /// <summary>
-        /// Nicely disposes of the current player
+        /// Nicely stops a queue and the player it has
         /// </summary>
-        void DisposePlayer() {
-            if (_player != null) {
-                _player.Stop();
-                _player.PlaybackFinished -= player_PlaybackFinished;
-                _player = null;
+        /// <param name="queue">The queue to stop</param>
+        void StopQueue(Queue queue) {
+            StopPlayer(queue.CurrentPlayer);
+            queue.CurrentPlayer = null;
+            queue.IndexChanged -= queue_IndexChanged;
+            queue.ItemsUpdated -= queue_ItemsUpdated;
+            queue.Finished -= queue_Finished;
+            queue.Dispose();
+        }
+
+
+        /// <summary>
+        /// Nicely stops a player
+        /// </summary>
+        /// <param name="player">The player to stop</param>
+        void StopPlayer(IPlayer player) {
+            if (player != null) {
+                player.Stop();
+                player.PlaybackFinished -= player_PlaybackFinished;
             }
         }
 
@@ -598,7 +604,11 @@ namespace Touchee {
         /// <param name="player">The player who was playing the item</param>
         /// <param name="item">The item that has finished</param>
         void player_PlaybackFinished(IPlayer player, IItem item) {
-            Next();
+            var queue = Queue.FirstOrDefault(q => q.CurrentPlayer == player);
+            if (queue != null)
+                queue.GoNext();
+            else
+                StopPlayer(player);
         }
 
         
@@ -606,7 +616,7 @@ namespace Touchee {
         /// Called when the contents of a queue has changed
         /// </summary>
         /// <param name="queue">The queue whos contents have changed</param>
-        void _queue_ItemsUpdated(Queue queue) {
+        void queue_ItemsUpdated(Queue queue) {
             
         }
 
@@ -615,9 +625,8 @@ namespace Touchee {
         /// Called when a queue is done
         /// </summary>
         /// <param name="queue">The corresponding queue</param>
-        void _queue_Finished(Queue queue) {
-            DisposePlayer();
-            _queue = null;
+        void queue_Finished(Queue queue) {
+            StopQueue(queue);
         }
 
 

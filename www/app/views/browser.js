@@ -11,11 +11,12 @@ define([
     containerViews: {},
     
     events: {
-      'click [data-href]':          'followNonAnchor',
-      'click [data-button=prev]':   'prev',
-      'click [data-button=next]':   'next',
-      'click [data-button=play]':   'play',
-      'click [data-button=pause]':  'pause'
+      'touchstart [data-ontouchstart]': 'followOnDown',
+      'click [data-href]':              'followNonAnchor',
+      'click [data-button=prev]':       'prev',
+      'click [data-button=next]':       'next',
+      'click [data-button=play]':       'play',
+      'click [data-button=pause]':      'pause'
     },
     
     
@@ -74,7 +75,7 @@ define([
       else {
         $nav = $('<nav/>').appendTo($footer);
         _.each(viewTypes, function(v){
-          var $button = $('<a class="button"/>')
+          var $button = $('<a class="button" data-ontouchstart="true" />')
             .text( T.T.viewTypes[v] )
             .attr('href', "#" + view.container.url() + "/contents/type:" + v);
           if (view.type == v) $button.addClass('selected');
@@ -85,15 +86,26 @@ define([
     },
     
     
-    followNonAnchor: function(ev) {
-      Backbone.history.loadUrl($(ev.target).closest('[data-href]'));
+    followOnDown: function(ev) {
+      var $button = $(ev.target).closest('[data-href], [href]');
+      Backbone.history.loadUrl(
+        $button.attr('data-href') || $button.attr('href')
+      );
+      return false;
     },
     
     
-    prev:   function() { Backbone.history.loadUrl("control/prev"); },
-    next:   function() { Backbone.history.loadUrl("control/next"); },
-    play:   function() { Backbone.history.loadUrl("control/play"); },
-    pause:  function() { Backbone.history.loadUrl("control/pause"); }
+    followNonAnchor: function(ev) {
+      Backbone.history.loadUrl(
+        $(ev.target).closest('[data-href]').attr('data-href')
+      );
+    },
+    
+    
+    prev:   function() { Backbone.history.loadUrl("queue/" + 1 + "/prev"); },
+    next:   function() { Backbone.history.loadUrl("queue/" + 1 + "/next"); },
+    play:   function() { Backbone.history.loadUrl("queue/" + 1 + "/play"); },
+    pause:  function() { Backbone.history.loadUrl("queue/" + 1 + "/pause"); }
     
   });
   

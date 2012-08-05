@@ -18,29 +18,6 @@ define([
       return this.find(function(medium){
         return medium.isLocal();
       });
-    },
-    
-    updateAll: function(data) {
-      var Media = this;
-      
-      var ids = [];
-      // Create new and update existing media
-      _.each(data, function(m) {
-        ids.push(m.id);
-        var medium = Media.get(m.id);
-        if (medium)
-          medium.set(m);
-        else
-          Media.create(m);
-      });
-      
-      // Remove media which are not present anymore
-      this.each(function(m){
-        if (ids.indexOf(m.id) == -1)
-          m.destroy();
-      });
-      
-      this.trigger('reset');
     }
     
   });

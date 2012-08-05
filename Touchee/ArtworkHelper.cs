@@ -133,7 +133,7 @@ namespace Touchee.Artwork {
         /// </summary>
         /// <param name="filter">The filter for which the artwork should be retrieved</param>
         /// <returns>A filled ArtworkResult object</returns>
-        public static ArtworkResult GetFromArtworkService(Filter filter) {
+        public static ArtworkResult GetFromArtworkService(Options filter) {
             var result = new ArtworkResult();
 
             // Artist: get artist or album
@@ -234,7 +234,7 @@ namespace Touchee.Artwork {
 
 
 
-        public static string GetDefaultArtworkType(Filter filter) {
+        public static string GetDefaultArtworkType(Options filter) {
             var type = ArtworkType.Unknown;
 
             if (filter.ContainsKey("artist"))

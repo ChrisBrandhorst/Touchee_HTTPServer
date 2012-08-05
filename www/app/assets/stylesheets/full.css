@@ -987,24 +987,24 @@ body > section {
   height: 128px;
   text-align: center;
   box-shadow: 0 0 9px 1px #c8c8c8;
-  background: white url(../images/artwork/medium/unknown.png) no-repeat center top;
+  background-color: #c8c8c8;
 }
-/* line 20, ../sass/full/browser/contents/_tiles.sass */
+/* line 23, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles > div.scrollable li:before {
   content: "";
   position: absolute;
   width: 128px;
   height: 128px;
 }
-/* line 26, ../sass/full/browser/contents/_tiles.sass */
+/* line 28, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles > div.scrollable li.selected:before {
-  background-color: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.25);
 }
-/* line 29, ../sass/full/browser/contents/_tiles.sass */
+/* line 31, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles > div.scrollable li.hidden {
-  visibility: hidden;
+  -webkit-transform: translate3d(-100000px, 0, 0);
 }
-/* line 32, ../sass/full/browser/contents/_tiles.sass */
+/* line 34, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles > div.scrollable li span {
   display: block;
   padding-bottom: 1px;
@@ -1012,7 +1012,7 @@ body > section {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 37, ../sass/full/browser/contents/_tiles.sass */
+/* line 39, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles > div.scrollable li span:first-child {
   padding-top: 135px;
   background: no-repeat center top;
@@ -1020,15 +1020,15 @@ body > section {
   font-weight: bold;
   color: black;
 }
-/* line 44, ../sass/full/browser/contents/_tiles.sass */
+/* line 46, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles > div.scrollable .count {
   border-top: 1px solid #cccccc;
 }
-/* line 47, ../sass/full/browser/contents/_tiles.sass */
+/* line 49, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles .quickscroll {
   z-index: 10;
 }
-/* line 49, ../sass/full/browser/contents/_tiles.sass */
+/* line 51, ../sass/full/browser/contents/_tiles.sass */
 .contents > .view-tiles .overlay {
   z-index: 20;
 }
@@ -2057,7 +2057,7 @@ header ~ .quickscroll.alpha li:nth-child(odd) {
 }
 /* line 8, ../sass/full/modules/music/contents/_track.sass */
 .contents > .type-track > div.scrollable td:last-child {
-  width: 66px;
+  width: 149px;
   text-align: right;
   padding: 0 83px 0 0;
 }
@@ -2068,19 +2068,20 @@ header ~ .quickscroll.alpha li:nth-child(odd) {
   padding: 0;
   vertical-align: top;
   background-image: url(../images/artwork/small/artist.png);
+  background-size: 43px;
 }
-/* line 10, ../sass/full/modules/music/contents/_artist.sass */
+/* line 11, ../sass/full/modules/music/contents/_artist.sass */
 .contents > .type-artist > div.scrollable td:first-child img {
   height: 43px;
   width: 43px;
   display: none;
 }
-/* line 14, ../sass/full/modules/music/contents/_artist.sass */
+/* line 15, ../sass/full/modules/music/contents/_artist.sass */
 .contents > .type-artist > div.scrollable td:first-child + td {
   border-left: none;
   font-weight: bold;
 }
-/* line 17, ../sass/full/modules/music/contents/_artist.sass */
+/* line 18, ../sass/full/modules/music/contents/_artist.sass */
 .contents > .type-artist > div.scrollable td:last-child {
   width: 243px;
 }
@@ -2088,27 +2089,6 @@ header ~ .quickscroll.alpha li:nth-child(odd) {
 /* line 3, ../sass/full/modules/music/contents/_genre.sass */
 .contents > .type-genre > div.scrollable td:first-child {
   padding-left: 20px;
-}
-
-/* line 5, ../sass/full/modules/music/contents/_album.sass */
-.contents > .type-album > div.scrollable li {
-  background-image: url(../images/artwork/medium/album.png);
-}
-/* line 8, ../sass/full/modules/music/contents/_album.sass */
-.contents > .type-album > div.scrollable li span {
-  display: block;
-  padding-bottom: 1px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-/* line 13, ../sass/full/modules/music/contents/_album.sass */
-.contents > .type-album > div.scrollable li span:first-child {
-  padding-top: 135px;
-  background: no-repeat center top;
-  background-size: 128px 128px;
-  font-weight: bold;
-  color: black;
 }
 
 /* line 4, ../sass/full/modules/music/contents/_artist_track.sass */
@@ -2165,10 +2145,12 @@ section.album_track .back {
   width: 100%;
   height: 100%;
   border: 3px solid #ebecf0;
+  background-image: url(../images/artwork/medium/album.png);
+  background-repeat: no-repeat;
+  background-position: 349px 0;
   background-size: 63px;
-  background: url(../images/artwork/medium/album.png) no-repeat 349px 0;
 }
-/* line 37, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 39, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back h1 {
   -webkit-box-sizing: border-box;
   height: 63px;
@@ -2186,21 +2168,21 @@ section.album_track .back h1 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 56, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 58, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back h1 span {
   font-size: 50%;
   font-weight: bold;
   color: #555555;
   text-shadow: none;
 }
-/* line 63, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 65, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable {
   -webkit-box-flex: 1;
   border: 1px solid #dfdfdf;
   border-top: none;
   background: white;
 }
-/* line 70, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 72, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table {
   width: 100%;
   table-layout: fixed;
@@ -2208,7 +2190,7 @@ section.album_track .back div.scrollable table {
   border-spacing: 0;
   color: #646464;
 }
-/* line 79, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 81, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr td {
   height: 42px;
   padding: 0;
@@ -2221,61 +2203,61 @@ section.album_track .back div.scrollable table tr td {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 90, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 92, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr td:first-child {
   padding-left: 10px;
-  width: 34px;
+  width: 44px;
 }
-/* line 95, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 97, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr td:nth-child(2) {
   font-weight: bold;
   padding: 0 10px;
   border-width: 1px;
 }
-/* line 99, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 101, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr td:nth-child(2) span {
   font-weight: lighter;
   font-size: 90%;
 }
-/* line 104, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 106, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr td:last-child {
   padding-left: 15px;
   width: 62px;
 }
-/* line 109, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 111, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr:nth-child(even) td {
   background: #f6f6f6;
 }
-/* line 111, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 113, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr:first-child td {
   border-top-width: 1px;
 }
-/* line 118, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 120, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr.playing td:first-child {
   color: transparent;
 }
-/* line 125, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 127, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .back div.scrollable table tr.selected td {
   background: -webkit-linear-gradient(#058cf5, #015de6);
   color: white;
   border-left: none;
   border-right: none;
 }
-/* line 143, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 145, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .front, section.album_track .back {
   -webkit-backface-visibility: hidden;
 }
-/* line 147, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 149, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track .front {
   -webkit-transform: rotateY(-180deg) translate3d(0, 0, 0.5px);
 }
-/* line 151, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 153, ../sass/full/modules/music/contents/_album_track.sass */
 section.album_track.flip {
   -webkit-transform: scale(1) rotateY(0deg);
   box-shadow: 0 0 45px 0 black;
 }
 
-/* line 155, ../sass/full/modules/music/contents/_album_track.sass */
+/* line 157, ../sass/full/modules/music/contents/_album_track.sass */
 .album_track_overlay {
   -webkit-perspective: 2000px;
 }
@@ -2293,8 +2275,13 @@ body {
 
 /* line 37, ../sass/full.sass */
 body {
-  width: 1024px;
-  height: 748px;
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: left -20px;
+}
+/* line 43, ../sass/full.sass */
+body > * {
+  max-width: 1024px;
+  max-height: 748px;
 }

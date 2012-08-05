@@ -27,8 +27,8 @@ define([
       "media/:mid/groups/:group/containers":          "containers",
       "media/:mid/containers/:cid/contents":          "container",
       "media/:mid/containers/:cid/contents/*filter":  "container",
-      "control/:command":                             "control",
-      "control/:command/container/:cid/*filter":      "control"
+      "play/container/:cid/*filter":                  "play",
+      "queue/:qid/:command":                          "control"
     },
     
     
@@ -141,12 +141,21 @@ define([
     },
     
     
-    // Send a control command to the server
-    control: function(command, containerID, filter) {
+    // Send a play command to the server
+    play: function(containerID, filter) {
       new ControlRequest({
-        command:    command,
+        command:    'play',
         container:  containerID,
         filter:     new Filter(filter || "")
+      }).save();
+    },
+    
+    
+    // Send a control command to the server
+    control: function(queueID, command) {
+      new ControlRequest({
+        command:  command,
+        queue:    queueID
       }).save();
     },
     

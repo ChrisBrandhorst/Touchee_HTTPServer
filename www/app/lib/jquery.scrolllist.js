@@ -261,7 +261,8 @@
     // Render
     render: function(force) {
       var $this = this,
-          data = $this.data('scrolllist');
+          data = $this.data('scrolllist'),
+          start = new Date();
       
       // If there are no elements, no point in going further
       if (!data.$elements.length) return;
@@ -448,6 +449,8 @@
         }
         
       });
+      
+      $('#debug').text("rendered in " + (new Date() - start) + " ms");
       
     },
     
