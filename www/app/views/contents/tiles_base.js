@@ -58,8 +58,10 @@ define([
         renderItem: function(id, data, odd) {
           
           var item = ['<li data-', contents.idAttribute, '="', data[contents.keys.id], '"><span'];
-          if (scrolllistOptions.tileArtworkURL)
-            item.push(' style="background-image:url(', scrolllistOptions.tileArtworkURL, data[contents.keys.artworkid || contents.keys.id], ')"');
+          if (scrolllistOptions.tileArtworkURL) {
+            var artworkItem = encodeForFilter(data[contents.keys.artworkid || contents.keys.id]);
+            item.push(' style="background-image:url(', scrolllistOptions.tileArtworkURL, artworkItem, ')"');
+          }
           item.push('>');
           if (scrolllistOptions.tileLine1Key)
             item.push( (data[contents.keys[scrolllistOptions.tileLine1Key]] || T.T.unknown).htmlEncode() );

@@ -16,6 +16,19 @@ String.prototype.htmlEncode = function() {
     return String.htmlEncodeMap[c];
   });
 };
+String.prototype.encodeForFilter = function() {
+  return encodeForFilter(this);
+};
+
+function encodeForFilter(str) {
+  return typeof str === 'string' ? encodeURIComponent(str.replace(',', "\\,")) : str;
+}
+
+
+
+
+
+
 
 // String.prototype.camelize = function(first_uppercase){
 //   if (first_uppercase !== false)

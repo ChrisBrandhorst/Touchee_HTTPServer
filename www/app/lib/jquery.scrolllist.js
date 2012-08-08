@@ -1,4 +1,3 @@
-
 (function($){
   
   // Using some Underscore methods
@@ -432,7 +431,7 @@
           }
           
         }
-        
+        $('#debug').text("rendered in " + (new Date() - start) + " ms");
         // Set the HTML
         this.innerHTML = html;
         
@@ -450,7 +449,7 @@
         
       });
       
-      $('#debug').text("rendered in " + (new Date() - start) + " ms");
+      
       
     },
     

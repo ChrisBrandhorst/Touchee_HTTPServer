@@ -31,7 +31,7 @@ namespace Touchee.Artwork {
             else
                 identifier = item.UniqueKey;
             
-            return identifier == null ? null : identifier;
+            return identifier == null ? null : identifier.ToLower();
         }
 
 
@@ -138,11 +138,11 @@ namespace Touchee.Artwork {
 
             // Artist: get artist or album
             if (filter.ContainsKey("artist")) {
-                var artist = filter["artist"];
+                var artist = filter["artist"].ToLower();
 
                 // Also album: get album
                 if (filter.ContainsKey("album"))
-                    result = GetFromPlugins<Service.IAlbumArtworkService>(ArtworkType.Album, new object[] { artist, filter["album"] });
+                    result = GetFromPlugins<Service.IAlbumArtworkService>(ArtworkType.Album, new object[] { artist, filter["album"].ToLower() });
 
                 // Get artist
                 else

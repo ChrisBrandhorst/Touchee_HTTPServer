@@ -250,7 +250,7 @@ namespace Touchee {
                 new SortedDictionary<string, string>(filter).Select(
                     kv => kv.Key + ":" + kv.Value
                 )
-            );
+            ).ToLower();
 
             // Return artwork for hash input
             return Artwork(container, uniqueKey, null, filter, client, uri);
@@ -403,7 +403,7 @@ namespace Touchee {
 
                 // Notify client we are done
                 if (client != null)
-                    _server.Send(client, new ArtworkMessage(uri.PathAndQuery, null));
+                    _server.Send(client, new ArtworkMessage(uri.PathAndQuery.TrimStart(new char[]{'/'}), null));
 
             }
 

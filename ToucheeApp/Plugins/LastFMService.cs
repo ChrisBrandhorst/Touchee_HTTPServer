@@ -223,7 +223,7 @@ namespace Touchee.Service {
             // Setup vars
             XPathDocument lastFMDoc = null;
             var req = WebRequest.Create(url);
-            req.Timeout = 5000;
+            //req.Timeout = 5000;
             WebResponse resp = null;
 
             // Do request

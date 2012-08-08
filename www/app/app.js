@@ -38,7 +38,6 @@ define([
           ev.preventDefault();
           return false;
         });
-      
     }
     
   });
@@ -149,7 +148,7 @@ define([
       
       if (response.artwork) {
         var decodedURL = decodeURI(response.artwork.url),
-            imgs = $('img[src="' + decodedURL + '"], [style*="' + decodedURL + '"]');
+            imgs = $('img[src="' + decodedURL + '"], [style$="' + decodedURL + '"]');
         // imgs.attr('src', "data:image/png;base64," + response.artwork.data);
         imgs.each(function(){
           if (this.tagName.toLowerCase() == 'img') {

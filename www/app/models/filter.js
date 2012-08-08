@@ -54,12 +54,17 @@ define([
       
       var filter = _.extend({}, this.toJSON(), attributes || {});
       
-      return _.map(
-        _.keys(filter).sort(),
-        function(key) {
-          return [key, (filter[key] || "").toString().replace(',', "\\,")].join(':');
-        }
-      ).join(',');
+      var f =
+        _.map(
+          _.keys(filter).sort(),
+          function(key) {
+            return [key, (filter[key] || "").toString().replace(',', "\\,")].join(':');
+            // return [key, encodeURIComponent(filter[key] || "")].join(':');
+          }
+        ).join(',');
+      
+      console.log(f);
+      return f;
     }
     
     

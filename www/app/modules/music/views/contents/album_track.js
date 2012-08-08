@@ -65,8 +65,8 @@ define([
       var $scrollable = $thumb.closest('.scrollable'),
           thumbPos    = $thumb.position();
           thumbMargin = {
-            top:  $thumb.css('marginTop').numberValue(),
-            left: $thumb.css('marginLeft').numberValue()
+            top:  $thumb.css('margin-top').numberValue(),
+            left: $thumb.css('margin-left').numberValue()
           };
       
       // Modify thumbpos, taking into account the margins
@@ -86,14 +86,17 @@ define([
       
       // Calculate at what position the album will be shown
       var albumPos = {
-        top:  thumbPos.top + $album.css('marginTop').numberValue(),
-        left: thumbPos.left + $album.css('marginLeft').numberValue()
+        top:  thumbPos.top + $album.css('margin-top').numberValue(),
+        left: thumbPos.left + $album.css('margin-left').numberValue()
       };
+      
+      // Get left margin of ul containing thumb
+      var ulMarginFix = $thumb.parent().css('margin-left').numberValue();
       
       // Calculate deltas
       var deltaX = Math.min(
-        $scrollable[0].offsetWidth - thumbMargin.left - this.el.offsetWidth,
-        Math.max(thumbMargin.left, albumPos.left)
+        $scrollable[0].offsetWidth - thumbMargin.left - this.el.offsetWidth - ulMarginFix,
+        Math.max(thumbMargin.left, albumPos.left) + ulMarginFix
       ) - albumPos.left;
       var deltaY = Math.min(
         $scrollable[0].offsetHeight - thumbMargin.top - this.el.offsetHeight,

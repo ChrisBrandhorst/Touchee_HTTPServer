@@ -24,12 +24,21 @@
 // iPad portrait
 // @media all and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)
 @media all and (max-width: 900px)
-  .contents .tracks td
+  
+  // Hide first two columns in track view
+  .contents > .type-track > div.scrollable td
     &:first-child
-      width:  45%
+      width:  45% !important
     &:nth-child(3), &:nth-child(4)
       display:  none
   
+  // Adjust spacing in tile view
+  .contents > .view-tiles > div.scrollable ul
+    margin-left:  -26px
+    li
+      margin-left:  52px
+    
+  // Stretch quickscroll
   .quickscroll
     &.alpha
       line-height: 32px
