@@ -1,0 +1,27 @@
+#nowplaying
+  position:       relative
+  height:         100%
+  -webkit-box-sizing: border-box
+  padding-top:           44px
+  .perspective
+    
+    -webkit-perspective: 400px
+    
+    .nowplaying_artwork
+      width:                320px
+      height:               320px
+      background:           url(http://musicalstewdaily.files.wordpress.com/2008/09/delicate-sound-of-thunder.jpg) no-repeat center center
+      background-size:      cover
+      -webkit-box-reflect:  below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0,0,0,0.5)))
+      -webkit-transform:    rotateY(-45deg)
+      -webkit-backface-visibility: hidden
+      
+  #controls
+    position:           absolute
+    bottom:             0
+    left:               0
+    right:              0
+    -webkit-box-sizing: border-box
+    height:             95px
+    border-top:         1px solid #595959
+    background-image:   -webkit-gradient(linear, left top, left bottom, from(rgba(80,80,80,0.67)), color-stop(0.5, rgba(40,40,40,0.65)), color-stop(0.5, #080502), to(black))

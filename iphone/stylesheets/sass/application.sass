@@ -1,0 +1,62 @@
+$baseFontColor: black
+
+html, body
+  width:    100%
+  height:   100%
+  overflow: hidden
+  
+body, input, textarea, select, button
+  font-family:          "Helvetica Neue", "Calibri", Arial
+  font-size:            0.8em
+
+html
+  background: white
+body
+  -webkit-box-shadow: 0 0 16px black
+// *
+//   cursor: url(../images/cursor.png), crosshair
+
+body
+  margin:               0
+  background:           black
+  color:                $baseFontColor
+  //-webkit-user-select:  none
+  position:             relative
+  width:                320px
+  height:               460px
+  
+  ul, li, p
+    margin:   0
+    padding:  0
+  
+  ul
+    list-style: none
+    overflow:   hidden
+    
+  *
+    outline:    none
+    
+  img
+    border: none
+  
+  a
+    color:            $baseFontColor
+    text-decoration:  none
+  
+  table
+    font-size: 100%
+    
+    td
+      vertical-align: top
+  
+  .invisible
+    visibility: hidden
+  
+  .hidden
+    display:  none
+    
+@import "layout"
+
+@import "toolbar"
+
+@import "nowplaying"
