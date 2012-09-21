@@ -13,10 +13,7 @@ define([
     events: {
       'touchstart [data-ontouchstart]': 'followOnDown',
       'click [data-href]':              'followNonAnchor',
-      'click [data-button=prev]':       'prev',
-      'click [data-button=next]':       'next',
-      'click [data-button=play]':       'play',
-      'click [data-button=pause]':      'pause'
+      'click [data-button]':            'button'
     },
     
     
@@ -102,10 +99,22 @@ define([
     },
     
     
+    button: function(ev) {
+      var button = $(ev.target).closest('[data-button]').attr('data-button')
+      if (_.isFunction(this[button]))
+        this[button].apply(this, arguments);
+    },
+    
+    
     prev:   function() { Backbone.history.loadUrl("queue/" + 1 + "/prev"); },
     next:   function() { Backbone.history.loadUrl("queue/" + 1 + "/next"); },
     play:   function() { Backbone.history.loadUrl("queue/" + 1 + "/play"); },
-    pause:  function() { Backbone.history.loadUrl("queue/" + 1 + "/pause"); }
+    pause:  function() { Backbone.history.loadUrl("queue/" + 1 + "/pause"); },
+    
+    volume: function() {
+      Touchee.setOverlay($('#devices_popup'));
+      // $('#devices_popup').withOverlay();
+    }
     
   });
   

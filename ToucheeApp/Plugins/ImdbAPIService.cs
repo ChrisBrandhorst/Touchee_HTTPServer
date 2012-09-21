@@ -212,6 +212,12 @@ namespace Touchee.Service {
                 return ServiceResultStatus.InvalidResponse;
             }
 
+            // Check response
+            if (data["Response"].ToString().ToLower() == "false") {
+                Log(data["Error"].ToString());
+                return ServiceResultStatus.NoResult;
+            }
+
             // Build object
             try {
                 movieInfo = MovieInfo.Build(data);

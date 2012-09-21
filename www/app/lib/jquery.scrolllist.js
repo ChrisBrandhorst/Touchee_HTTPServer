@@ -40,7 +40,7 @@
     // At least this number of items should be present for buffering
     min:          100,
     
-    // The total number of additional should be rendered around the visible portion
+    // The total number of additional rows that should be rendered around the visible portion
     rows:         80,
     
     // Function for determining the number of items of the given element
@@ -142,7 +142,7 @@
           data.scrolling = false;
         });
         $this.bind('scroll.scrolllist', function(){
-          data.scrolling = true;
+          data.scrolling = data.touching;
           SL.positionIndex.call($this);
           if (!data.touching && !data.scrollTimeout)
             SL.scroll.call($this);

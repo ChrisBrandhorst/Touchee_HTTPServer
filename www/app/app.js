@@ -22,7 +22,7 @@ define([
   
   $.extend(Touchee, {
     
-    $overlay: $('<div id="overlay"/>').hide().appendTo(document.body),
+    $overlay: $('<div id="overlay" class="overlay" />').hide().appendTo(document.body),
     setOverlay: function($el, closeFunc, $overlay) {
       var $o = $overlay || T.$overlay;
       
@@ -32,12 +32,16 @@ define([
         .bind(T.START_EVENT, function(ev){
           var $target = $(ev.target);
           if (!$target.parents().is($el)) {
-            closeFunc.apply(this, arguments);
+            if (_.isFunction(closeFunc))
+              closeFunc.apply(this, arguments);
             $o.hide().unbind(T.START_EVENT);
+            $el.hide();
           }
           ev.preventDefault();
           return false;
         });
+      
+      $el.show();
     }
     
   });
@@ -147,17 +151,17 @@ define([
       }
       
       if (response.artwork) {
-        var decodedURL = decodeURI(response.artwork.url),
-            imgs = $('img[src="' + decodedURL + '"], [style$="' + decodedURL + '"]');
+        var url   = response.artwork.url,
+            imgs  = $('img[src="' + url + '"], [style$="' + url + ')"]'); // \\\'
         // imgs.attr('src', "data:image/png;base64," + response.artwork.data);
         imgs.each(function(){
           if (this.tagName.toLowerCase() == 'img') {
             this.setAttribute('src', "");
-            this.setAttribute('src', response.artwork.url);
+            this.setAttribute('src', url);
           }
           else {
             this.style.backgroundImage = "";
-            this.style.backgroundImage = "url(" + response.artwork.url + ")";
+            this.style.backgroundImage = "url(" + url + ")";
           }
         });
       }

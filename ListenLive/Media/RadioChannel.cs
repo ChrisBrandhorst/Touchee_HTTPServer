@@ -10,7 +10,7 @@ namespace ListenLive {
     /// <remarks>
     /// Represents a radio channel from the ListLive.eu site
     /// </remarks>
-    public class RadioChannel : Collectable<RadioChannel>, IWebcast, IItem, IComparable {
+    public class RadioChannel : Collectable<RadioChannel>, IWebcast, IComparable {
 
 
         #region Statics

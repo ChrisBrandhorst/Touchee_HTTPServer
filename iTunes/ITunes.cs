@@ -30,7 +30,7 @@ namespace Touchee.ITunes {
         public ITunes() {}
 
 
-        #region Properties
+        #region Privates
 
         internal static dynamic Config;
         Controller _controller;

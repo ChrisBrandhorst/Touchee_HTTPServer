@@ -195,8 +195,9 @@ namespace Touchee {
             var controller = Plugins.GetContentsPluginFor(container);
             if (controller == null)
                 return null;
-            
+
             var contents = controller.GetContents(container, filter);
+
             return contents == null ? null : new ContentsMessage(container, contents);
         }
 

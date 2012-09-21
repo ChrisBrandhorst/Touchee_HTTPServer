@@ -35,6 +35,17 @@ Touchee.T = {
       one:    'webcast',
       more:   'webcasts'
     }
+  },
+  
+  time: {
+    minute: {
+      one:  'minute',
+      more: 'minutes',
+      short: {
+        one:  'min.',
+        more: 'mins.'
+      }  
+    }
   }
   
 };

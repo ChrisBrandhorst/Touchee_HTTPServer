@@ -11,7 +11,7 @@ namespace Touchee.ITunes.Media {
     /// <remarks>
     /// Represents an iTUnes track
     /// </remarks>
-    public abstract class Track : Collectable<Track>, IItem, IComparable {
+    public abstract class Track : Collectable<Track>, IAudioItem, IComparable {
 
 
         #region Statics

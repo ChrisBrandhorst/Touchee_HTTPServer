@@ -42,6 +42,13 @@ define([
       else
         this.backgroundImage = $thumb[0].childNodes[0].style.backgroundImage;
       
+      // 
+      var $spans = $thumb.children();
+      this.contents.set({
+        album:        $spans.eq(0).text(),
+        albumArtist:  $spans.eq(1).text()
+      });
+      
       // Render contents
       $album.html(
         albumPopupTemplate(

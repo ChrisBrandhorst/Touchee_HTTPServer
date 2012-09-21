@@ -73,7 +73,7 @@ namespace Touchee.ITunes {
             // Otherwise, bail out
             else
                 return null;
-
+            
             // Filter tracks
             tracks = FilterTracks(tracks, filter);
 
@@ -168,7 +168,7 @@ namespace Touchee.ITunes {
                     contents.Keys = new string[] { "id", "name", "artist", "album", "albumArtist", "number", "duration", "index" };
                     if (filter.ContainsKey("albumid")) {
                         meta.Albumid = filter["albumid"];
-                        //meta.TotalDuration = tracks.Aggregate<ITrack, TimeSpan>(new TimeSpan(0), (total, t) => total + t.Duration).ToStringShort();
+                        meta.TotalDuration = (int)(tracks.Aggregate(TimeSpan.Zero, (total, t) => total + t.Duration).TotalSeconds);
                     }
                     break;
                 case Types.Album:

@@ -173,7 +173,7 @@ namespace Touchee.Web.Modules {
 
             // Build custom params object
             var parameters = new Params(request.Parameters);
-            
+
             // TODO: check if we have a matching route
             switch (segments.Length) {
 
@@ -262,7 +262,7 @@ namespace Touchee.Web.Modules {
                 return ProcessingResult.Continue;
 
             Logger.Log(String.Format("{0} - [{1}] \"{2} {3}\"", httpContext.RemoteEndPoint.Address, DateTime.UtcNow, request.Method, request.Uri.AbsolutePath));
-            
+
             controller = null;
             bool ret = false;
             try {

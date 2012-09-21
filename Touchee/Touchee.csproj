@@ -56,6 +56,7 @@
     <Compile Include="Base.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Media\IAudioItem.cs" />
     <Compile Include="Media\IFileTrack.cs" />
     <Compile Include="Playback\IAudioPlayer.cs" />
     <Compile Include="Playback\IVisualPlayer.cs" />

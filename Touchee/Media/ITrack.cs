@@ -8,7 +8,7 @@ namespace Touchee {
     /// <remarks>
     /// Interface for a track object.
     /// </remarks>
-    public interface ITrack {
+    public interface ITrack : IAudioItem {
 
         /// <summary>
         /// The title of this track

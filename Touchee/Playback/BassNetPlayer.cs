@@ -14,7 +14,7 @@ namespace   Touchee.Playback {
     /// <remarks>
     /// 
     /// </remarks>
-    public class BassNetPlayer : Base, IVisualPlayer, IPlugin {
+    public class BassNetPlayer : Base, IAudioPlayer, IPlugin {
 
 
         #region IPlugin implementation
@@ -71,7 +71,7 @@ namespace   Touchee.Playback {
         /// <param name="item">The item to play</param>
         /// <returns>True if the player can play the given item, otherwise false</returns>
         public bool CanPlay(IItem item) {
-            return item is IFileTrack || item is IWebcast;
+            return item is IAudioItem;
         }
 
 
@@ -85,7 +85,7 @@ namespace   Touchee.Playback {
             //this.Stop();
             
             // Create stream
-            this.CreateStream(item);
+            this.CreateStream((IAudioItem)item);
 
             //
             this.Item = item;
@@ -137,19 +137,55 @@ namespace   Touchee.Playback {
         #endregion
 
 
+        #region IAudioPlayer implementation
 
 
+        /// <summary>
+        /// Get or set the volume of the LFE channel between and including 0 and 1
+        /// After a set, this method modifies the stream matrix/
+        /// </summary>
+        public double LFEVolume {
+            get { return _lfeVolume; }
+            set {
+                _lfeVolume = Math.Max(0, Math.Min(1, value));
+                SetMatrix(_currentStream);
+            }
+        }
 
+
+        #endregion
+
+
+        #region Privates
+
+        // Private holding the value for the LFEVolume property
+        double _lfeVolume = 0.5;
+
+        // The current stream pointer
         int _currentStream = -1;
+
+        // The current mixer pointer
         int _mixer = -1;
+
+        // Channel ending callback proc
         SYNCPROC _channelEndCallback;
 
+        #endregion
 
 
+        #region Stream handling
 
-        protected virtual void CreateStream(IItem track) {
+
+        /// <summary>
+        /// Creates a stream for the given track.
+        /// If the stream is created successfully, the track is automatically played. Thus,
+        /// this implementation is synchronous.
+        /// </summary>
+        /// <param name="track">The track to create the stream for and play.</param>
+        protected virtual void CreateStream(IAudioItem track) {
             int stream = 0;
 
+            // If we have a webcast, create a stream for one of the available URIs
             if (track is IWebcast) {
 
                 var streams = ((IWebcast)track).Streams;
@@ -168,21 +204,30 @@ namespace   Touchee.Playback {
 
             }
 
+            // Else, just load the track
             else if (track is IFileTrack) {
                 var path = Path.GetFullPath(((ITrack)track).Uri.GetComponents(UriComponents.Path, UriFormat.SafeUnescaped));
                 stream = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_STREAM_STATUS | BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_SAMPLE_FLOAT);
             }
-            
+
+            // Start the stream if successfull
             if (stream != 0)
                 this.StreamCreated(track, stream);
+            else
+                throw new NotImplementedException("Unhandled: no valid stream created");
         }
 
 
-        protected virtual void StreamCreated(IItem track, int stream) {
+        /// <summary>
+        /// Called when a stream has been created. This actually starts the playback of the stream.
+        /// </summary>
+        /// <param name="track">The track that is to be played.</param>
+        /// <param name="stream">The BASS.NET stream pointer to play.</param>
+        protected virtual void StreamCreated(IAudioItem track, int stream) {
 
             // Init mixer
             if (_mixer == -1) {
-                _mixer = BassMix.BASS_Mixer_StreamCreate(44100, 2, BASSFlag.BASS_MIXER_END);
+                _mixer = BassMix.BASS_Mixer_StreamCreate(44100, 6, BASSFlag.BASS_MIXER_END);
                 
                 // Set playback done callback on mixer
                 _channelEndCallback = new SYNCPROC(ChannelEnd);
@@ -190,8 +235,11 @@ namespace   Touchee.Playback {
             }
 
             // Load streamin mixer
-            bool ok = BassMix.BASS_Mixer_StreamAddChannel(_mixer, stream, BASSFlag.BASS_STREAM_AUTOFREE);
+            bool ok = BassMix.BASS_Mixer_StreamAddChannel(_mixer, stream, BASSFlag.BASS_STREAM_AUTOFREE | BASSFlag.BASS_MIXER_MATRIX);
             if (!ok) Log(Bass.BASS_ErrorGetCode().ToString(), Logger.LogLevel.Error);
+
+            // Set matrix
+            SetMatrix(stream);
 
             // Remove current channel from mixer
             if (_currentStream != -1) {
@@ -215,6 +263,9 @@ namespace   Touchee.Playback {
         }
 
 
+        /// <summary>
+        /// Called when a channel has ended the playback. This triggers the PlaybackFinished event.
+        /// </summary>
         void ChannelEnd(int handle, int channel, int data, IntPtr user) {
             this.Item = null;
             if (PlaybackFinished != null)
@@ -222,6 +273,9 @@ namespace   Touchee.Playback {
         }
 
 
+        /// <summary>
+        /// Called when metadata for a url stream is changed
+        /// </summary>
         void MetaSync(int handle, int channel, int data, IntPtr user) {
             string[] tags = Bass.BASS_ChannelGetTagsMETA(channel);
             foreach (string tag in tags)
@@ -229,8 +283,107 @@ namespace   Touchee.Playback {
         }
 
 
-    }
+        #endregion
 
+
+        #region Mix matrix stuff
+
+
+        /// <summary>
+        /// Sets the correct mix matrix for the given stream pointer.
+        /// </summary>
+        /// <param name="stream">The stream pointer to set the mix matrix for</param>
+        void SetMatrix(int stream) {
+            var matrix = GetMixMatrix(stream);
+            if (matrix != null)
+                BassMix.BASS_Mixer_ChannelSetMatrix(stream, matrix);
+        }
+
+
+        /// <summary>
+        /// Gets the correct mix matrix for the given stream.
+        /// </summary>
+        /// <param name="stream">The stream pointer to get the mix matrix for</param>
+        /// <returns>The mix matrix, or null if something fails</returns>
+        float[,] GetMixMatrix(int stream) {
+
+            // Get the stream info
+            var streamInfo = Bass.BASS_ChannelGetInfo(stream);
+            if (streamInfo == null || !_mixMatrices.ContainsKey(streamInfo.chans)) return null;
+            
+            // Get the matrix
+            var matrix = _mixMatrices[streamInfo.chans];
+
+            // Set the LFE channel
+            for (int i = 0; i < streamInfo.chans; i++)
+                matrix[3, i] = (float)Math.Max(0, _maxLFELevel * Math.Min(1, LFEVolume) / streamInfo.chans);
+
+            // Return the matrix
+            return matrix;
+        }
+
+
+        // The maximum LFE level
+        float _maxLFELevel = 0.2F;
+
+        #region Matrices
+
+        // When streaming multi-channel sample data, the channel order of each sample is as follows.
+        // 3 channels	left-front, right-front, center. 
+        // 4 channels	left-front, right-front, left-rear/side, right-rear/side. 
+        // 5 channels	left-front, right-front, center, left-rear/side, right-rear/side. 
+        // 6 channels (5.1)	left-front, right-front, center, LFE, left-rear/side, right-rear/side. 
+        // 8 channels (7.1)	left-front, right-front, center, LFE, left-rear/side, right-rear/side, left-rear center, right-rear center
+        Dictionary<int, float[,]> _mixMatrices = new Dictionary<int, float[,]>() {
+
+            // Stereo: upmixed to 5.1
+            { 2, new float[,]{
+                { 1, 0 },
+                { 0, 1 },
+                { (float)Math.Sqrt(1/2), (float)Math.Sqrt(1/2) },
+                { 0.1F, 0.1F },
+                { -(float)Math.Sqrt(2/3), (float)Math.Sqrt(1/3) },
+                { -(float)Math.Sqrt(1/3), (float)Math.Sqrt(2/3) }
+            } },
+
+            // 3.0: upmix
+            { 3, new float[,]{
+                { 1, 0, 0 },
+                { 0, 1, 0 },
+                { 0, 0, 1 },
+                { 0.033F, 0.033F, 0.033F },
+                { -(float)Math.Sqrt(2/3), (float)Math.Sqrt(1/3), 0 },
+                { -(float)Math.Sqrt(1/3), (float)Math.Sqrt(2/3), 0 }
+            } },
+
+            // Quadraphonic: add LFE channel, center remains silent
+            { 4, new float[,]{
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0.05F, 0.05F, 0.05F, 0.05F },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            } },
+
+            // 5.0 to 5.1: add LFE channel
+            { 5, new float[,]{
+                { 1, 0, 0, 0, 0 },
+                { 0, 1, 0, 0, 0 },
+                { 0, 0, 1, 0, 0 },
+                { 0.04F, 0.04F, 0.04F, 0.04F, 0.04F },
+                { 0, 0, 0, 1, 0 },
+                { 0, 0, 0, 0, 1 }
+            } }
+
+        };
+
+        #endregion
+
+        #endregion
+
+
+    }
 
 
 }

@@ -50,10 +50,6 @@ namespace Touchee {
             // Loads all plugins
             if (!LoadPlugins()) return false;
 
-            var g = new Touchee.Service.ImdbAPIService();
-            System.Drawing.Image result;
-            var r = g.GetMovieArtwork("wef wef wef wef wef", out result);
-
 
             // Get port for the http server
             int httpPort;
@@ -191,6 +187,11 @@ namespace Touchee {
                 bool ok = true;
                 IPlugin plugin;
 
+                // Get the configuration
+                dynamic pluginConfig = null;
+                if (pluginsConfig != null)
+                    pluginsConfig.TryGetValue(type.Name, out pluginConfig);
+
                 // Create instance of plugin
                 try {
                     plugin = (IPlugin)Activator.CreateInstance(type);
@@ -199,11 +200,6 @@ namespace Touchee {
                     Logger.Log("Cannot instantiate plugin: " + type.Name + " : " + e.Message, Logger.LogLevel.Error);
                     continue;
                 }
-
-                // Get the configuration
-                dynamic pluginConfig = null;
-                if (pluginsConfig != null)
-                    pluginsConfig.TryGetValue(type.Name, out pluginConfig);
 
                 // Boot the plugin
                 ok = plugin.Start(pluginConfig);

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BB86A306-3DC4-458B-BD2E-688BA3DC4888}</ProjectGuid>
+    <ProjectGuid>{3D297D80-6E21-4DCE-B728-809E052A82D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Touchee.ITunes</RootNamespace>
-    <AssemblyName>iTunes</AssemblyName>
+    <RootNamespace>Touchee.Spotify</RootNamespace>
+    <AssemblyName>Spotify</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,61 +25,42 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\ToucheeApp\bin\Debug\plugins\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controller.cs" />
-    <Compile Include="ITCParser\BitConversion.cs" />
-    <Compile Include="ITCParser\ITCFile.cs" />
-    <Compile Include="ITCParser\Structures\ITCFILE_HEADER.cs" />
-    <Compile Include="ITCParser\Structures\ITCFILE_HEADER2.cs" />
-    <Compile Include="ITunes.cs" />
-    <Compile Include="Media\WebcastContainer.cs" />
-    <Compile Include="Watcher.cs" />
-    <Compile Include="Media\MasterPlaylist.cs" />
-    <Compile Include="Media\FileTrack.cs" />
-    <Compile Include="Media\Playlist.cs" />
-    <Compile Include="Media\Track.cs" />
-    <Compile Include="Media\Webcast.cs" />
-    <Compile Include="Messages\TracksMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionManager.cs" />
+    <Compile Include="Spotify.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\torshify\src\Torshify\Torshify.csproj">
+      <Project>{FD9C7812-7F81-4E27-95B7-C36F2140EF57}</Project>
+      <Name>Torshify</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Touchee\Touchee.csproj">
       <Project>{9DDBFBF9-B71A-407F-9C35-2640E5053D4B}</Project>
       <Name>Touchee</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="iTunesLib">
-      <Guid>{9E93C96F-CF0D-43F6-8BA8-B807A3370712}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>13</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
+    <Content Include="libspotify.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

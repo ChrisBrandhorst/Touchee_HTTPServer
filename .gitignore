@@ -1,5 +1,6 @@
-ToucheeApp/config.yaml
-www/app/assets/sass/.sass-cache
+config.yaml
+.sass-cache
+spotify_appkey.key
 
 #################
 ## Eclipse

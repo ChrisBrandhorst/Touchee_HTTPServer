@@ -13,7 +13,7 @@ namespace Touchee {
             object result;
             if (TryMapValue(document, out result))
                 return result;
-
+            
             throw new Exception("Unexpected parsed value");
         }
 
@@ -59,7 +59,7 @@ namespace Touchee {
         public override bool TryGetMember(GetMemberBinder binder, out object result) {
             if (TryGetValue(binder.Name, out result))
                 return true;
-
+            
             return base.TryGetMember(binder, out result);
         }
 

@@ -100,10 +100,7 @@ namespace Touchee {
                 dict,
                 Formatting.None,
                 new JsonSerializerSettings {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    Converters = new List<JsonConverter> {
-                        //new ToucheeJsonConverter()
-                    }
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }
             );
         }

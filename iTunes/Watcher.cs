@@ -35,7 +35,7 @@ namespace Touchee.ITunes {
         public bool Watch(Medium medium) {
 
             // TODO: Check if the itunes plugin is disabled
-
+            
             // First, collect all media
             if (medium.Type == MediumType.Local && _localMedium == null)
                 _localMedium = medium;

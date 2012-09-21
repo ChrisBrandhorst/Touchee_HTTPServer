@@ -63,7 +63,6 @@ define([
           }
         ).join(',');
       
-      console.log(f);
       return f;
     }
     

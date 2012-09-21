@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Touchee {
 
-    public interface IWebcast {
+    public interface IWebcast : IAudioItem {
 
         /// <summary>
         /// The title of this stream
